@@ -35,7 +35,7 @@ sudo ./firewall.sh
 | `install.sh` | Core packages, Tela icons, Bibata cursor, Nerd Fonts, Oh My Zsh, mise, opencode |
 | `mango-noctalia.sh` | Noctalia v5 + mangowm + config `dotfiles/mango-noctalia/` |
 | `apps.sh` | Nautilus, Zen browser, AstroNvim, tmux, imv, Yazi, Neovim, GNOME tools, Telegram, ASUS tools |
-| `firewall.sh` | UFW — deny incoming, allow LocalSend (53317), Docker DNS |
+| `firewall.sh` | UFW — deny incoming, allow LocalSend (53317) |
 
 ## Shell
 
