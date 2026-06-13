@@ -60,7 +60,6 @@ sudo ./firewall.sh
 
 - **Zen browser** default (Firefox-based, mic stabil di WebRTC)
 - **Qt6 packages** tetap diinstall (dibutuhkan qylock screen lock)
-- **Mic:** Alsa power_save=0, Internal Mic Boost=1, Capture=45, PipeWire soft vol 80%
 - **playerctl** diinstall untuk media key support
 - **Session name:** "MangoWM"
 - Hanya `noctalia-git` dari AUR; sisanya dari CachyOS repo
