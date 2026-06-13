@@ -55,6 +55,7 @@ install_core_app_support() {
         ncdu httpie bind whois traceroute mtr socat nmap github-cli strace pipx \
         telegram-desktop \
         localsend zen-browser-bin asusctl rog-control-center zed nautilus-python \
+        ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu
 
     if command -v podman &>/dev/null; then
