@@ -1,0 +1,314 @@
+#!/usr/bin/env bash
+# CachyOS Setup — minimal package installer
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOG_FILE="${SCRIPT_DIR}/install.log"
+
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
+log_info() { echo -e "${CYAN}[INFO]${NC}  $*"; }
+log_ok()   { echo -e "${GREEN}[OK]${NC}   $*"; }
+log_warn() { echo -e "${YELLOW}[WARN]${NC}  $*"; }
+log_err()  { echo -e "${RED}[ERROR]${NC} $*"; }
+
+if [[ -f "$LOG_FILE" ]]; then
+    mv "$LOG_FILE" "${LOG_FILE}.old.$(date +%Y%m%d%H%M%S)"
+fi
+exec > >(tee -a "$LOG_FILE") 2>&1
+log_info "Logging to: ${LOG_FILE}"
+trap 'log_err "Failed at line ${LINENO}: ${BASH_COMMAND}"' ERR
+
+detect_os() {
+    if [[ -f /etc/os-release ]]; then
+        . /etc/os-release
+        case "${ID:-}" in
+            arch|cachyos) log_ok "Detected: ${PRETTY_NAME:-$ID}" ;;
+            *) log_err "Unsupported: ${ID:-unknown}. This script is for CachyOS/Arch only."; exit 1 ;;
+        esac
+    else
+        log_err "Cannot detect OS."
+        exit 1
+    fi
+}
+
+preflight_checks() {
+    log_info "Running preflight checks..."
+    detect_os
+    if [[ "$(id -u)" -eq 0 ]]; then
+        log_err "Do not run as root."
+        exit 1
+    fi
+    if ! sudo -n true 2>/dev/null; then
+        log_warn "Sudo required."
+        sudo -v
+    fi
+    log_ok "Preflight passed."
+}
+
+pacman_install() {
+    local pkgs=("$@") pkg missing=()
+    for pkg in "${pkgs[@]}"; do
+        if pacman -Q "$pkg" &>/dev/null || command -v "$pkg" &>/dev/null; then
+            log_ok "${pkg} already installed."
+            continue
+        fi
+        missing+=("$pkg")
+    done
+    [[ ${#missing[@]} -eq 0 ]] && return 0
+    log_info "Installing: ${missing[*]}"
+    sudo pacman -S --noconfirm "${missing[@]}" || {
+        log_warn "Some packages failed to install."
+        return 1
+    }
+}
+
+install_packages() {
+    log_info "Installing packages..."
+
+    # Development tools
+    pacman_install base-devel
+
+    # Essentials
+    pacman_install \
+        git curl wget rsync \
+        libva-utils \
+        sddm kitty \
+        flatpak \
+        cmake meson ninja python python-pip \
+        podman podman-compose podman-docker shellcheck openssh
+
+    # CLI tools
+    pacman_install \
+        bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo \
+        grim slurp wl-clipboard brightnessctl playerctl \
+        eza pamixer wlsunset \
+        lm_sensors
+
+    # Fonts
+    pacman_install \
+        ttf-jetbrains-mono noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts \
+        ttf-jetbrains-mono-nerd
+
+    # GTK/Qt themes & libs
+    pacman_install \
+        qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme
+
+    # Printing
+    pacman_install cups cups-filters
+
+    # Filesystem tools
+    pacman_install \
+        exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump
+
+    if command -v sensors-detect &>/dev/null; then
+        sudo sensors-detect --auto 2>/dev/null || true
+    fi
+    log_ok "Packages installed."
+}
+
+setup_flatpak() {
+    command -v flatpak &>/dev/null || { log_warn "Flatpak not installed."; return 0; }
+    log_info "Adding Flathub remote..."
+    if flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo; then
+        log_ok "Flathub remote ready."
+    else
+        log_warn "Failed to add Flathub remote."
+    fi
+}
+
+install_icon_themes() {
+    log_info "Installing Tela icon theme..."
+    if ls ~/.local/share/icons/Tela* &>/dev/null 2>&1; then
+        log_ok "Tela already installed."
+    else
+        local temp_dir="/tmp/tela-icon-theme"
+        rm -rf "$temp_dir"
+        if git clone --depth 1 https://github.com/vinceliuice/Tela-icon-theme.git "$temp_dir"; then
+            (cd "$temp_dir" && ./install.sh -a) || log_warn "Tela install script failed"
+            rm -rf "$temp_dir"
+            log_ok "Tela icon theme installed."
+        else
+            log_warn "Failed to clone Tela. Skipping."
+        fi
+    fi
+    apply_icon_cursor_settings
+}
+
+apply_icon_cursor_settings() {
+    command -v gsettings &>/dev/null || { log_warn "gsettings not available."; return 0; }
+    log_info "Setting Tela-nord-dark as default icon theme..."
+    gsettings set org.gnome.desktop.interface icon-theme "Tela-nord-dark" 2>/dev/null && log_ok "Tela-nord-dark set." || log_warn "Failed to set Tela-nord-dark"
+    log_info "Setting Bibata-Modern-Ice as cursor..."
+    gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice" 2>/dev/null && log_ok "Bibata cursor set." || log_warn "Failed to set Bibata cursor"
+}
+
+install_bibata_cursor() {
+    log_info "Installing Bibata cursor..."
+    if ls ~/.local/share/icons/Bibata* &>/dev/null 2>&1 || ls /usr/share/icons/Bibata* &>/dev/null 2>&1; then
+        log_ok "Bibata cursor already installed."; return 0
+    fi
+    local url="https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Ice.tar.xz"
+    local tmp
+    tmp="$(mktemp -d)"
+    if curl -fsSL "$url" -o "$tmp/bibata.tar.xz"; then
+        tar -xf "$tmp/bibata.tar.xz" -C "$tmp"
+        local icons_dir="$HOME/.local/share/icons"
+        mkdir -p "$icons_dir"
+        cp -r "$tmp/Bibata-Modern-Ice" "$icons_dir/"
+        log_ok "Bibata cursor installed."
+    else
+        log_warn "Failed to download Bibata cursor."
+    fi
+    rm -rf "$tmp"
+}
+
+setup_nerd_fonts() {
+    log_info "Installing Nerd Fonts..."
+    local fonts_dir="$HOME/.local/share/fonts"
+    mkdir -p "$fonts_dir"
+    local temp_dir
+    temp_dir="$(mktemp -d)"
+    for font in JetBrainsMono FiraCode; do
+        local tmp_zip="$temp_dir/${font}.zip"
+        if curl -fsSL "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.zip" -o "$tmp_zip"; then
+            unzip -qo "$tmp_zip" -d "$temp_dir/${font}" 2>/dev/null
+            find "$temp_dir/${font}" -maxdepth 1 \( -name '*.ttf' -o -name '*.otf' \) -exec cp {} "$fonts_dir/" \; 2>/dev/null || true
+            log_ok "${font} Nerd Font installed."
+        else
+            log_warn "Failed to download ${font} Nerd Font."
+        fi
+    done
+    rm -rf "$temp_dir"
+    fc-cache -fv "$fonts_dir" &>/dev/null || true
+    log_ok "Font cache updated."
+}
+
+setup_zsh() {
+    pacman_install zsh
+    command -v zsh &>/dev/null || { log_warn "Zsh not installed."; return 0; }
+
+    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+        log_info "Installing Oh My Zsh..."
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended 2>/dev/null || true
+    else
+        log_ok "Oh My Zsh already installed."
+    fi
+
+    local p10k_dir="$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
+    if [[ ! -d "$p10k_dir" ]]; then
+        log_info "Installing Powerlevel10k..."
+        git clone --depth 1 https://github.com/romkatv/powerlevel10k.git "$p10k_dir" 2>/dev/null || true
+    else
+        log_ok "Powerlevel10k already installed."
+    fi
+
+    local plugin
+    for plugin in zsh-autosuggestions zsh-syntax-highlighting zsh-completions; do
+        local pdir="$HOME/.oh-my-zsh/custom/plugins/$plugin"
+        if [[ ! -d "$pdir" ]]; then
+            log_info "Installing $plugin..."
+            git clone --depth 1 "https://github.com/zsh-users/$plugin.git" "$pdir" 2>/dev/null || true
+        else
+            log_ok "$plugin already installed."
+        fi
+    done
+
+    local zsh_dotfiles="${SCRIPT_DIR}/dotfiles/zsh"
+    if [[ -d "$zsh_dotfiles" ]]; then
+        [[ -f "$zsh_dotfiles/.zshrc" ]] && cp "$zsh_dotfiles/.zshrc" "$HOME/.zshrc" && log_ok ".zshrc copied"
+        [[ -f "$zsh_dotfiles/.p10k.zsh" ]] && cp "$zsh_dotfiles/.p10k.zsh" "$HOME/.p10k.zsh" && log_ok ".p10k.zsh copied"
+    fi
+
+    local zsh_path
+    zsh_path="$(command -v zsh)"
+    if [[ "$SHELL" != "$zsh_path" ]]; then
+        sudo chsh -s "$zsh_path" "$USER" 2>/dev/null || log_warn "chsh failed"
+    fi
+    log_ok "Zsh configured."
+}
+
+set_kitty_default() {
+    command -v kitty &>/dev/null || { log_warn "Kitty not installed."; return 0; }
+    xdg-mime default kitty.desktop x-scheme-handler/terminal 2>/dev/null || true
+    log_ok "Kitty set as default terminal."
+}
+
+setup_mise() {
+    command -v mise &>/dev/null && { log_ok "mise already installed."; return 0; }
+    log_info "Installing mise..."
+    curl -fsSL https://mise.run | sh 2>/dev/null || log_warn "mise install failed."
+    log_ok "mise installed."
+}
+
+setup_opencode() {
+    command -v opencode &>/dev/null && { log_ok "opencode already installed."; return 0; }
+    log_info "Installing opencode..."
+    curl -fsSL https://opencode.ai/install | bash 2>/dev/null || log_warn "opencode install failed."
+    log_ok "opencode installed."
+}
+
+copy_dotfiles() {
+    log_info "Copying dotfiles..."
+
+    local -A config_map=(
+        ["kitty"]=".config/kitty"
+        ["xdg-desktop-portal"]=".config/xdg-desktop-portal"
+    )
+
+    for src_dir in "${!config_map[@]}"; do
+        local src="${SCRIPT_DIR}/dotfiles/${src_dir}"
+        local dst="$HOME/${config_map[$src_dir]}"
+        if [[ -d "$src" ]]; then
+            mkdir -p "$dst"
+            cp -r "$src"/* "$dst/" 2>/dev/null || true
+            log_ok "${src_dir} copied."
+        else
+            log_warn "${src_dir} not found, skipping."
+        fi
+    done
+
+    if [[ -f "${SCRIPT_DIR}/dotfiles/clean/clean.sh" ]]; then
+        mkdir -p "$HOME/.config/clean" && cp "${SCRIPT_DIR}/dotfiles/clean/clean.sh" "$HOME/.config/clean/clean.sh" 2>/dev/null && chmod +x "$HOME/.config/clean/clean.sh" && log_ok "clean.sh copied."
+    fi
+
+    log_ok "Dotfiles copied."
+}
+
+copy_wallpapers() {
+    local src="${SCRIPT_DIR}/Wallpapers"
+    local dst="$HOME/Pictures/Wallpapers"
+    [[ -d "$src" ]] || { log_warn "Wallpapers dir not found."; return 0; }
+    mkdir -p "$dst"
+    cp -r "$src"/* "$dst/" 2>/dev/null || true
+    log_ok "Wallpapers copied."
+}
+
+copy_docker_db() {
+    local src="${SCRIPT_DIR}/docker-db"
+    local dst="$HOME/Projects/docker-db"
+    [[ -d "$src" ]] || { log_warn "docker-db dir not found."; return 0; }
+    mkdir -p "$(dirname "$dst")"
+    [[ -d "$dst" ]] && { log_ok "docker-db already exists."; return 0; }
+    cp -r "$src" "$dst"
+    log_ok "docker-db copied."
+}
+
+main() {
+    preflight_checks
+    install_packages
+    setup_flatpak
+    install_icon_themes
+    install_bibata_cursor
+    setup_nerd_fonts
+    set_kitty_default
+    setup_mise
+    setup_opencode
+    copy_dotfiles
+    copy_wallpapers
+    copy_docker_db
+    echo ""
+    log_ok "Setup complete."
+    log_info "Log saved to: ${LOG_FILE}"
+}
+
+main "$@"
