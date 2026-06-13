@@ -92,7 +92,7 @@ deploy_nvim_config() {
     if [[ -d "$src" ]] && ! [[ -f "$dst/init.lua" ]]; then
         mkdir -p "$(dirname "$dst")"
         cp -r "$src" "$dst"
-        log_ok "NvChad config deployed."
+        log_ok "AstroNvim config deployed."
     fi
 }
 

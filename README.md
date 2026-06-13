@@ -53,7 +53,7 @@ sudo ./firewall.sh
 | `dotfiles/kitty/` | Kitty terminal config |
 | `dotfiles/xdg-desktop-portal/` | Portal config (wlr screencast) |
 | `dotfiles/tmux/tmux.conf` | tmux config |
-| `dotfiles/nvim/` | NvChad starter |
+| `dotfiles/nvim/` | AstroNvim template |
 | `dotfiles/clean/` | CachyOS maintenance script |
 
 ## Catatan
