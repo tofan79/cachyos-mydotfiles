@@ -82,7 +82,7 @@ install_packages() {
         bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo \
         grim slurp wl-clipboard brightnessctl playerctl \
         eza pamixer wlsunset \
-        lm_sensors
+        lm_sensors dua-cli
 
     # Fonts
     pacman_install \
