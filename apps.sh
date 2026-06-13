@@ -54,7 +54,8 @@ install_core_app_support() {
         cava cups-pk-helper \
         ncdu httpie bind whois traceroute mtr socat nmap github-cli strace pipx \
         telegram-desktop \
-        localsend zen-browser-bin asusctl rog-control-center zed nautilus-python
+        localsend zen-browser-bin asusctl rog-control-center zed nautilus-python \
+        lazygit nodejs bottom gdu
 
     if command -v podman &>/dev/null; then
         systemctl --user enable --now podman.socket 2>/dev/null || true
