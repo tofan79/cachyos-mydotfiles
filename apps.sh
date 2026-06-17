@@ -53,7 +53,7 @@ install_core_app_support() {
         xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays \
         cava cups-pk-helper \
         ncdu httpie bind whois traceroute mtr socat nmap github-cli strace pipx \
-        telegram-desktop zapzap \
+        telegram-desktop \
         localsend zen-browser-bin asusctl rog-control-center zed nautilus-python \
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat
