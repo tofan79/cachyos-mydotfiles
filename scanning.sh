@@ -24,7 +24,7 @@ echo ""
 
 # Daftar known compromised AUR packages (double protection)
 KNOWN_LIST_URLS=(
-    "https://raw.githubusercontent.com/lenucksi/aur-malware-check/main/package_list.txt"
+    "https://raw.githubusercontent.com/lenucksi/aur-malware-check/master/package_list.txt"
     "https://cscs.pastes.sh/raw/aurvulnlist20260611.txt"
 )
 CACHYOS_SCAN_SCRIPT="https://cscs.pastes.sh/raw/aurvulntest20260611.sh"
