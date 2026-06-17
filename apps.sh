@@ -56,7 +56,7 @@ install_core_app_support() {
         telegram-desktop \
         localsend zen-browser-bin asusctl rog-control-center zed nautilus-python \
         ffmpegthumbnailer nautilus-image-converter \
-        lazygit nodejs bottom gdu
+        lazygit nodejs bottom gdu qt6-5compat
 
     if command -v podman &>/dev/null; then
         systemctl --user enable --now podman.socket 2>/dev/null || true
