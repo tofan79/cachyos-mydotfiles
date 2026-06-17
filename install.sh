@@ -111,6 +111,12 @@ setup_flatpak() {
     else
         log_warn "Failed to add Flathub remote."
     fi
+
+    log_info "Installing Flatpak apps..."
+    flatpak install --system -y flathub com.obsproject.Studio \
+        com.obsproject.Studio.Plugin.OBSPWVideo \
+        io.github.tobagin.karere 2>/dev/null || true
+    log_ok "Flatpak apps installed."
 }
 
 install_icon_themes() {

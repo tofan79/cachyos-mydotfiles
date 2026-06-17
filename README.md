@@ -38,7 +38,7 @@ chmod +x *.sh
 - **FS tools:** `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump`
 
 **Setup:**
-- Flatpak + Flathub remote
+- Flatpak + Flathub remote + OBS Studio (+ PipeWire plugin) + Karere
 - Tela icon theme (`vinceliuice/Tela-icon-theme` → `Tela-nord-dark`)
 - Bibata cursor (`Bibata-Modern-Ice` v2.0.7)
 - JetBrainsMono + FiraCode Nerd Fonts
