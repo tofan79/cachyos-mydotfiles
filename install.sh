@@ -67,7 +67,7 @@ install_packages() {
     pacman_install \
         git curl wget rsync \
         libva-utils \
-        sddm kitty \
+        kitty \
         flatpak \
         cmake meson ninja python python-pip \
         shellcheck openssh

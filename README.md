@@ -30,7 +30,7 @@ chmod +x *.sh
 
 **Packages:**
 - **Dev:** `base-devel git curl wget rsync cmake meson ninja python python-pip shellcheck openssh`
-- **Display/WM:** `sddm kitty`
+- **Display/WM:** `kitty`
 - **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
 - **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts`
 - **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme`
