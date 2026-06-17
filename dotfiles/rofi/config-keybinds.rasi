@@ -1,0 +1,53 @@
+@theme "noctalia"
+
+configuration {
+    font: "JetBrainsMono Nerd Font 11";
+    show-icons: false;
+}
+
+window {
+    location: center;
+    width: 480;
+    border-radius: 24px;
+}
+
+mainbox {
+    padding: 12px;
+}
+
+inputbar {
+    border-color: @accent;
+    border: 2px;
+    border-radius: 16px;
+    padding: 8px 16px;
+    spacing: 8px;
+    children: [ prompt, entry ];
+}
+
+message {
+    margin: 12px 0 0;
+    border-radius: 16px;
+}
+
+listview {
+    margin: 12px 0 0;
+    lines: 6;
+    columns: 1;
+    fixed-height: false;
+}
+
+element {
+    padding: 8px 16px;
+    spacing: 8px;
+    border-radius: 16px;
+}
+
+element selected.normal, element selected.active {
+    background-color: @accent;
+    text-color: @accent-fg;
+}
+
+element-icon {
+    size: 1em;
+    vertical-align: 0.5;
+}
