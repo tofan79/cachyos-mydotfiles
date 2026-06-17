@@ -70,7 +70,7 @@ install_packages() {
         sddm kitty \
         flatpak \
         cmake meson ninja python python-pip \
-        podman podman-compose podman-docker shellcheck openssh
+        shellcheck openssh
 
     # CLI tools
     pacman_install \

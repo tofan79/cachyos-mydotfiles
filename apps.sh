@@ -57,11 +57,6 @@ install_core_app_support() {
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat
 
-    if command -v podman &>/dev/null; then
-        systemctl --user enable --now podman.socket 2>/dev/null || true
-        log_ok "podman socket enabled."
-    fi
-
     if command -v asusctl &>/dev/null; then
         log_info "Configuring ASUS daemon..."
         sudo mkdir -p /etc/asusd
@@ -132,7 +127,25 @@ main() {
     deploy_nvim_config
     deploy_tmux_config
     apply_icon_cursor_settings
+    remove_cachyos_defaults
     log_ok "CachyOS app support complete. Log: ${LOG_FILE}"
+}
+
+remove_cachyos_defaults() {
+    log_info "Removing CachyOS pre-installed packages (not needed)..."
+    sudo pacman -Rns --noconfirm micro alacritty meld cachyos-micro-settings 2>/dev/null || true
+    log_ok "Removed micro, alacritty, meld."
+
+    log_info "Hiding unused desktop entries..."
+    local entries="avahi-discover.desktop bssh.desktop bvnc.desktop qv4l2.desktop qvidcap.desktop"
+    for f in $entries; do
+        if [ -f "/usr/share/applications/$f" ]; then
+            cp -n "/usr/share/applications/$f" ~/.local/share/applications/ 2>/dev/null || true
+            grep -qx "Hidden=true" ~/.local/share/applications/"$f" 2>/dev/null || \
+                echo "Hidden=true" >> ~/.local/share/applications/"$f"
+        fi
+    done
+    log_ok "Desktop entries hidden."
 }
 
 main "$@"
