@@ -493,9 +493,8 @@ All workspaces persistent (visible in Noctalia bar when empty).
 
 ## 🐍 Notes
 
-- **openSUSE Tumbleweed** is current daily driver; this repo is for **future CachyOS migration**
-- `hyprctl eval "hl.config({...})"` is the correct way to change config at runtime (not `hyprctl keyword`)
+- `hyprctl eval "hl.config({...})"` — cara bener untuk runtime config di Hyprland Lua API
 - Noctalia regenerates `noctalia.lua` on updates — global variables (`primary`, `surface`, `secondary`, `error`, `on_primary`) must be re-applied
 - Session name: **"Hyprland (Noctalia)"** in SDDM
-- Hanya AUR: `noctalia-git` (via paru). Sisanya dari CachyOS/Arch repo (`pacman`)
+- Hanya AUR: `noctalia-git` (via `paru`). Sisanya dari CachyOS/Arch repo (`pacman`)
 - DaVinci Resolve: extract zip → `sudo SKIP_PACKAGE_CHECK=1 ./DaVinci_Resolve_*_Linux.run` → nonaktifkan libs bentrok (`/opt/resolve/libs/`)
