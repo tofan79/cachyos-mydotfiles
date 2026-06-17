@@ -22,7 +22,12 @@ echo "║       AUR Security Scanner — Atomic Arch Check          ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 
-KNOWN_LIST_URL="https://raw.githubusercontent.com/lenucksi/aur-malware-check/main/package_list.txt"
+# Daftar known compromised AUR packages (double protection)
+KNOWN_LIST_URLS=(
+    "https://raw.githubusercontent.com/lenucksi/aur-malware-check/main/package_list.txt"
+    "https://cscs.pastes.sh/raw/aurvulnlist20260611.txt"
+)
+CACHYOS_SCAN_SCRIPT="https://cscs.pastes.sh/raw/aurvulntest20260611.sh"
 NPM_IOC=("atomic-lockfile" "js-digest" "lockfile-js")
 
 detect_pkg_manager() {
@@ -45,18 +50,27 @@ check_aur_packages() {
     echo -e "  AUR packages: $(echo "$aur_pkgs" | wc -l)"
     echo ""
 
-    log_info "Mendownload daftar known compromised packages..."
-    local known_list
-    known_list=$(curl -fsSL "$KNOWN_LIST_URL" 2>/dev/null || true)
-    if [[ -z "$known_list" ]]; then
-        log_warn "Gagal download daftar compromised. Cek koneksi."
+    local found=0
+    local combined_list=""
+    for url in "${KNOWN_LIST_URLS[@]}"; do
+        log_info "Download daftar: ${url}"
+        local list
+        list=$(curl -fsSL "$url" 2>/dev/null || true)
+        if [[ -n "$list" ]]; then
+            combined_list+=$'\n'"$list"
+        else
+            log_warn "Gagal download: ${url}"
+        fi
+    done
+
+    if [[ -z "$combined_list" ]]; then
+        log_warn "Semua daftar compromised gagal didownload. Cek koneksi."
         return 1
     fi
 
-    local found=0
     while IFS= read -r pkg; do
         [[ -z "$pkg" ]] && continue
-        if echo "$known_list" | grep -qi "^${pkg}$"; then
+        if echo "$combined_list" | grep -qi "^${pkg}$"; then
             log_err "TERINFEKSI: ${pkg} — ada di daftar compromised!"
             found=$((found + 1))
         fi
@@ -187,7 +201,12 @@ main() {
     log_info "  4. Cek proses mencurigakan: ps aux | grep -i npm"
     echo ""
     log_info "Info resmi CachyOS: https://discuss.cachyos.org/t/aur-compromised-1500-packages-affected-20260611/31040"
-    log_info "Cek manual: pacman -Qm | grep -Ff <(curl -s https://raw.githubusercontent.com/lenucksi/aur-malware-check/main/package_list.txt)"
+    echo ""
+    log_info "One-liner CachyOS (alternative):"
+    log_info "  curl -s ${CACHYOS_SCAN_SCRIPT} | bash"
+    log_info "  comm -12 <(pacman -Qq | sort) <(curl -s https://cscs.pastes.sh/raw/aurvulnlist20260611.txt | sort)"
+    echo ""
+    log_info "Cek foreign packages: pacman -Qm"
 }
 
 main "$@"
