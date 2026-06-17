@@ -18,9 +18,9 @@ chmod +x *.sh
 | Step | Script | What it does |
 |------|--------|-------------|
 | 1 | `./install.sh` | Core OS: packages, Tela icons, Bibata cursor, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak, Flathub, dotfiles (kitty, gtk, qt, btop), wallpapers |
-| 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + rofi + switcheroo-control + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
+| 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + SDDM + rofi + switcheroo-control (enabled) + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
 | 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
-| 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/tcp+udp) |
+| 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
 
 ---
 
@@ -29,7 +29,7 @@ chmod +x *.sh
 ### `install.sh`
 
 **Packages:**
-- **Dev:** `base-devel git curl wget rsync cmake meson ninja python python-pip shellcheck openssh`
+- **Dev:** `base-devel git curl wget rsync libva-utils cmake meson ninja python python-pip shellcheck openssh flatpak`
 - **Display/WM:** `kitty`
 - **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
 - **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts`
@@ -56,7 +56,7 @@ chmod +x *.sh
 - `dotfiles/qt5ct/` → `~/.config/qt5ct/`
 - `dotfiles/qt6ct/` → `~/.config/qt6ct/`
 - `dotfiles/btop/` → `~/.config/btop/`
-- `dotfiles/zsh/.zshrc` + `.p10k.zsh` → `~/`
+- `dotfiles/zsh/.zshrc` → `~/` (merged with existing, not overwritten). `.p10k.zsh` → `~/`
 - `Wallpapers/` → `~/Pictures/Wallpapers/`
 - `dotfiles/clean/clean.sh` → `~/.config/clean/`
 
@@ -66,6 +66,8 @@ chmod +x *.sh
 **AUR:** `noctalia-git` (via paru)
 
 **Setup:**
+- SDDM enabled as display manager
+- `switcheroo-control` service enabled for NVIDIA dGPU switching
 - Session file: `/usr/share/wayland-sessions/hyprland.desktop` → "Hyprland (Noctalia)"
 - Polkit fix: `/etc/polkit-1/rules.d/49-networkmanager.rules` — bypasses polkit prompt for NetworkManager actions (fixes Noctalia WiFi D-Bus crash, GitHub issue #3013)
 
@@ -81,7 +83,7 @@ chmod +x *.sh
 
 **Packages:**
 - **Desktop:** `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp yazi neovim btop mpv imv gnome-disk-utility gnome-calculator`
-- **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-5compat pavucontrol`
+- **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol`
 - **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava`
 - **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
 - **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed nautilus-python`
@@ -92,9 +94,8 @@ chmod +x *.sh
 - Desktop file fixes: btop, nvim, yazi → run inside Kitty
 - Neovim AstroNvim config (from `dotfiles/nvim/`)
 - tmux config (from `dotfiles/tmux/`)
-- imv desktop file (image viewer MIME handler)
 - Icon/cursor theme applied via `gsettings`
-- Removes pre-installed CachyOS bloat: micro, meld, cachyos-micro-settings
+- Removes pre-installed CachyOS bloat: micro, alacritty, meld, cachyos-micro-settings
 - Hides unused desktop entries: avahi-discover, bssh, bvnc, qv4l2, qvidcap
 
 ### `firewall.sh`
@@ -102,9 +103,10 @@ chmod +x *.sh
 ```bash
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow 53317/tcp comment 'LocalSend'
-ufw allow 53317/udp comment 'LocalSend'
-ufw enable
+ufw allow 53317/udp
+ufw allow 53317/tcp
+ufw --force enable
+systemctl enable ufw
 ```
 
 ---
@@ -444,7 +446,7 @@ background_alpha=0
 # System cleanup
 ~/.config/clean/clean.sh
 ```
-Cleans: pacman cache, orphans, AUR caches (yay/paru), Flatpak unused runtimes, Go build/module cache, pip cache, npm cache, Cargo registry, mise tarballs, JetBrains cache, temp files, journal logs (>3d), trash, browser caches (Zen/Chromium), mesa/RADV/NVIDIA shader caches, Qt/GTK caches, opencode/zed cache, zsh history, thumbnails.
+Cleans: pacman cache, orphans, AUR caches (yay/paru), Flatpak unused runtimes, Go build/module cache, pip cache, npm cache, Cargo registry, mise tarballs + cache clear, JetBrains cache, temp files, journal logs (>3d), trash, browser caches (Zen/Chromium), mesa/RADV/NVIDIA shader caches, Qt/GTK caches, opencode/zed cache, zsh history, thumbnails.
 
 ---
 
