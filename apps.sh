@@ -47,7 +47,7 @@ install_core_app_support() {
     pacman_install \
         nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp \
         yazi neovim btop mpv imv gnome-disk-utility gnome-calculator \
-        qt6-declarative qt6-svg qt6-multimedia pavucontrol \
+        qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg pavucontrol \
         tesseract tesseract-data-eng imagemagick \
         xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays \
         cava \
