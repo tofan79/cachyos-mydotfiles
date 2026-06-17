@@ -448,19 +448,6 @@ Cleans: pacman cache, orphans, AUR caches (yay/paru), Flatpak unused runtimes, G
 
 ---
 
-## ⚙️ NVIDIA Setup
-
-```
-/etc/modprobe.d/99-nvidia-wayland.conf:
-  options nvidia_drm modeset=1 fbdev=1
-  options nvidia NVreg_AllowOtherGpuClients=1
-
-Device 0: AMD Renoir iGPU (default for desktop)
-Device 1: NVIDIA RTX 3050 (switcherooctl launch -- ...)
-```
-
----
-
 ## 🔌 Polkit Fix (Noctalia WiFi)
 
 `/etc/polkit-1/rules.d/49-networkmanager.rules` — bypasses polkit prompt for NetworkManager actions. Resolves Noctalia Shell D-Bus timeout crash (GitHub issue #3013).
