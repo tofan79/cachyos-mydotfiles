@@ -70,7 +70,7 @@ pacman_install() {
 
 install_packages() {
     log_info "Installing Hyprland-specific packages..."
-    pacman_install hyprland rofi-wayland cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-dkms nvidia-utils lib32-nvidia-utils switcheroo-control
+    pacman_install hyprland rofi-wayland cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-dkms nvidia-utils lib32-nvidia-utils sddm switcheroo-control
     ensure_paru
     aur_install noctalia-git
     log_ok "Packages installed."
@@ -82,6 +82,15 @@ enable_switcheroo() {
     else
         sudo systemctl enable --now switcheroo-control
         log_ok "switcheroo-control enabled."
+    fi
+}
+
+enable_sddm() {
+    if systemctl is-enabled sddm &>/dev/null 2>&1; then
+        log_ok "SDDM already enabled."
+    else
+        sudo systemctl enable sddm
+        log_ok "SDDM enabled — next boot will show graphical login."
     fi
 }
 
@@ -160,6 +169,7 @@ main() {
     preflight_checks
     install_packages
     enable_switcheroo
+    enable_sddm
     setup_session_file
     setup_polkit_fix
     copy_dotfiles
