@@ -19,7 +19,7 @@ chmod +x *.sh
 |------|--------|-------------|
 | 1 | `./install.sh` | Core OS: packages, Tela icons, Bibata cursor, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak, Flathub, dotfiles (kitty, gtk, qt, btop), wallpapers |
 | 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + rofi + switcheroo-control + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
-| 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, podman socket, desktop file fixes |
+| 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
 | 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/tcp+udp) |
 
 ---
@@ -29,12 +29,12 @@ chmod +x *.sh
 ### `install.sh`
 
 **Packages:**
-- **Dev:** `base-devel git curl wget rsync cmake meson ninja python python-pip`
+- **Dev:** `base-devel git curl wget rsync cmake meson ninja python python-pip shellcheck openssh`
 - **Display/WM:** `sddm kitty`
 - **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
-- **Fonts:** `ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adobe-source-code-font-pro`
+- **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts`
 - **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme`
-- **Printing:** `cups cups-filters`
+- **GStreamer:** `gst-plugins-base gst-plugins-good`
 - **FS tools:** `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump`
 
 **Setup:**
@@ -62,7 +62,7 @@ chmod +x *.sh
 
 ### `hyprland-noctalia.sh`
 
-**Packages:** `hyprland rofi-wayland cliphist xdg-desktop-portal-hyprland hyprpicker switcheroo-control`  
+**Packages:** `hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control`  
 **AUR:** `noctalia-git` (via paru)
 
 **Setup:**
@@ -80,21 +80,22 @@ chmod +x *.sh
 ### `apps.sh`
 
 **Packages:**
-- **Desktop:** `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp yazi neovim btop mpv imv gnome-disk-utility gnome-calculator file-roller seahorse`
-- **Qt:** `qt6-declarative qt6-svg qt6-multimedia pavucontrol`
-- **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava cups-pk-helper`
-- **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace pipx`
+- **Desktop:** `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp yazi neovim btop mpv imv gnome-disk-utility gnome-calculator`
+- **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-5compat pavucontrol`
+- **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava`
+- **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
 - **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed nautilus-python`
 - **Dev:** `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu`
 
 **Setup:**
-- Podman socket enabled
 - ASUS daemon (`asusd`) enabled
 - Desktop file fixes: btop, nvim, yazi → run inside Kitty
 - Neovim AstroNvim config (from `dotfiles/nvim/`)
 - tmux config (from `dotfiles/tmux/`)
 - imv desktop file (image viewer MIME handler)
 - Icon/cursor theme applied via `gsettings`
+- Removes pre-installed CachyOS bloat: micro, meld, cachyos-micro-settings
+- Hides unused desktop entries: avahi-discover, bssh, bvnc, qv4l2, qvidcap
 
 ### `firewall.sh`
 
@@ -443,7 +444,7 @@ background_alpha=0
 # System cleanup
 ~/.config/clean/clean.sh
 ```
-Cleans: pacman cache, orphans, AUR caches, mise tarballs, JetBrains cache, temp files, journal logs (>3d), trash, browser caches, mesa/RADV/NVIDIA shader caches, Qt/GTK caches, zsh history, thumbnails.
+Cleans: pacman cache, orphans, AUR caches (yay/paru), Flatpak unused runtimes, Go build/module cache, pip cache, npm cache, Cargo registry, mise tarballs, JetBrains cache, temp files, journal logs (>3d), trash, browser caches (Zen/Chromium), mesa/RADV/NVIDIA shader caches, Qt/GTK caches, opencode/zed cache, zsh history, thumbnails.
 
 ---
 
@@ -497,5 +498,3 @@ All workspaces persistent (visible in Noctalia bar when empty).
 - Noctalia regenerates `noctalia.lua` on updates — global variables (`primary`, `surface`, `secondary`, `error`, `on_primary`) must be re-applied
 - Session name: **"Hyprland (Noctalia)"** in SDDM
 - Hanya AUR: `noctalia-git` (via `paru`). Sisanya dari CachyOS/Arch repo (`pacman`)
-- DaVinci Resolve: extract zip → `sudo SKIP_PACKAGE_CHECK=1 ./DaVinci_Resolve_*_Linux.run` → nonaktifkan libs bentrok (`/opt/resolve/libs/`)
-- AUR security scanner: `./scanning.sh` atau one-liner `pacman -Qm | grep -Ff <(curl -s https://raw.githubusercontent.com/lenucksi/aur-malware-check/main/package_list.txt)`
