@@ -116,7 +116,7 @@ copy_dotfiles() {
     local dst="$HOME/.config/mango"
     if [[ -d "$src" ]]; then
         mkdir -p "$dst"
-        cp -r "$src"/* "$dst/" 2>/dev/null || true
+        cp -r "$src"/. "$dst/" 2>/dev/null || true
         log_ok "Noctalia dotfiles copied."
     else
         log_warn "Noctalia dotfiles not found, skipping."

@@ -13,9 +13,9 @@ wl-paste --watch cliphist store &
 
 # Tunggu compositor siap, baru start portal (wlr butuh compositor running)
 sleep 3
-/usr/libexec/xdg-desktop-portal-wlr >/dev/null 2>&1 &
-/usr/libexec/xdg-desktop-portal-gtk >/dev/null 2>&1 &
+/usr/lib/xdg-desktop-portal-hyprland >/dev/null 2>&1 &
+/usr/lib/xdg-desktop-portal-gtk >/dev/null 2>&1 &
 sleep 1
-/usr/libexec/xdg-desktop-portal >/dev/null 2>&1 &
+/usr/lib/xdg-desktop-portal >/dev/null 2>&1 &
 
 wait

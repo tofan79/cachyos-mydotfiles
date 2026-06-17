@@ -44,14 +44,13 @@ alias di='docker images'
 alias dex='docker exec -it'
 alias dlog='docker logs -f'
 
-# ---- openSUSE system ----
-alias update='sudo zypper ref && sudo zypper dup'
-alias install='sudo zypper install'
-alias remove='sudo zypper rm'
-alias search='zypper search'
-alias clean='sudo zypper clean --all'
-alias repos='zypper lr'
-alias cleanfd='~/.config/clean/clean.sh'
+# ---- CachyOS / Arch ----
+alias update='sudo pacman -Syu'
+alias install='sudo pacman -S'
+alias remove='sudo pacman -Rns'
+alias search='pacman -Ss'
+alias aur='paru -S'
+alias clean='~/.config/clean/clean.sh'
 alias jctl="journalctl -p 3 -xb"
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'

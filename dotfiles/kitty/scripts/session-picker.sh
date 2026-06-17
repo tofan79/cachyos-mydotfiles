@@ -6,7 +6,7 @@ session_dir="$HOME/.config/kitty/sessions"
 # Check if fzf is installed
 if ! command -v fzf &> /dev/null; then
     echo "fzf is not installed. Please install it first."
-    echo "On Fedora: sudo dnf install fzf"
+    echo "Install it with: sudo pacman -S fzf"
     read -n 1 -s -r -p "Press any key to exit..."
     exit 1
 fi

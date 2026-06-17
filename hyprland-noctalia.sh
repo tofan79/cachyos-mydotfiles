@@ -70,7 +70,7 @@ pacman_install() {
 
 install_packages() {
     log_info "Installing Hyprland-specific packages..."
-    pacman_install hyprland rofi-wayland cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-dkms nvidia-utils lib32-nvidia-utils sddm switcheroo-control
+    pacman_install hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control
     ensure_paru
     aur_install noctalia-git
     log_ok "Packages installed."
@@ -157,7 +157,7 @@ copy_dotfiles() {
         local dst="$HOME/${config_map[$src_dir]}"
         if [[ -d "$src" ]]; then
             mkdir -p "$dst"
-            cp -r "$src"/* "$dst/" 2>/dev/null || true
+            cp -r "$src"/. "$dst/" 2>/dev/null || true
             log_ok "${src_dir} dotfiles copied."
         else
             log_warn "${src_dir} dotfiles not found, skipping."

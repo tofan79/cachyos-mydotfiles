@@ -2,134 +2,133 @@
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
     "type": "builtin",
-    "source": "opensuse",
+    "source": "CachyOS",
     "padding": {
       "top": 2,
       "right": 6,
-      "left": 2
-    }
+      "left": 2,
+    },
   },
   "modules": [
     "break",
     {
       "type": "custom",
-      "format": "\u001b[90m┌──────────────────────Hardware──────────────────────┐"
+      "format": "\u001b[90m┌──────────────────────Hardware──────────────────────┐",
     },
     {
       "type": "host",
       "key": " PC",
-      "keyColor": "green"
+      "keyColor": "green",
     },
     {
       "type": "cpu",
       "key": "│ ├",
       "showPeCoreCount": true,
-      "keyColor": "green"
+      "keyColor": "green",
     },
     {
       "type": "gpu",
       "key": "│ ├",
       "detectionMethod": "pci",
-      "keyColor": "green"
+      "keyColor": "green",
     },
     {
       "type": "display",
       "key": "│ ├󱄄",
-      "keyColor": "green"
+      "keyColor": "green",
     },
     {
       "type": "disk",
       "key": "│ ├󰋊",
-      "keyColor": "green"
+      "keyColor": "green",
     },
     {
       "type": "memory",
       "key": "│ ├",
-      "keyColor": "green"
+      "keyColor": "green",
     },
     {
       "type": "swap",
       "key": "└ └󰓡",
-      "keyColor": "green"
+      "keyColor": "green",
     },
     {
       "type": "custom",
-      "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+      "format": "\u001b[90m└────────────────────────────────────────────────────┘",
     },
     "break",
     {
       "type": "custom",
-      "format": "\u001b[90m┌──────────────────────Software──────────────────────┐"
+      "format": "\u001b[90m┌──────────────────────Software──────────────────────┐",
     },
     {
       "type": "command",
-      "key": " OS",
+      "key": " OS",
       "keyColor": "blue",
-      "text": ". /etc/os-release && echo \"openSUSE Tumbleweed x86_64 (snapshot $VERSION_ID)\""
+      "text": ". /etc/os-release && echo \"CachyOS x86_64\"",
     },
     {
       "type": "kernel",
       "key": "│ ├",
-      "keyColor": "blue"
+      "keyColor": "blue",
     },
     {
       "type": "wm",
       "key": "│ ├",
-      "keyColor": "blue"
+      "keyColor": "blue",
     },
     {
       "type": "terminal",
       "key": "│ ├",
-      "keyColor": "blue"
+      "keyColor": "blue",
     },
     {
       "type": "packages",
       "key": "│ ├󰏖",
-      "keyColor": "blue"
+      "keyColor": "blue",
     },
     {
       "type": "command",
       "key": "│ ├󰉼",
       "keyColor": "blue",
-      "text": "scheme=$(noctalia msg color-scheme-get 2>/dev/null | awk '{print $2, $3}'); echo \"Noctalia ($scheme)\""
+      "text": "scheme=$(noctalia msg color-scheme-get 2>/dev/null | awk '{print $2, $3}'); echo \"Noctalia ($scheme)\"",
     },
     {
       "type": "command",
       "key": "│ ├󰸌",
       "keyColor": "blue",
-      "text": "scheme=$(noctalia msg color-scheme-get 2>/dev/null | awk '{print $2, $3}'); echo -e \"$scheme \\e[38m●\\e[37m●\\e[36m●\\e[35m●\\e[34m●\\e[33m●\\e[32m●\\e[31m●\""
+      "text": "scheme=$(noctalia msg color-scheme-get 2>/dev/null | awk '{print $2, $3}'); echo -e \"$scheme \\e[38m●\\e[37m●\\e[36m●\\e[35m●\\e[34m●\\e[33m●\\e[32m●\\e[31m●\"",
     },
     {
       "type": "command",
       "key": "└ └",
       "keyColor": "blue",
-      "text": "awk '!/^#/ && /^font_family/ {sub(/^font_family /,\"\"); f=$0} /^font_size/ {s=$2} END {cmd=\"fc-match \\\"\" f \"\\\" -f %{style}\"; cmd | getline style; close(cmd); print f \" (\" s+0 \"pt, \" style \")\"}' /home/mindset/.config/kitty/kitty.conf"
+      "text": "awk '!/^#/ && /^font_family/ {sub(/^font_family /,\"\"); f=$0} /^font_size/ {s=$2} END {cmd=\"fc-match \\\"\" f \"\\\" -f %{style}\"; cmd | getline style; close(cmd); print f \" (\" s+0 \"pt, \" style \")\"}' /home/mindset/.config/kitty/kitty.conf",
     },
     {
       "type": "custom",
-      "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+      "format": "\u001b[90m└────────────────────────────────────────────────────┘",
     },
     "break",
     {
       "type": "custom",
-      "format": "\u001b[90m┌─────────────────────Age / Uptime────────────────────┐"
+      "format": "\u001b[90m┌────────────────────Age / Uptime────────────────────┐",
     },
     {
       "type": "command",
       "key": "󱦟 OS Age",
       "keyColor": "magenta",
-      "text": "echo $(( ($(date +%s) - $(stat -c %W /)) / 86400 )) days"
+      "text": "echo $(( ($(date +%s) - $(stat -c %W /)) / 86400 )) days",
     },
     {
       "type": "uptime",
       "key": "󱫐 Uptime",
-      "keyColor": "magenta"
+      "keyColor": "magenta",
     },
 
     {
       "type": "custom",
-      "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+      "format": "\u001b[90m└────────────────────────────────────────────────────┘",
     },
-    "break"
-  ]
+  ],
 }

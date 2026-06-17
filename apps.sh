@@ -50,8 +50,8 @@ install_core_app_support() {
         qt6-declarative qt6-svg qt6-multimedia pavucontrol \
         tesseract tesseract-data-eng imagemagick \
         xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays \
-        cava cups-pk-helper \
-        ncdu httpie bind whois traceroute mtr socat nmap github-cli strace pipx \
+        cava \
+        ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx \
         telegram-desktop \
         localsend zen-browser-bin asusctl rog-control-center zed nautilus-python \
         ffmpegthumbnailer nautilus-image-converter \
@@ -69,6 +69,7 @@ install_core_app_support() {
         log_ok "ASUS daemon configured."
     fi
 
+    command -v xdg-user-dirs-update &>/dev/null && xdg-user-dirs-update 2>/dev/null || true
     log_ok "Core desktop app support installed."
 }
 
@@ -106,23 +107,6 @@ deploy_tmux_config() {
     log_ok "tmux config deployed."
 }
 
-fix_image_viewer() {
-    local dst="$HOME/.local/share/applications/imv.desktop"
-    [[ -f "$dst" ]] && return 0
-    mkdir -p ~/.local/share/applications
-    cat > "$dst" << 'EOF'
-[Desktop Entry]
-Name=Image Viewer
-Exec=imv %F
-Icon=imv
-Type=Application
-MimeType=image/png;image/jpeg;image/jpg;image/gif;image/bmp;image/webp;image/tiff;image/x-xcf;image/x-portable-pixmap;image/x-xbitmap;
-Terminal=false
-Categories=Graphics;Viewer;
-EOF
-    log_ok "imv desktop file created."
-}
-
 apply_icon_cursor_settings() {
     command -v gsettings &>/dev/null || { log_warn "gsettings not available."; return 0; }
 
@@ -147,7 +131,6 @@ main() {
     fix_terminal_desktop
     deploy_nvim_config
     deploy_tmux_config
-    fix_image_viewer
     apply_icon_cursor_settings
     log_ok "CachyOS app support complete. Log: ${LOG_FILE}"
 }

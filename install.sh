@@ -88,8 +88,9 @@ install_packages() {
     pacman_install \
         qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme
 
-    # Printing
-    pacman_install cups cups-filters
+    # GStreamer codecs
+    pacman_install \
+        gst-plugins-base gst-plugins-good
 
     # Filesystem tools
     pacman_install \
@@ -210,7 +211,20 @@ setup_zsh() {
 
     local zsh_dotfiles="${SCRIPT_DIR}/dotfiles/zsh"
     if [[ -d "$zsh_dotfiles" ]]; then
-        [[ -f "$zsh_dotfiles/.zshrc" ]] && cp "$zsh_dotfiles/.zshrc" "$HOME/.zshrc" && log_ok ".zshrc copied"
+        if [[ -f "$HOME/.zshrc" ]]; then
+            # Add fastfetch at the top if not already there
+            if ! grep -q "^fastfetch" "$HOME/.zshrc" 2>/dev/null; then
+                sed -i '1i # ---- fastfetch ----' "$HOME/.zshrc"
+                sed -i '2i fastfetch' "$HOME/.zshrc"
+                log_ok "fastfetch added to .zshrc."
+            fi
+            # Append custom aliases/config without duplicating oh-my-zsh/p10k
+            tail -n +17 "$zsh_dotfiles/.zshrc" >> "$HOME/.zshrc"
+            log_ok ".zshrc custom config appended."
+        else
+            cp "$zsh_dotfiles/.zshrc" "$HOME/.zshrc"
+            log_ok ".zshrc copied."
+        fi
         [[ -f "$zsh_dotfiles/.p10k.zsh" ]] && cp "$zsh_dotfiles/.p10k.zsh" "$HOME/.p10k.zsh" && log_ok ".p10k.zsh copied"
     fi
 
@@ -259,7 +273,7 @@ copy_dotfiles() {
         local dst="$HOME/${config_map[$src_dir]}"
         if [[ -d "$src" ]]; then
             mkdir -p "$dst"
-            cp -r "$src"/* "$dst/" 2>/dev/null || true
+            cp -r "$src"/. "$dst/" 2>/dev/null || true
             log_ok "${src_dir} copied."
         else
             log_warn "${src_dir} not found, skipping."
