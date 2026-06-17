@@ -287,14 +287,24 @@ copy_wallpapers() {
     log_ok "Wallpapers copied."
 }
 
-copy_docker_db() {
-    local src="${SCRIPT_DIR}/docker-db"
-    local dst="$HOME/Projects/docker-db"
-    [[ -d "$src" ]] || { log_warn "docker-db dir not found."; return 0; }
-    mkdir -p "$(dirname "$dst")"
-    [[ -d "$dst" ]] && { log_ok "docker-db already exists."; return 0; }
-    cp -r "$src" "$dst"
-    log_ok "docker-db copied."
+copy_project_dirs() {
+    local -A projects=(
+        ["DaVinci_Resolve"]="DaVinci_Resolve/install_update.txt"
+        ["docker-db"]="docker-db/docker-compose.yml"
+    )
+    for dir in "${!projects[@]}"; do
+        local src="${SCRIPT_DIR}/${dir}"
+        local dst="$HOME/Projects/${dir}"
+        local marker="${projects[$dir]}"
+        [[ -d "$src" ]] || { log_warn "${dir} dir not found, skipping."; continue; }
+        mkdir -p "$(dirname "$dst")"
+        if [[ -f "$dst/$marker" ]]; then
+            log_ok "${dir} already exists."
+        else
+            cp -r "$src" "$dst"
+            log_ok "${dir} copied."
+        fi
+    done
 }
 
 main() {
@@ -309,7 +319,7 @@ main() {
     setup_opencode
     copy_dotfiles
     copy_wallpapers
-    copy_docker_db
+    copy_project_dirs
     echo ""
     log_ok "Setup complete."
     log_info "Log saved to: ${LOG_FILE}"

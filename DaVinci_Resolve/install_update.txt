@@ -1,0 +1,16 @@
+=== Install / Update DaVinci Resolve (openSUSE Tumbleweed) ===
+
+1. Unzip
+   cd ~/Downloads/Compressed
+   unzip DaVinci_Resolve_*_Linux.zip
+
+2. Install
+   sudo SKIP_PACKAGE_CHECK=1 ./DaVinci_Resolve_*_Linux.run
+
+3. Fix libs (bentrok dengan sistem)
+   cd /opt/resolve/libs
+   sudo mkdir -p _disabled
+   sudo mv libgio-2.0.so.0 libglib-2.0.so.0 libgmodule-2.0.so.0 libgobject-2.0.so.0 _disabled/
+
+4. Jalanin
+   /opt/resolve/bin/resolve
