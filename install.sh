@@ -88,9 +88,10 @@ install_packages() {
     pacman_install \
         qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme
 
-    # GStreamer codecs
+    # GStreamer codecs + encoders
     pacman_install \
-        gst-plugins-base gst-plugins-good
+        gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav \
+        x264 x265
 
     # Filesystem tools
     pacman_install \
