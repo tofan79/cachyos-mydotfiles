@@ -38,8 +38,8 @@ ensure_paru() {
     local tmp
     tmp="$(mktemp -d)"
     sudo pacman -S --noconfirm --needed base-devel git || true
-    git clone --depth 1 https://aur.archlinux.org/paru.git "$tmp/paru" 2>/dev/null || { rm -rf "$tmp"; return 1; }
-    (cd "$tmp/paru" && makepkg -si --noconfirm) 2>/dev/null || { rm -rf "$tmp"; return 1; }
+    git clone --depth 1 https://aur.archlinux.org/paru.git "$tmp/paru" || { log_err "Failed to clone paru from AUR."; rm -rf "$tmp"; return 1; }
+    (cd "$tmp/paru" && makepkg -si --noconfirm) || { log_err "makepkg failed for paru."; rm -rf "$tmp"; return 1; }
     rm -rf "$tmp"
     log_ok "paru installed."
 }
@@ -57,16 +57,15 @@ aur_install() {
 }
 
 pacman_install() {
-    local pkgs=("$@") pkg missing=()
+    local pkgs=("$@") pkg
     for pkg in "${pkgs[@]}"; do
         if pacman -Q "$pkg" &>/dev/null || command -v "$pkg" &>/dev/null; then
             log_ok "${pkg} already installed."
             continue
         fi
-        missing+=("$pkg")
+        log_info "Installing ${pkg}..."
+        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
-    [[ ${#missing[@]} -eq 0 ]] && return 0
-    sudo pacman -S --noconfirm "${missing[@]}" || log_warn "Some packages failed."
 }
 
 install_packages() {

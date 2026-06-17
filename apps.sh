@@ -30,16 +30,15 @@ preflight_checks() {
 }
 
 pacman_install() {
-    local pkgs=("$@") pkg missing=()
+    local pkgs=("$@") pkg
     for pkg in "${pkgs[@]}"; do
         if pacman -Q "$pkg" &>/dev/null || command -v "$pkg" &>/dev/null; then
             log_ok "${pkg} already installed."
             continue
         fi
-        missing+=("$pkg")
+        log_info "Installing ${pkg}..."
+        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
-    [[ ${#missing[@]} -eq 0 ]] && return 0
-    sudo pacman -S --noconfirm "${missing[@]}" || log_warn "Some packages failed."
 }
 
 install_core_app_support() {

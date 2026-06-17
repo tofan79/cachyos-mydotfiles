@@ -46,20 +46,15 @@ preflight_checks() {
 }
 
 pacman_install() {
-    local pkgs=("$@") pkg missing=()
+    local pkgs=("$@") pkg
     for pkg in "${pkgs[@]}"; do
         if pacman -Q "$pkg" &>/dev/null || command -v "$pkg" &>/dev/null; then
             log_ok "${pkg} already installed."
             continue
         fi
-        missing+=("$pkg")
+        log_info "Installing ${pkg}..."
+        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
-    [[ ${#missing[@]} -eq 0 ]] && return 0
-    log_info "Installing: ${missing[*]}"
-    sudo pacman -S --noconfirm "${missing[@]}" || {
-        log_warn "Some packages failed to install."
-        return 1
-    }
 }
 
 install_packages() {
@@ -222,7 +217,7 @@ setup_zsh() {
     local zsh_path
     zsh_path="$(command -v zsh)"
     if [[ "$SHELL" != "$zsh_path" ]]; then
-        sudo chsh -s "$zsh_path" "$USER" 2>/dev/null || log_warn "chsh failed"
+        sudo chsh -s "$zsh_path" "$(whoami)" 2>/dev/null || log_warn "chsh failed"
     fi
     log_ok "Zsh configured."
 }
