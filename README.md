@@ -498,3 +498,4 @@ All workspaces persistent (visible in Noctalia bar when empty).
 - Session name: **"Hyprland (Noctalia)"** in SDDM
 - Hanya AUR: `noctalia-git` (via `paru`). Sisanya dari CachyOS/Arch repo (`pacman`)
 - DaVinci Resolve: extract zip → `sudo SKIP_PACKAGE_CHECK=1 ./DaVinci_Resolve_*_Linux.run` → nonaktifkan libs bentrok (`/opt/resolve/libs/`)
+- AUR security scanner: `./scanning.sh` atau one-liner `pacman -Qm | grep -Ff <(curl -s https://raw.githubusercontent.com/lenucksi/aur-malware-check/main/package_list.txt)`
