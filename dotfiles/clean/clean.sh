@@ -11,7 +11,9 @@ sudo rm -rf /var/cache/pacman/pkg/* 2>/dev/null && echo "  ✔ All packages wipe
 echo -e "\n[2/9] Orphan packages..."
 sudo pacman -Rns "$(pacman -Qtdq 2>/dev/null)" --noconfirm 2>/dev/null && echo "  ✔ Orphans removed" || echo "  ✔ No orphans"
 
-echo -e "\n[3/9] AUR + dev caches..."
+echo -e "\n[3/9] AUR + Chaotic-AUR + dev caches..."
+[[ -f ~/.cache/chaotic-mirrorlist ]] && rm -rf ~/.cache/chaotic-mirrorlist && echo "  ✔ Chaotic-AUR cache cleaned"
+sudo pacman-key --populate chaotic 2>/dev/null && echo "  ✔ Chaotic-AUR key refreshed"
 [[ -d ~/.cache/yay ]] && rm -rf ~/.cache/yay/* && echo "  ✔ yay cache cleaned"
 [[ -d ~/.cache/paru ]] && rm -rf ~/.cache/paru/* && echo "  ✔ paru cache cleaned"
 paru -Scc --noconfirm 2>/dev/null && echo "  ✔ paru AUR cache cleaned"
