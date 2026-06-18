@@ -3,4 +3,4 @@ bars = 20
 sensitivity = 150
 
 [color]
-theme = noctalia
+theme = "noctalia"
