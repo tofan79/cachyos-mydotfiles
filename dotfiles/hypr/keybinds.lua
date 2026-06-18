@@ -77,7 +77,7 @@ case "$CUR" in
   dwindle)   NXT=scrolling ;;
   scrolling) NXT=dwindle ;;
 esac
-hyprctl eval "hl.workspace_rule({ workspace = $ID, layout = \"$NXT\" })"
+hyprctl keyword workspace:$ID layout:$NXT
 notify-send "Layout: $NXT"
 ']]), { description = "Cycle layout" })
 hl.bind(M .. " + CTRL + K", hl.dsp.layout("swapsplit"), { description = "Swap split" })

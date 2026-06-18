@@ -18,11 +18,11 @@ hl.gesture({
 })
 
 -- Fullscreen on  
-hl.gesture({ fingers = 4, direction = "pinchout", action = function ()
+hl.gesture({ fingers = 4, direction = "out", action = function ()
     hl.dispatch(hl.dsp.window.fullscreen({ action="set" })) 
 end})
 
 -- Fullscreen off  
-hl.gesture({ fingers = 4, direction = "pinchin", action = function ()
+hl.gesture({ fingers = 4, direction = "in", action = function ()
     hl.dispatch(hl.dsp.window.fullscreen({ action="unset" })) 
 end})
