@@ -181,7 +181,7 @@ hl.bind("CTRL + SHIFT + right", hl.dsp.window.move({ x = 50, y = 0, relative = t
 -- ───────────────────────────────────────────
 hl.bind(M .. " + Return", hl.dsp.exec_cmd("kitty"), { description = "Terminal" })
 hl.bind(M .. " + E", hl.dsp.exec_cmd("nautilus"), { description = "File manager" })
-hl.bind(M .. " + B", hl.dsp.exec_cmd("zen"), { description = "Browser (Zen)" })
+hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser (Zen)" })
 hl.bind(M .. " + N", hl.dsp.exec_cmd("zed"), { description = "Editor (Zed)" })
 hl.bind(M .. " + H", hl.dsp.exec_cmd("localsend"), { description = "LocalSend" })
 hl.bind(M .. " + T", hl.dsp.exec_cmd("Telegram"), { description = "Telegram" })
