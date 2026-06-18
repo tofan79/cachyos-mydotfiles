@@ -11,6 +11,7 @@ hl.bind(M .. " + CTRL + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "
 hl.bind(M .. " + Q", hl.dsp.window.close(), { description = "Close active window" })
 hl.bind(M .. " + CTRL + M", hl.dsp.exit(), { description = "Exit Hyprland" })
 hl.bind(M .. " + Escape", hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Session menu" })
+hl.bind(M .. " + SHIFT + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
 hl.bind(M .. " + slash", hl.dsp.exec_cmd("kitty -T btop -e btop"), { description = "System monitor (btop)" })
 
 -- ───────────────────────────────────────────
@@ -71,14 +72,14 @@ hl.bind(M .. " + SHIFT + CTRL + S", hl.dsp.window.move({ workspace = "previous" 
 -- Layout Controls
 -- ───────────────────────────────────────────
 hl.bind(M .. " + CTRL + L", hl.dsp.exec_cmd([[sh -c '
-ID=$(hyprctl activeworkspace -j | jq -r .id)
-CUR=$(hyprctl activeworkspace -j | jq -r ".tiledLayout // \"dwindle\"")
-case "$CUR" in
-  dwindle)   NXT=scrolling ;;
-  scrolling) NXT=dwindle ;;
+ACTIVE_WORKSPACE=$(hyprctl activeworkspace -j | jq -r ".id")
+CURRENT_LAYOUT=$(hyprctl activeworkspace -j | jq -r ".tiledLayout")
+case "$CURRENT_LAYOUT" in
+  dwindle) NEW_LAYOUT=scrolling ;;
+  *) NEW_LAYOUT=dwindle ;;
 esac
-hyprctl keyword workspace:$ID layout:$NXT
-notify-send "Layout: $NXT"
+hyprctl eval "hl.workspace_rule({ workspace = \"$ACTIVE_WORKSPACE\", layout = \"$NEW_LAYOUT\" })"
+notify-send -u low "󱂬    Workspace layout set to $NEW_LAYOUT"
 ']]), { description = "Cycle layout" })
 hl.bind(M .. " + CTRL + K", hl.dsp.layout("swapsplit"), { description = "Swap split" })
 hl.bind(M .. " + CTRL + J", hl.dsp.layout("togglesplit"), { description = "Toggle split" })
