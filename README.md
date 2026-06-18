@@ -92,7 +92,7 @@ chmod +x *.sh
 - **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol`
 - **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava`
 - **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
-- **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition`
+- **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition zoom`
 - **Gaming:** `gamemode lib32-gamemode`
 - **Dev:** `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu`
 
@@ -343,8 +343,8 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 ## 🎨 Presets
 
 ### Animations (`~/.config/hypr/animations/*.lua`)
-10 presets switchable via `SUPER + CTRL + A` (rofi):
-`animations-classic`, `animations-dynamic`, `animations-end4`, `animations-fast`, `animations-high`, `animations-moving`, `animations-smooth`, `default`, `disabled`, `standard`
+13 presets switchable via `SUPER + CTRL + A` (rofi):
+`animations-classic`, `animations-dynamic`, `animations-end4`, `animations-fast`, `animations-high`, `animations-moving`, `animations-smooth`, `default`, `disabled`, `metamorphosis`, `slide`, `standard`, `wipe`
 
 Default: `animations-moving.lua` — bezier curves (overshot, smoothOut, smoothIn), speed 3-6
 
