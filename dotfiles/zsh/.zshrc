@@ -69,6 +69,6 @@ export FZF_CTRL_T_OPTS='--height 40% --layout=reverse --border'
 eval "$(~/.local/bin/mise activate zsh)"
 
 # ---- opencode ----
-export PATH=/home/mindset/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # fastfetch ada di atas (sebelum instant prompt)
