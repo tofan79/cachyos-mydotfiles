@@ -54,6 +54,7 @@ install_core_app_support() {
         ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx \
         telegram-desktop \
         localsend zen-browser-bin asusctl rog-control-center zed \
+        firefoxpwa \
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat \
         ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
