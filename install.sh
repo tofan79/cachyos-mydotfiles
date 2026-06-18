@@ -191,8 +191,12 @@ setup_zsh() {
                 log_ok "fastfetch added to .zshrc."
             fi
             # Append custom aliases/config without duplicating oh-my-zsh/p10k
-            tail -n +17 "$zsh_dotfiles/.zshrc" >> "$HOME/.zshrc"
-            log_ok ".zshrc custom config appended."
+            if ! grep -q "# ---- Eza ----" "$HOME/.zshrc" 2>/dev/null; then
+                tail -n +17 "$zsh_dotfiles/.zshrc" >> "$HOME/.zshrc"
+                log_ok ".zshrc custom config appended."
+            else
+                log_ok ".zshrc custom config already present."
+            fi
         else
             cp "$zsh_dotfiles/.zshrc" "$HOME/.zshrc"
             log_ok ".zshrc copied."
