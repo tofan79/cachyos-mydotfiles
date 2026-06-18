@@ -183,24 +183,8 @@ setup_zsh() {
 
     local zsh_dotfiles="${SCRIPT_DIR}/dotfiles/zsh"
     if [[ -d "$zsh_dotfiles" ]]; then
-        if [[ -f "$HOME/.zshrc" ]]; then
-            # Add fastfetch at the top if not already there
-            if ! grep -q "^fastfetch" "$HOME/.zshrc" 2>/dev/null; then
-                sed -i '1i # ---- fastfetch ----' "$HOME/.zshrc"
-                sed -i '2i fastfetch' "$HOME/.zshrc"
-                log_ok "fastfetch added to .zshrc."
-            fi
-            # Append custom aliases/config without duplicating oh-my-zsh/p10k
-            if ! grep -q "# ---- Eza ----" "$HOME/.zshrc" 2>/dev/null; then
-                tail -n +17 "$zsh_dotfiles/.zshrc" >> "$HOME/.zshrc"
-                log_ok ".zshrc custom config appended."
-            else
-                log_ok ".zshrc custom config already present."
-            fi
-        else
-            cp "$zsh_dotfiles/.zshrc" "$HOME/.zshrc"
-            log_ok ".zshrc copied."
-        fi
+        [[ -f "$HOME/.zshrc" ]] && cp "$HOME/.zshrc" "$HOME/.zshrc.bak" 2>/dev/null
+        cp "$zsh_dotfiles/.zshrc" "$HOME/.zshrc" && log_ok ".zshrc copied (overwrite)."
         [[ -f "$zsh_dotfiles/.p10k.zsh" ]] && cp "$zsh_dotfiles/.p10k.zsh" "$HOME/.p10k.zsh" && log_ok ".p10k.zsh copied"
     fi
 
