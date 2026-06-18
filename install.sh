@@ -82,11 +82,12 @@ install_packages() {
     # Fonts
     pacman_install \
         ttf-jetbrains-mono noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts \
-        ttf-jetbrains-mono-nerd
+        ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k
 
     # GTK/Qt themes & libs
     pacman_install \
-        qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme
+        qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme \
+        bibata-cursor-theme tela-icon-theme
 
     # GStreamer codecs + encoders
     pacman_install \
@@ -119,50 +120,12 @@ setup_flatpak() {
     log_ok "Flatpak apps installed."
 }
 
-install_icon_themes() {
-    log_info "Installing Tela icon theme..."
-    if ls ~/.local/share/icons/Tela* &>/dev/null 2>&1; then
-        log_ok "Tela already installed."
-    else
-        local temp_dir="/tmp/tela-icon-theme"
-        rm -rf "$temp_dir"
-        if git clone --depth 1 https://github.com/vinceliuice/Tela-icon-theme.git "$temp_dir"; then
-            (cd "$temp_dir" && ./install.sh -a) || log_warn "Tela install script failed"
-            rm -rf "$temp_dir"
-            log_ok "Tela icon theme installed."
-        else
-            log_warn "Failed to clone Tela. Skipping."
-        fi
-    fi
-    apply_icon_cursor_settings
-}
-
-apply_icon_cursor_settings() {
+apply_icon_settings() {
     command -v gsettings &>/dev/null || { log_warn "gsettings not available."; return 0; }
     log_info "Setting Tela-nord-dark as default icon theme..."
     gsettings set org.gnome.desktop.interface icon-theme "Tela-nord-dark" 2>/dev/null && log_ok "Tela-nord-dark set." || log_warn "Failed to set Tela-nord-dark"
     log_info "Setting Bibata-Modern-Ice as cursor..."
     gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice" 2>/dev/null && log_ok "Bibata cursor set." || log_warn "Failed to set Bibata cursor"
-}
-
-install_bibata_cursor() {
-    log_info "Installing Bibata cursor..."
-    if ls ~/.local/share/icons/Bibata* &>/dev/null 2>&1 || ls /usr/share/icons/Bibata* &>/dev/null 2>&1; then
-        log_ok "Bibata cursor already installed."; return 0
-    fi
-    local url="https://github.com/ful1e5/Bibata_Cursor/releases/download/v2.0.7/Bibata-Modern-Ice.tar.xz"
-    local tmp
-    tmp="$(mktemp -d)"
-    if curl -fsSL "$url" -o "$tmp/bibata.tar.xz"; then
-        tar -xf "$tmp/bibata.tar.xz" -C "$tmp"
-        local icons_dir="$HOME/.local/share/icons"
-        mkdir -p "$icons_dir"
-        cp -r "$tmp/Bibata-Modern-Ice" "$icons_dir/"
-        log_ok "Bibata cursor installed."
-    else
-        log_warn "Failed to download Bibata cursor."
-    fi
-    rm -rf "$tmp"
 }
 
 setup_nerd_fonts() {
@@ -346,9 +309,8 @@ main() {
     setup_chaotic_aur
     install_packages
     setup_flatpak
-    install_icon_themes
-    install_bibata_cursor
     setup_nerd_fonts
+    apply_icon_settings
     set_kitty_default
     setup_mise
     setup_opencode
