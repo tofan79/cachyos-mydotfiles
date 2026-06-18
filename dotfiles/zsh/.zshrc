@@ -67,8 +67,6 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_CTRL_R_OPTS='--height 40% --layout=reverse --border'
 export FZF_CTRL_T_OPTS='--height 40% --layout=reverse --border'
 
-# ---- Powerlevel10k ----
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ---- mise ----
 eval "$(~/.local/bin/mise activate zsh)"
