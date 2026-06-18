@@ -33,7 +33,7 @@ chmod +x *.sh
 - **Display/WM:** `kitty`
 - **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
 - **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts otf-comicshanns-nerd ttf-ms-fonts`
-- **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme bibata-cursor-theme tela-icon-theme`
+- **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme nordic-theme bibata-cursor-theme tela-icon-theme`
 - **GStreamer:** `gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav x264 x265`
 - **FS tools:** `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump`
 
@@ -90,7 +90,7 @@ chmod +x *.sh
 - **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol`
 - **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava`
 - **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
-- **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed nautilus-python protonplus ab-download-manager faugus-launcher`
+- **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition`
 - **Gaming:** `gamemode lib32-gamemode`
 - **Dev:** `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu`
 
@@ -411,7 +411,7 @@ background_alpha=0
 |-------|-------|
 | **Icons** | `Tela-nord-dark` (GTK + gsettings) |
 | **Cursor** | `Bibata-Modern-Ice` 24px |
-| **GTK** | Adwaita theme |
+| **GTK** | Nordic theme |
 | **Qt5/Qt6** | Fusion style + Noctalia custom palette |
 | **Terminal** | Kitty + ComicShannsMono Nerd Font 11pt + Noctalia theme |
 | **Shell** | Zsh + Powerlevel10k (rainbow style) |

@@ -53,10 +53,11 @@ install_core_app_support() {
         cava \
         ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx \
         telegram-desktop \
-        localsend zen-browser-bin asusctl rog-control-center zed nautilus-python \
+        localsend zen-browser-bin asusctl rog-control-center zed \
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat \
-        ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus
+        ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
+        android-studio intellij-idea-community-edition
 
     if command -v asusctl &>/dev/null; then
         log_info "Configuring ASUS daemon..."

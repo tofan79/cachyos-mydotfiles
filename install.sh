@@ -87,7 +87,8 @@ install_packages() {
 
     # GTK/Qt themes & libs
     pacman_install \
-        qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme \
+        qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme \
+        nordic-theme \
         bibata-cursor-theme tela-icon-theme
 
     # GStreamer codecs + encoders
