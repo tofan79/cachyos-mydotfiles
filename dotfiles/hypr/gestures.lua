@@ -2,13 +2,19 @@
 -- Gestures
 -------------------------------------------------------
 
--- Workspaces
+-- Workspaces (3 fingers)
 hl.gesture({
     fingers = 3,
     direction = "vertical",
     action = "workspace"
 })
 
+-- Workspaces (4 fingers)
+hl.gesture({
+    fingers = 4,
+    direction = "vertical",
+    action = "workspace"
+})
 -- Scrolling
 hl.gesture({
     fingers = 3,
@@ -18,11 +24,11 @@ hl.gesture({
 })
 
 -- Fullscreen on  
-hl.gesture({ fingers = 4, direction = "out", action = function ()
+hl.gesture({ fingers = 4, direction = "pinchout", action = function ()
     hl.dispatch(hl.dsp.window.fullscreen({ action="set" })) 
 end})
 
 -- Fullscreen off  
-hl.gesture({ fingers = 4, direction = "in", action = function ()
+hl.gesture({ fingers = 4, direction = "pinchin", action = function ()
     hl.dispatch(hl.dsp.window.fullscreen({ action="unset" })) 
 end})
