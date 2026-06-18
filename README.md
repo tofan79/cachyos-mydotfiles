@@ -451,7 +451,7 @@ background_alpha=0
 # System cleanup
 ~/.config/clean/clean.sh
 ```
-Cleans: pacman cache, orphans, AUR caches (yay/paru), Flatpak unused runtimes, Go build/module cache, pip cache, npm cache, Cargo registry, mise tarballs + cache clear, JetBrains cache, temp files, journal logs (>3d), trash, browser caches (Zen/Chromium), mesa/RADV/NVIDIA shader caches, Qt/GTK caches, opencode/zed cache, zsh history, thumbnails.
+Cleans: pacman cache, orphans, AUR caches (yay/paru), Flatpak unused runtimes, Go build/module cache, pip cache, npm cache, Cargo registry, mise tarballs + cache clear, temp files, journal logs (>3d), trash, browser caches (Zen/Chromium), mesa/RADV/NVIDIA shader caches, Qt/GTK caches, opencode/zed cache, zsh history, thumbnails.
 
 ---
 
