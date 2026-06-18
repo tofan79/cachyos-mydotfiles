@@ -82,7 +82,8 @@ install_packages() {
     # Fonts
     pacman_install \
         ttf-jetbrains-mono noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts \
-        ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k
+        ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k \
+        otf-comicshanns-nerd
 
     # GTK/Qt themes & libs
     pacman_install \
