@@ -56,7 +56,7 @@ install_core_app_support() {
         localsend zen-browser-bin asusctl rog-control-center zed nautilus-python \
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat \
-        ab-download-manager
+        ab-download-manager gamemode lib32-gamemode
 
     if command -v asusctl &>/dev/null; then
         log_info "Configuring ASUS daemon..."
