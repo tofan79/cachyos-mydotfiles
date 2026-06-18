@@ -3,7 +3,7 @@
 Personal dotfiles for **ASUS TUF Gaming A15 FA506ICB** — AMD Renoir + NVIDIA RTX 3050.
 
 Dual setup:
-- **Current:** Hyprland 0.55.4 (Lua API) + Noctalia Shell v5
+- **Current:** Hyprland (git, Lua API) + Noctalia Shell v5
 - **Legacy:** MangoWM + Noctalia (`mango-noctalia.sh`)
 
 ---
@@ -17,7 +17,7 @@ chmod +x *.sh
 
 | Step | Script | What it does |
 |------|--------|-------------|
-| 1 | `./install.sh` | Core OS: packages, Tela icons, Bibata cursor, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak, Flathub, dotfiles (kitty, gtk, qt, btop), wallpapers |
+| 1 | `./install.sh` | Core OS (Chaotic-AUR + packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for kitty/gtk/qt/btop/zsh, wallpapers) |
 | 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + SDDM + rofi + switcheroo-control (enabled) + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
 | 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
 | 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
@@ -32,18 +32,22 @@ chmod +x *.sh
 - **Dev:** `base-devel git curl wget rsync libva-utils cmake meson ninja python python-pip shellcheck openssh flatpak`
 - **Display/WM:** `kitty`
 - **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
-- **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts`
-- **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme`
+- **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts otf-comicshanns-nerd ttf-ms-fonts`
+- **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme adw-gtk-theme bibata-cursor-theme tela-icon-theme`
 - **GStreamer:** `gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav x264 x265`
 - **FS tools:** `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump`
 
 **Setup:**
+- Chaotic-AUR key, keyring, mirrorlist, added to `/etc/pacman.conf`
 - Flatpak + Flathub remote + OBS Studio (+ PipeWire plugin) + Karere
-- Tela icon theme (`vinceliuice/Tela-icon-theme` → `Tela-nord-dark`)
-- Bibata cursor (`Bibata-Modern-Ice` v2.0.7)
-- JetBrainsMono + FiraCode Nerd Fonts
+- Tela icon theme (`tela-icon-theme` from Chaotic-AUR → `Tela-nord-dark`)
+- Bibata cursor (`bibata-cursor-theme` from Chaotic-AUR → `Bibata-Modern-Ice`)
+- JetBrainsMono + FiraCode Nerd Fonts (manual download)
 - Oh My Zsh + Powerlevel10k + zsh-autosuggestions + zsh-syntax-highlighting + zsh-completions
-- `chsh` to zsh
+- `.zshrc` merges with existing (fastfetch prepended, custom aliases appended); `.p10k.zsh` overwrites
+- `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu && flatpak update -y`)
+- fastfetch config: CachyOS logo + Arch icon
+- Kitty font: `ComicShannsMono Nerd Font` 11pt
 - mise (runtime manager)
 - opencode
 - Kitty as default terminal (`xdg-mime`)
@@ -62,7 +66,7 @@ chmod +x *.sh
 
 ### `hyprland-noctalia.sh`
 
-**Packages:** `hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control`  
+**Packages:** `hyprland-git rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control`  
 **AUR:** `noctalia-git` (via paru)
 
 **Setup:**
@@ -86,7 +90,8 @@ chmod +x *.sh
 - **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol`
 - **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava`
 - **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
-- **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed nautilus-python`
+- **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed nautilus-python protonplus ab-download-manager faugus-launcher`
+- **Gaming:** `gamemode lib32-gamemode`
 - **Dev:** `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu`
 
 **Setup:**
@@ -408,7 +413,7 @@ background_alpha=0
 | **Cursor** | `Bibata-Modern-Ice` 24px |
 | **GTK** | Adwaita theme |
 | **Qt5/Qt6** | Fusion style + Noctalia custom palette |
-| **Terminal** | Kitty + JetBrainsMono Nerd Font 11pt + Noctalia theme |
+| **Terminal** | Kitty + ComicShannsMono Nerd Font 11pt + Noctalia theme |
 | **Shell** | Zsh + Powerlevel10k (rainbow style) |
 | **Monitor** | Btop + Noctalia theme |
 | **Rofi** | Noctalia theme, centered, rounded 24px, JetBrainsMono Nerd Font |
@@ -425,7 +430,7 @@ background_alpha=0
 | `fastfetch/` | `hyprland-noctalia.sh` | Custom Omarchy layout: Hardware (host/cpu/gpu/display/disk/mem/swap), Software (os/kernel/wm/terminal/packages/noctalia scheme/font), Age/Uptime |
 | `MangoHud/` | `hyprland-noctalia.sh` | Gaming overlay config |
 | `nvim/` | `hyprland-noctalia.sh` + `apps.sh` | AstroNvim v6: Lazy.nvim, Mason, Treesitter, LSP, none-ls, custom plugins |
-| `kitty/` | `install.sh` | JetBrainsMono Nerd Font 11pt, Noctalia theme, padding 14, blur 0.9, powerline tabs, splits/stack layouts |
+| `kitty/` | `install.sh` | ComicShannsMono Nerd Font 11pt, Noctalia theme, padding 14, blur 0.9, powerline tabs, splits/stack layouts |
 | `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Adwaita` |
 | `gtk-4.0/` | `install.sh` | `Tela-nord-dark` |
 | `qt5ct/` | `install.sh` | Fusion style + Noctalia custom palette |
@@ -486,4 +491,4 @@ All workspaces persistent (visible in Noctalia bar when empty).
 - `hyprctl eval "hl.config({...})"` — cara bener untuk runtime config di Hyprland Lua API
 - Noctalia regenerates `noctalia.lua` on updates — global variables (`primary`, `surface`, `secondary`, `error`, `on_primary`) must be re-applied
 - Session name: **"Hyprland (Noctalia)"** in SDDM
-- Hanya AUR: `noctalia-git` (via `paru`). Sisanya dari CachyOS/Arch repo (`pacman`)
+- **Sumber package:** CachyOS official + Chaotic-AUR (binary) + AUR hanya `noctalia-git` (via `paru`, karena `noctalia-shell` di Chaotic terlalu tua)
