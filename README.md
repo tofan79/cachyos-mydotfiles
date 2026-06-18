@@ -61,6 +61,7 @@ chmod +x *.sh
 - `dotfiles/qt6ct/` → `~/.config/qt6ct/`
 - `dotfiles/btop/` → `~/.config/btop/`
 - `dotfiles/cava/` → `~/.config/cava/`
+- `dotfiles/yazi/` → `~/.config/yazi/`
 - `dotfiles/zsh/.zshrc` → `~/` (merged with existing, not overwritten). `.p10k.zsh` → `~/`
 - `Wallpapers/` → `~/Pictures/Wallpapers/`
 - `dotfiles/clean/clean.sh` → `~/.config/clean/`
@@ -438,6 +439,7 @@ background_alpha=0
 | `qt6ct/` | `install.sh` | Fusion style + Noctalia custom palette |
 | `btop/` | `install.sh` | `color_theme = "noctalia"` + noctalia.theme |
 | `cava/` | `install.sh` | Noctalia theme, minimal config (bars, sensitivity) |
+| `yazi/` | `install.sh` | Flavor set to noctalia |
 | `zsh/` | `install.sh` | `.zshrc` (fastfetch, P10k, zoxide, fzf, mise, opencode), `.p10k.zsh` |
 | `clean/` | `install.sh` | `clean.sh` — system cleanup script |
 | `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Kitty integration, minimal blue theme |
