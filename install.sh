@@ -317,6 +317,7 @@ main() {
     setup_nerd_fonts
     apply_icon_settings
     set_kitty_default
+    setup_zsh
     setup_mise
     setup_opencode
     copy_dotfiles
