@@ -238,6 +238,7 @@ copy_dotfiles() {
         ["qt5ct"]=".config/qt5ct"
         ["qt6ct"]=".config/qt6ct"
         ["btop"]=".config/btop"
+        ["cava"]=".config/cava"
     )
 
     for src_dir in "${!config_map[@]}"; do

@@ -17,7 +17,7 @@ chmod +x *.sh
 
 | Step | Script | What it does |
 |------|--------|-------------|
-| 1 | `./install.sh` | Core OS (Chaotic-AUR + packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for kitty/gtk/qt/btop/zsh, wallpapers) |
+| 1 | `./install.sh` | Core OS (Chaotic-AUR + packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for kitty/gtk/qt/btop/cava/zsh, wallpapers) |
 | 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + SDDM + rofi + switcheroo-control (enabled) + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
 | 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
 | 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
@@ -60,6 +60,7 @@ chmod +x *.sh
 - `dotfiles/qt5ct/` → `~/.config/qt5ct/`
 - `dotfiles/qt6ct/` → `~/.config/qt6ct/`
 - `dotfiles/btop/` → `~/.config/btop/`
+- `dotfiles/cava/` → `~/.config/cava/`
 - `dotfiles/zsh/.zshrc` → `~/` (merged with existing, not overwritten). `.p10k.zsh` → `~/`
 - `Wallpapers/` → `~/Pictures/Wallpapers/`
 - `dotfiles/clean/clean.sh` → `~/.config/clean/`
@@ -436,6 +437,7 @@ background_alpha=0
 | `qt5ct/` | `install.sh` | Fusion style + Noctalia custom palette |
 | `qt6ct/` | `install.sh` | Fusion style + Noctalia custom palette |
 | `btop/` | `install.sh` | `color_theme = "noctalia"` + noctalia.theme |
+| `cava/` | `install.sh` | Noctalia theme, minimal config (bars, sensitivity) |
 | `zsh/` | `install.sh` | `.zshrc` (fastfetch, P10k, zoxide, fzf, mise, opencode), `.p10k.zsh` |
 | `clean/` | `install.sh` | `clean.sh` — system cleanup script |
 | `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Kitty integration, minimal blue theme |
