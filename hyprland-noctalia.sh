@@ -68,24 +68,8 @@ pacman_install() {
     done
 }
 
-setup_chaotic_aur() {
-    pacman -Qi chaotic-keyring &>/dev/null && return 0
-    log_info "Setting up Chaotic-AUR..."
-    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com 2>/dev/null || true
-    sudo pacman-key --lsign-key 3056513887B78AEB 2>/dev/null || true
-    sudo pacman -U --noconfirm \
-        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
-        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' 2>/dev/null
-    if ! grep -q '\[chaotic-aur\]' /etc/pacman.conf 2>/dev/null; then
-        echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf >/dev/null
-    fi
-    sudo pacman -Sy --noconfirm 2>/dev/null
-    log_ok "Chaotic-AUR configured."
-}
-
 install_packages() {
     log_info "Installing Hyprland-specific packages..."
-    setup_chaotic_aur
     pacman_install hyprland-git rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control
     ensure_paru
     aur_install noctalia-git
