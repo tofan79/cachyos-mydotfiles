@@ -25,3 +25,6 @@ end
 
 require "lazy_setup"
 require "polish"
+
+local ok, matugen = pcall(require, 'matugen')
+if ok then matugen.setup() end
