@@ -53,7 +53,7 @@ install_core_app_support() {
     log_info "Installing desktop app support..."
 
     pacman_install \
-        nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp \
+        nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp nautilus-open-any-terminal \
         yazi neovim btop mpv imv gnome-disk-utility gnome-calculator \
         qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg pavucontrol \
         tesseract tesseract-data-eng imagemagick \
@@ -90,6 +90,10 @@ install_core_app_support() {
     fi
 
     command -v xdg-user-dirs-update &>/dev/null && xdg-user-dirs-update 2>/dev/null || true
+
+    if command -v nautilus &>/dev/null; then
+        gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal foot 2>/dev/null || true
+    fi
     log_ok "Core desktop app support installed."
 }
 

@@ -90,7 +90,7 @@ chmod +x *.sh
 ### `apps.sh`
 
 **Packages:**
-- **Desktop:** `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp yazi neovim btop mpv mpv-mpris imv evince gnome-disk-utility gnome-calculator`
+- **Desktop:** `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp nautilus-open-any-terminal yazi neovim btop mpv mpv-mpris imv evince gnome-disk-utility gnome-calculator`
 - **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol`
 - **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava satty tldr gum lazydocker gpu-screen-recorder dua-cli bat eza fd`
 - **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
@@ -102,6 +102,7 @@ chmod +x *.sh
 - ASUS hardware auto-detected via DMI: `asusctl` + `rog-control-center` installed only on ASUS laptops
 - ASUS daemon (`asusd`) enabled (if installed)
 - Desktop file fixes: btop, nvim, yazi → run inside Foot
+- Nautilus: right-click folder → Open in Terminal (foot), set via gsettings
 - Docker service enabled + user added to docker group
 - Desktop entries for lazydocker + dua with custom omarchy icons
 - Icon deployment to hicolor/48x48/apps/
