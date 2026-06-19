@@ -103,7 +103,7 @@
       "type": "command",
       "key": "└ └",
       "keyColor": "blue",
-      "text": "awk -F= '/^font=/ {split($2,a,\":size=\"); f=a[1]; s=a[2]} END {cmd=\"fc-match \\\"\" f \"\\\" -f %{style}\"; cmd | getline style; close(cmd); print f \" (\" s+0 \"pt, \" style \")\"}' /home/mindset/.config/foot/foot.ini",
+      "text": "awk -F= '/^font=/ {gsub(/:size$/,\"\",$2); f=$2; s=$3} END {cmd=\"fc-match \\\"\" f \"\\\" -f %{style}\"; cmd | getline style; close(cmd); print f \" (\" s+0 \"pt, \" style \")\"}' /home/mindset/.config/foot/foot.ini",
     },
     {
       "type": "custom",
