@@ -31,9 +31,16 @@ detect_os() {
     fi
 }
 
+IS_ASUS=false
+
+detect_asus() {
+    [[ $(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) == "ASUSTeK COMPUTER INC." ]] && IS_ASUS=true
+}
+
 preflight_checks() {
     log_info "Running preflight checks..."
     detect_os
+    detect_asus
     if [[ "$(id -u)" -eq 0 ]]; then
         log_err "Do not run as root."
         exit 1
@@ -43,6 +50,7 @@ preflight_checks() {
         sudo -v
     fi
     log_ok "Preflight passed."
+    $IS_ASUS && log_info "ASUS hardware detected." || log_info "Non-ASUS hardware detected."
 }
 
 pacman_install() {
@@ -232,8 +240,10 @@ copy_dotfiles() {
         ["cava"]=".config/cava"
         ["yazi"]=".config/yazi"
         ["zed"]=".config/zed"
-        ["wireplumber"]=".config/wireplumber"
     )
+    if $IS_ASUS; then
+        config_map["wireplumber"]=".config/wireplumber"
+    fi
 
     for src_dir in "${!config_map[@]}"; do
         local src="${SCRIPT_DIR}/dotfiles/${src_dir}"
@@ -284,7 +294,8 @@ copy_project_dirs() {
 }
 
 fix_audio() {
-    log_info "Applying audio fixes (ASUS ALC256/ALC285 only)..."
+    $IS_ASUS || { log_info "Skipping audio fix (non-ASUS)."; return 0; }
+    log_info "Applying audio fixes (ASUS ALC256/ALC285)..."
 
     # Restart WirePlumber to pick up alsa-soft-mixer drop-in
     systemctl --user restart wireplumber.service 2>/dev/null || true

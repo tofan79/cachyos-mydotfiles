@@ -94,12 +94,13 @@ chmod +x *.sh
 - **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol`
 - **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava satty tldr gum lazydocker gpu-screen-recorder dua-cli bat eza fd`
 - **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
-- **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition zoom`
+- **Apps:** `telegram-desktop localsend zen-browser-bin zed protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition zoom`
 - **Gaming:** `gamemode lib32-gamemode`
 - **Dev:** `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu docker docker-buildx docker-compose`
 
 **Setup:**
-- ASUS daemon (`asusd`) enabled
+- ASUS hardware auto-detected via DMI: `asusctl` + `rog-control-center` installed only on ASUS laptops
+- ASUS daemon (`asusd`) enabled (if installed)
 - Desktop file fixes: btop, nvim, yazi → run inside Foot
 - Docker service enabled + user added to docker group
 - Desktop entries for lazydocker + dua with custom omarchy icons
@@ -442,7 +443,7 @@ background_alpha=0
 | `fontconfig/` | `install.sh` | ComicShannsMono Nerd Font monospace, Liberation Sans serif/sans |
 | `git/` | `install.sh` | Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main |
 | `imv/` | `install.sh` | Omarchy keybinds: Ctrl+p/x/X/r/e (print, trash, rotate, edit) |
-| `wireplumber/` | `install.sh` | alsa-soft-mixer.conf drop-in from omarchy — **ASUS-only** (ALC256/ALC285), skip if non-ASUS |
+| `wireplumber/` | `install.sh` | alsa-soft-mixer.conf drop-in — **ASUS-only** (auto-detected via DMI) |
 | `icons/` | `apps.sh` | Custom omarchy icons for lazydocker + dua |
 | `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Adwaita` |
 | `gtk-4.0/` | `install.sh` | `Tela-nord-dark` |

@@ -23,10 +23,18 @@ detect_os() {
     log_err "This script is for CachyOS/Arch only."; exit 1
 }
 
+IS_ASUS=false
+
+detect_asus() {
+    [[ $(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) == "ASUSTeK COMPUTER INC." ]] && IS_ASUS=true
+}
+
 preflight_checks() {
     [[ "$(id -u)" -ne 0 ]] || { log_err "Do not run as root."; exit 1; }
     detect_os
+    detect_asus
     sudo -n true 2>/dev/null || sudo -v
+    $IS_ASUS && log_info "ASUS hardware detected." || log_info "Non-ASUS hardware detected."
 }
 
 pacman_install() {
@@ -53,7 +61,7 @@ install_core_app_support() {
         cava \
         ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx \
         telegram-desktop \
-        localsend zen-browser-bin asusctl rog-control-center zed \
+        localsend zen-browser-bin zed \
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat \
         mpv-mpris dua-cli gpu-screen-recorder satty tldr gum lazydocker \
@@ -62,6 +70,10 @@ install_core_app_support() {
         ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
         android-studio intellij-idea-community-edition \
         zoom
+
+    if $IS_ASUS; then
+        pacman_install asusctl rog-control-center
+    fi
 
     if command -v asusctl &>/dev/null; then
         log_info "Configuring ASUS daemon..."
