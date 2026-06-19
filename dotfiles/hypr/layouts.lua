@@ -31,5 +31,5 @@ for i = 1, 9 do
     hl.workspace_rule({ workspace = tostring(i), monitor = "eDP-1", persistent = true })
 end
 
--- Default layout: scrolling
-hl.config({ general = { layout = "scrolling" } })
+-- Default layout: dwindle
+hl.config({ general = { layout = "dwindle" } })
