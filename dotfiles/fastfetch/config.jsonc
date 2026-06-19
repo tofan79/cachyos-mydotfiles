@@ -91,7 +91,7 @@
       "type": "command",
       "key": "│ ├󰉼",
       "keyColor": "blue",
-      "text": "pacman -Q noctalia-git 2>/dev/null | awk '{print $2}' || echo 'not installed'",
+      "text": "pacman -Q noctalia-git 2>/dev/null | awk '{print \"Noctalia\", $2}' || echo 'not installed'",
     },
     {
       "type": "command",
