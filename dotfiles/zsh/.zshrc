@@ -43,7 +43,7 @@ alias dex='docker exec -it'
 alias dlog='docker logs -f'
 
 # ---- CachyOS / Arch ----
-alias update='sudo pacman -Syu && paru -Syu && flatpak update -y'
+alias update='sudo pacman -Syu && paru -Syu --devel && flatpak update -y'
 alias install='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 alias search='pacman -Ss'
