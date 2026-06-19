@@ -496,14 +496,9 @@ hyprctl eval "hl.config({ master = { mfactor = 0.5 } })"
 
 ---
 
-## 🗺️ Workspace Layout
+## 🗺️ Workspaces
 
-| Workspace | Layout |
-|-----------|--------|
-| 1-4 | Scrolling |
-| 5-9 | Dwindle |
-
-All workspaces persistent (visible in Noctalia bar when empty).
+All workspaces 1-9 persistent (visible in Noctalia bar when empty). Default layout: dwindle.
 
 ---
 
