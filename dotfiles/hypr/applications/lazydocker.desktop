@@ -2,7 +2,7 @@
 Type=Application
 Name=LazyDocker
 Exec=foot lazydocker
-Icon=utilities-terminal
+Icon=lazydocker
 Terminal=false
 Categories=Utility;Development;
 Comment=Docker TUI manager

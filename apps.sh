@@ -105,6 +105,13 @@ deploy_custom_desktop_entries() {
         cp -r "$src"/. "$dst/" 2>/dev/null || true
         log_ok "Custom desktop entries deployed."
     fi
+    local icon_src="${SCRIPT_DIR}/dotfiles/hypr/icons"
+    local icon_dst="$HOME/.local/share/icons"
+    if [[ -d "$icon_src" ]]; then
+        mkdir -p "$icon_dst"
+        cp -r "$icon_src"/. "$icon_dst/" 2>/dev/null || true
+        log_ok "Custom desktop icons deployed."
+    fi
 }
 
 deploy_nvim_config() {
