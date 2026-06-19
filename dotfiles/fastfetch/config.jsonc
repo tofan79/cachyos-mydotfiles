@@ -91,7 +91,7 @@
       "type": "command",
       "key": "│ ├󰉼",
       "keyColor": "blue",
-      "text": "scheme=$(noctalia msg color-scheme-get 2>/dev/null | awk '{print $2, $3}'); echo \"Noctalia ($scheme)\"",
+      "text": "pacman -Q noctalia-git 2>/dev/null | awk '{print $2}' || echo 'not installed'",
     },
     {
       "type": "command",
