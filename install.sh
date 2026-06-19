@@ -284,7 +284,7 @@ copy_project_dirs() {
 }
 
 fix_audio() {
-    log_info "Applying audio fixes..."
+    log_info "Applying audio fixes (ASUS ALC256/ALC285 only)..."
 
     # Restart WirePlumber to pick up alsa-soft-mixer drop-in
     systemctl --user restart wireplumber.service 2>/dev/null || true

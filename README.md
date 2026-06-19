@@ -442,7 +442,7 @@ background_alpha=0
 | `fontconfig/` | `install.sh` | ComicShannsMono Nerd Font monospace, Liberation Sans serif/sans |
 | `git/` | `install.sh` | Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main |
 | `imv/` | `install.sh` | Omarchy keybinds: Ctrl+p/x/X/r/e (print, trash, rotate, edit) |
-| `wireplumber/` | `install.sh` | alsa-soft-mixer.conf drop-in from omarchy |
+| `wireplumber/` | `install.sh` | alsa-soft-mixer.conf drop-in from omarchy — **ASUS-only** (ALC256/ALC285), skip if non-ASUS |
 | `icons/` | `apps.sh` | Custom omarchy icons for lazydocker + dua |
 | `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Adwaita` |
 | `gtk-4.0/` | `install.sh` | `Tela-nord-dark` |
