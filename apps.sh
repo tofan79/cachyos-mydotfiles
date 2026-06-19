@@ -67,6 +67,7 @@ install_core_app_support() {
         mpv-mpris dua-cli gpu-screen-recorder satty tldr gum lazydocker \
         bat eza fd \
         docker docker-buildx docker-compose evince \
+        font-manager \
         ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
         android-studio intellij-idea-community-edition \
         zoom
