@@ -54,7 +54,6 @@ install_core_app_support() {
         ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx \
         telegram-desktop \
         localsend zen-browser-bin asusctl rog-control-center zed \
-        firefoxpwa \
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat \
         mpv-mpris dua-cli gpu-screen-recorder satty tldr gum lazydocker \
