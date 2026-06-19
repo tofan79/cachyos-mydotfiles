@@ -57,6 +57,7 @@ install_core_app_support() {
         firefoxpwa \
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat \
+        mpv-mpris dua-cli gpu-screen-recorder satty tldr gum lazydocker \
         ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
         android-studio intellij-idea-community-edition \
         zoom

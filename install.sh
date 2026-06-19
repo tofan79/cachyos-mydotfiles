@@ -229,6 +229,7 @@ copy_dotfiles() {
         ["cava"]=".config/cava"
         ["yazi"]=".config/yazi"
         ["zed"]=".config/zed"
+        ["wireplumber"]=".config/wireplumber"
     )
 
     for src_dir in "${!config_map[@]}"; do
@@ -279,6 +280,29 @@ copy_project_dirs() {
     done
 }
 
+fix_audio() {
+    log_info "Applying audio fixes..."
+
+    # Restart WirePlumber to pick up alsa-soft-mixer drop-in
+    systemctl --user restart wireplumber.service 2>/dev/null || true
+
+    # Set internal mic boost to 0 (prevents clipping on Realtek ALC codecs)
+    for card in /proc/asound/card*/codec*; do
+        if grep -q "ALC" "$card" 2>/dev/null; then
+            cardnum=$(echo "$card" | grep -oP 'card\K\d+')
+            # Check if Internal Mic Boost Volume control exists
+            if amixer -c "$cardnum" cget numid=9 2>/dev/null | grep -q "Internal Mic Boost"; then
+                amixer -c "$cardnum" cset numid=9 0 2>/dev/null
+                log_ok "Internal Mic Boost set to 0 (card ${cardnum})"
+            fi
+            break
+        fi
+    done
+
+    # Save ALSA state for persistence
+    pkexec alsactl store 2>/dev/null && log_ok "ALSA state saved." || log_warn "Could not save ALSA state."
+}
+
 setup_chaotic_aur() {
     log_info "Setting up Chaotic-AUR..."
     if pacman -Qi chaotic-keyring &>/dev/null; then
@@ -309,6 +333,7 @@ main() {
     setup_mise
     setup_opencode
     copy_dotfiles
+    fix_audio
     copy_wallpapers
     copy_project_dirs
     echo ""
