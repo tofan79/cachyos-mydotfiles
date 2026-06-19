@@ -30,8 +30,8 @@ chmod +x *.sh
 
 **Packages:**
 - **Dev:** `base-devel git curl wget rsync libva-utils cmake meson ninja python python-pip shellcheck openssh flatpak`
-- **Display/WM:** `foot`
-- **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
+- **Display/WM:** `foot foot-terminfo`
+- **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors satty gpu-screen-recorder tldr gum dua-cli lazydocker mpv-mpris`
 - **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts otf-comicshanns-nerd ttf-ms-fonts`
 - **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme nordic-theme bibata-cursor-theme tela-icon-theme`
 - **GStreamer:** `gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav x264 x265`
@@ -45,12 +45,13 @@ chmod +x *.sh
 - JetBrainsMono + FiraCode Nerd Fonts (manual download)
 - Oh My Zsh + Powerlevel10k + zsh-autosuggestions + zsh-syntax-highlighting + zsh-completions
 - `.zshrc` merges with existing (fastfetch prepended, custom aliases appended); `.p10k.zsh` overwrites
-- `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu && flatpak update -y`)
-- fastfetch config: CachyOS logo + Arch icon
-- Kitty font: `ComicShannsMono Nerd Font` 11pt
+- `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu --devel && flatpak update -y`), `aur` alias for paru
+- fastfetch config: Noctalia version line (`pacman -Q noctalia-git`), font size parsing fix
 - mise (runtime manager)
 - opencode
-- Kitty as default terminal (`xdg-mime`)
+- Foot as default terminal (`xdg-mime`, foot.ini)
+- Fontconfig: ComicShannsMono Nerd Font monospace (from omarchy)
+- Git config: aliases, pull.rebase, push.autoSetupRemote, diff histogram, rerere, defaultBranch=main
 - Sensors auto-detect
 
 **Copied:**
@@ -89,17 +90,20 @@ chmod +x *.sh
 ### `apps.sh`
 
 **Packages:**
-- **Desktop:** `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp yazi neovim btop mpv imv gnome-disk-utility gnome-calculator`
+- **Desktop:** `nautilus gvfs gvfs-afc gvfs-gphoto2 gvfs-smb libmtp yazi neovim btop mpv mpv-mpris imv evince gnome-disk-utility gnome-calculator`
 - **Qt:** `qt6-declarative qt6-svg qt6-multimedia qt6-multimedia-ffmpeg qt6-5compat pavucontrol`
-- **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava`
+- **Utils:** `tesseract tesseract-data-eng imagemagick xdg-desktop-portal-gtk xdg-utils xdg-user-dirs python-gobject wtype wdisplays cava satty tldr gum lazydocker gpu-screen-recorder dua-cli bat eza fd`
 - **Network:** `ncdu httpie bind whois traceroute mtr socat nmap github-cli strace python-pipx`
 - **Apps:** `telegram-desktop localsend zen-browser-bin asusctl rog-control-center zed protonplus ab-download-manager faugus-launcher android-studio intellij-idea-community-edition zoom`
 - **Gaming:** `gamemode lib32-gamemode`
-- **Dev:** `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu`
+- **Dev:** `ffmpegthumbnailer nautilus-image-converter lazygit nodejs bottom gdu docker docker-buildx docker-compose`
 
 **Setup:**
 - ASUS daemon (`asusd`) enabled
-- Desktop file fixes: btop, nvim, yazi → run inside Kitty
+- Desktop file fixes: btop, nvim, yazi → run inside Foot
+- Docker service enabled + user added to docker group
+- Desktop entries for lazydocker + dua with custom omarchy icons
+- Icon deployment to hicolor/48x48/apps/
 - Neovim AstroNvim config (from `dotfiles/nvim/`)
 - tmux config (from `dotfiles/tmux/`)
 - Icon/cursor theme applied via `gsettings`
@@ -286,7 +290,7 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 ### App Launchers
 | Key | App |
 |-----|-----|
-| `SUPER + Enter` | Kitty terminal |
+| `SUPER + Enter` | Foot terminal |
 | `SUPER + E` | Nautilus file manager |
 | `SUPER + B` | Zen browser |
 | `SUPER + N` | Zed editor |
@@ -311,8 +315,9 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | `XF86AudioNext` | Next track |
 | `XF86AudioPrev` | Previous track |
 | `XF86MonBrightnessUp/Down` | Brightness |
-| `Print` | Screenshot region |
-| `SUPER + SHIFT + Print` | Screenshot fullscreen |
+| `Print` | Screenshot region (grim+slurp+satty) |
+| `Shift + Print` | Screenshot fullscreen (grim+satty) |
+| `Ctrl + Print` | Screenshot window (grim+satty) |
 
 ### Multi-Monitor
 | Key | Action |
@@ -416,7 +421,7 @@ background_alpha=0
 | **Cursor** | `Bibata-Modern-Ice` 24px |
 | **GTK** | Nordic theme |
 | **Qt5/Qt6** | Fusion style + Noctalia custom palette |
-| **Terminal** | Kitty + ComicShannsMono Nerd Font 11pt + Noctalia theme |
+| **Terminal** | Foot + ComicShannsMono Nerd Font 10pt + alpha 0.90 + grapheme-shaping=off |
 | **Shell** | Zsh + Powerlevel10k (rainbow style) |
 | **Monitor** | Btop + Noctalia theme |
 | **Rofi** | Noctalia theme, centered, rounded 24px, JetBrainsMono Nerd Font |
@@ -433,7 +438,12 @@ background_alpha=0
 | `fastfetch/` | `hyprland-noctalia.sh` | Custom Omarchy layout: Hardware (host/cpu/gpu/display/disk/mem/swap), Software (os/kernel/wm/terminal/packages/noctalia scheme/font), Age/Uptime |
 | `MangoHud/` | `hyprland-noctalia.sh` | Gaming overlay config |
 | `nvim/` | `hyprland-noctalia.sh` + `apps.sh` | AstroNvim v6: Lazy.nvim, Mason, Treesitter, LSP, none-ls, custom plugins |
-| `foot/` | `install.sh` | ComicShannsMono Nerd Font 11pt, Noctalia theme, alpha 0.9, grapheme-shaping off |
+| `foot/` | `install.sh` | ComicShannsMono Nerd Font 10pt, alpha 0.90, grapheme-shaping=no (tweak) |
+| `fontconfig/` | `install.sh` | ComicShannsMono Nerd Font monospace, Liberation Sans serif/sans |
+| `git/` | `install.sh` | Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main |
+| `imv/` | `install.sh` | Omarchy keybinds: Ctrl+p/x/X/r/e (print, trash, rotate, edit) |
+| `wireplumber/` | `install.sh` | alsa-soft-mixer.conf drop-in from omarchy |
+| `icons/` | `apps.sh` | Custom omarchy icons for lazydocker + dua |
 | `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Adwaita` |
 | `gtk-4.0/` | `install.sh` | `Tela-nord-dark` |
 | `qt5ct/` | `install.sh` | Fusion style + Noctalia custom palette |
@@ -444,7 +454,7 @@ background_alpha=0
 | `zed/` | `install.sh` | Noctalia Dark Transparent theme, ui_font_size 16, buffer_font_size 15 |
 | `zsh/` | `install.sh` | `.zshrc` (fastfetch, P10k, zoxide, fzf, mise, opencode), `.p10k.zsh` |
 | `clean/` | `install.sh` | `clean.sh` — system cleanup script |
-| `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Kitty integration, minimal blue theme |
+| `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Foot integration, minimal blue theme |
 | `Wallpapers/` | `install.sh` | Copied to `~/Pictures/Wallpapers/` |
 | `DaVinci_Resolve/` | `install.sh` | Install/update notes → `~/Projects/DaVinci_Resolve/` |
 | `docker-db/` | `install.sh` | MariaDB + phpMyAdmin + PostgreSQL + pgAdmin dev DB → `~/Projects/docker-db/` |

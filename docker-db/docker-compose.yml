@@ -35,7 +35,7 @@ services:
       POSTGRES_PASSWORD: 123321
       POSTGRES_DB: dev
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4:latest
