@@ -275,7 +275,6 @@ copy_wallpapers() {
 
 copy_project_dirs() {
     local -A projects=(
-        ["DaVinci_Resolve"]="DaVinci_Resolve/install_update.txt"
         ["docker-db"]="docker-db/docker-compose.yml"
     )
     for dir in "${!projects[@]}"; do

@@ -461,7 +461,6 @@ background_alpha=0
 | `clean/` | `install.sh` | `clean.sh` — system cleanup script |
 | `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Foot integration, minimal blue theme |
 | `Wallpapers/` | `install.sh` | Copied to `~/Pictures/Wallpapers/` |
-| `DaVinci_Resolve/` | `install.sh` | Install/update notes → `~/Projects/DaVinci_Resolve/` |
 | `docker-db/` | `install.sh` | MariaDB + phpMyAdmin + PostgreSQL + pgAdmin dev DB → `~/Projects/docker-db/` |
 
 ---
