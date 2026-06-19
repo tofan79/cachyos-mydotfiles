@@ -133,9 +133,10 @@ Entry point: `hyprland.lua`
 require("monitor")
 require("env")
 require("noctalia")
+dofile("colors.lua")
 dofile("windows/glass.lua")
 dofile("decorations/rounding-all-blur.lua")
-dofile("animations/animations-moving.lua")
+dofile("animations/wipe-meta.lua")
 require("keybinds")
 require("rules")
 require("layouts")
@@ -189,7 +190,7 @@ hl.config({
 - **Scrolling config:** `fullscreen_on_one_column = false`
 - Noctalia blur layer rule: `^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd)$`
 - Persistent workspaces 1-9 (`monitor = "eDP-1"`)
-- Default layout: dwinkle (`hl.config({ general = { layout = "dwindle" } })`)
+- Default layout: dwindle (`hl.config({ general = { layout = "dwindle" } })`)
 
 ### `rules.lua`
 | App | Behavior |
@@ -214,7 +215,10 @@ hl.config({
 ### `startup.lua`
 ```lua
 hl.on("hyprland.start", function()
-    hl.exec_cmd("systemctl --user import-environment ...")
+    hl.exec_cmd("sleep 1 && dbus-update-activation-environment --systemd --all")
+    hl.exec_cmd("/usr/lib/xdg-desktop-portal-hyprland >/dev/null 2>&1 &")
+    hl.exec_cmd("/usr/lib/xdg-desktop-portal-gtk >/dev/null 2>&1 &")
+    hl.exec_cmd("sleep 1 && /usr/lib/xdg-desktop-portal >/dev/null 2>&1 &")
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("noctalia")
 end)
