@@ -17,7 +17,7 @@ chmod +x *.sh
 
 | Step | Script | What it does |
 |------|--------|-------------|
-| 1 | `./install.sh` | Core OS (Chaotic-AUR + packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for kitty/gtk/qt/btop/cava/zsh, wallpapers) |
+| 1 | `./install.sh` | Core OS (Chaotic-AUR + packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for foot/gtk/qt/btop/cava/zsh, wallpapers) |
 | 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + SDDM + rofi + switcheroo-control (enabled) + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
 | 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
 | 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
@@ -30,7 +30,7 @@ chmod +x *.sh
 
 **Packages:**
 - **Dev:** `base-devel git curl wget rsync libva-utils cmake meson ninja python python-pip shellcheck openssh flatpak`
-- **Display/WM:** `kitty`
+- **Display/WM:** `foot`
 - **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
 - **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts otf-comicshanns-nerd ttf-ms-fonts`
 - **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme nordic-theme bibata-cursor-theme tela-icon-theme`
@@ -54,7 +54,7 @@ chmod +x *.sh
 - Sensors auto-detect
 
 **Copied:**
-- `dotfiles/kitty/` → `~/.config/kitty/`
+- `dotfiles/foot/` → `~/.config/foot/`
 - `dotfiles/gtk-3.0/` → `~/.config/gtk-3.0/`
 - `dotfiles/gtk-4.0/` → `~/.config/gtk-4.0/`
 - `dotfiles/qt5ct/` → `~/.config/qt5ct/`
@@ -193,7 +193,7 @@ hl.config({
 | LocalSend | Floating (800×600) — two class patterns |
 | GNOME Calculator | Floating (400×500) |
 | Pavucontrol | Floating (800×600) |
-| Btop (kitty -T btop) | Floating (1200×700) |
+| Btop (foot -T btop) | Floating (1200×700) |
 | imv | Floating (900×700) |
 | mpv | Floating (900×600) |
 | XWayland empty drag fix | `no_focus = true` |
@@ -433,7 +433,7 @@ background_alpha=0
 | `fastfetch/` | `hyprland-noctalia.sh` | Custom Omarchy layout: Hardware (host/cpu/gpu/display/disk/mem/swap), Software (os/kernel/wm/terminal/packages/noctalia scheme/font), Age/Uptime |
 | `MangoHud/` | `hyprland-noctalia.sh` | Gaming overlay config |
 | `nvim/` | `hyprland-noctalia.sh` + `apps.sh` | AstroNvim v6: Lazy.nvim, Mason, Treesitter, LSP, none-ls, custom plugins |
-| `kitty/` | `install.sh` | ComicShannsMono Nerd Font 11pt, Noctalia theme, padding 14, blur 0.9, powerline tabs, splits/stack layouts |
+| `foot/` | `install.sh` | ComicShannsMono Nerd Font 11pt, Noctalia theme, alpha 0.9, grapheme-shaping off |
 | `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Adwaita` |
 | `gtk-4.0/` | `install.sh` | `Tela-nord-dark` |
 | `qt5ct/` | `install.sh` | Fusion style + Noctalia custom palette |

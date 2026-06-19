@@ -50,7 +50,7 @@ hl.window_rule({
     size  = { 800, 600 },
 })
 
--- Btop (launched as kitty -T btop)
+-- Btop (launched as foot -T btop)
 hl.window_rule({
     name  = "btop-float",
     match = { title = "^btop$" },

@@ -67,7 +67,7 @@ install_packages() {
     pacman_install \
         git curl wget rsync \
         libva-utils \
-        kitty \
+        foot \
         flatpak \
         cmake meson ninja python python-pip \
         shellcheck openssh
@@ -196,10 +196,10 @@ setup_zsh() {
     log_ok "Zsh configured."
 }
 
-set_kitty_default() {
-    command -v kitty &>/dev/null || { log_warn "Kitty not installed."; return 0; }
-    xdg-mime default kitty.desktop x-scheme-handler/terminal 2>/dev/null || true
-    log_ok "Kitty set as default terminal."
+set_foot_default() {
+    command -v foot &>/dev/null || { log_warn "Foot not installed."; return 0; }
+    xdg-mime default foot.desktop x-scheme-handler/terminal 2>/dev/null || true
+    log_ok "Foot set as default terminal."
 }
 
 setup_mise() {
@@ -220,7 +220,7 @@ copy_dotfiles() {
     log_info "Copying dotfiles..."
 
     local -A config_map=(
-        ["kitty"]=".config/kitty"
+        ["foot"]=".config/foot"
         ["gtk-3.0"]=".config/gtk-3.0"
         ["gtk-4.0"]=".config/gtk-4.0"
         ["qt5ct"]=".config/qt5ct"
@@ -304,7 +304,7 @@ main() {
     setup_flatpak
     setup_nerd_fonts
     apply_icon_settings
-    set_kitty_default
+    set_foot_default
     setup_zsh
     setup_mise
     setup_opencode

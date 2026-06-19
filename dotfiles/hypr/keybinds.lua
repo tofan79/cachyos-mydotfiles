@@ -12,7 +12,7 @@ hl.bind(M .. " + Q", hl.dsp.window.close(), { description = "Close active window
 hl.bind(M .. " + CTRL + M", hl.dsp.exit(), { description = "Exit Hyprland" })
 hl.bind(M .. " + Escape", hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Session menu" })
 hl.bind(M .. " + SHIFT + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
-hl.bind(M .. " + slash", hl.dsp.exec_cmd("kitty -T btop -e btop"), { description = "System monitor (btop)" })
+hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "System monitor (btop)" })
 
 -- ───────────────────────────────────────────
 -- Noctalia Shell
@@ -180,7 +180,7 @@ hl.bind("CTRL + SHIFT + right", hl.dsp.window.move({ x = 50, y = 0, relative = t
 -- ───────────────────────────────────────────
 -- App Launchers
 -- ───────────────────────────────────────────
-hl.bind(M .. " + Return", hl.dsp.exec_cmd("kitty"), { description = "Terminal" })
+hl.bind(M .. " + Return", hl.dsp.exec_cmd("foot"), { description = "Terminal" })
 hl.bind(M .. " + E", hl.dsp.exec_cmd("nautilus"), { description = "File manager" })
 hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser (Zen)" })
 hl.bind(M .. " + N", hl.dsp.exec_cmd("zeditor"), { description = "Editor (Zed)" })

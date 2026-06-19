@@ -80,10 +80,10 @@ fix_terminal_desktop() {
         src="/usr/share/applications/${app}.desktop"
         dst="$HOME/.local/share/applications/${app}.desktop"
         [[ -f "$src" ]] || { log_warn "Source desktop not found: ${src}"; continue; }
-        grep -q "kitty" "$dst" 2>/dev/null && continue
+        grep -q "foot" "$dst" 2>/dev/null && continue
         cp "$src" "$dst"
-        sed -i 's|^Exec=\(.*\)$|Exec=kitty -e \1|; s/^Terminal=true/Terminal=false/' "$dst"
-        log_ok "Fixed desktop: ${app} (kitty)"
+        sed -i 's|^Exec=\(.*\)$|Exec=foot -e \1|; s/^Terminal=true/Terminal=false/' "$dst"
+        log_ok "Fixed desktop: ${app} (foot)"
     done
 }
 
@@ -141,7 +141,7 @@ remove_cachyos_defaults() {
     log_ok "Removed micro, alacritty, meld."
 
     log_info "Hiding unused desktop entries..."
-    local entries="avahi-discover.desktop bssh.desktop bvnc.desktop qv4l2.desktop qvidcap.desktop"
+    local entries="avahi-discover.desktop bssh.desktop bvnc.desktop qv4l2.desktop qvidcap.desktop footclient.desktop foot-server.desktop java-java21-openjdk.desktop jconsole-java21-openjdk.desktop jshell-java21-openjdk.desktop rofi.desktop rofi-theme-selector.desktop"
     for f in $entries; do
         if [ -f "/usr/share/applications/$f" ]; then
             cp -n "/usr/share/applications/$f" ~/.local/share/applications/ 2>/dev/null || true
