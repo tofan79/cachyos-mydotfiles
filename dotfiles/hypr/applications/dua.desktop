@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Disk Usage
+Exec=foot dua i
+Icon=drive-harddisk
+Terminal=false
+Categories=Utility;System;
+Comment=Disk usage analyzer (TUI)

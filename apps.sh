@@ -97,6 +97,16 @@ fix_terminal_desktop() {
     done
 }
 
+deploy_custom_desktop_entries() {
+    local src="${SCRIPT_DIR}/dotfiles/hypr/applications"
+    local dst="$HOME/.local/share/applications"
+    if [[ -d "$src" ]]; then
+        mkdir -p "$dst"
+        cp -r "$src"/. "$dst/" 2>/dev/null || true
+        log_ok "Custom desktop entries deployed."
+    fi
+}
+
 deploy_nvim_config() {
     local src="${SCRIPT_DIR}/dotfiles/nvim"
     local dst="$HOME/.config/nvim"
@@ -138,6 +148,7 @@ main() {
     preflight_checks
     install_core_app_support
     fix_terminal_desktop
+    deploy_custom_desktop_entries
     deploy_nvim_config
     deploy_tmux_config
     apply_icon_cursor_settings
