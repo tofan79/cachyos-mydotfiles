@@ -58,6 +58,8 @@ install_core_app_support() {
         ffmpegthumbnailer nautilus-image-converter \
         lazygit nodejs bottom gdu qt6-5compat \
         mpv-mpris dua-cli gpu-screen-recorder satty tldr gum lazydocker \
+        bat eza fd \
+        docker docker-buildx docker-compose evince \
         ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
         android-studio intellij-idea-community-edition \
         zoom
@@ -67,6 +69,13 @@ install_core_app_support() {
         sudo mkdir -p /etc/asusd
         sudo systemctl enable --now asusd 2>/dev/null || true
         log_ok "ASUS daemon configured."
+    fi
+
+    if command -v docker &>/dev/null; then
+        log_info "Enabling Docker..."
+        sudo systemctl enable --now docker 2>/dev/null || true
+        sudo usermod -aG docker "$USER" 2>/dev/null || true
+        log_ok "Docker enabled."
     fi
 
     command -v xdg-user-dirs-update &>/dev/null && xdg-user-dirs-update 2>/dev/null || true
