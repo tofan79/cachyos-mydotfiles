@@ -220,7 +220,10 @@ copy_dotfiles() {
     log_info "Copying dotfiles..."
 
     local -A config_map=(
+        ["fontconfig"]=".config/fontconfig"
         ["foot"]=".config/foot"
+        ["git"]=".config/git"
+        ["imv"]=".config/imv"
         ["gtk-3.0"]=".config/gtk-3.0"
         ["gtk-4.0"]=".config/gtk-4.0"
         ["qt5ct"]=".config/qt5ct"

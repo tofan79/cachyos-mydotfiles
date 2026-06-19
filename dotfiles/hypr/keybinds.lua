@@ -128,8 +128,9 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("noctalia msg media previous"), { locke
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("noctalia msg brightness-up"), { locked = true, repeating = true, description = "Brightness up" })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { locked = true, repeating = true, description = "Brightness down" })
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("gnome-calculator"), { locked = true, description = "Calculator" })
-hl.bind("Print", hl.dsp.exec_cmd("noctalia msg screenshot-region"), { locked = true, description = "Screenshot region" })
-hl.bind(M .. " + SHIFT + Print", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"), { locked = true, description = "Screenshot fullscreen" })
+hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh region"), { locked = true, description = "Screenshot region → annotate" })
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh fullscreen"), { locked = true, description = "Screenshot fullscreen → annotate" })
+hl.bind("CTRL + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh windows"), { locked = true, description = "Screenshot window → annotate" })
 
 -- ───────────────────────────────────────────
 -- Workspace Navigation (Super + 1-9)
