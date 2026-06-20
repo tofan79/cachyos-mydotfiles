@@ -22,6 +22,7 @@ hl.bind(M .. " + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle contro
 hl.bind(M .. " + CTRL + Space", hl.dsp.exec_cmd("noctalia msg settings-toggle"), { description = "Settings toggle" })
 hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg wallpaper-random"), { description = "Random wallpaper" })
 hl.bind(M .. " + CTRL + period", hl.dsp.exec_cmd("noctalia msg notification-clear-history"), { description = "Clear notifications" })
+hl.bind(M .. " + CTRL + comma", hl.dsp.exec_cmd("noctalia msg clipboard-clear"), { description = "Clear clipboard" })
 
 -- ───────────────────────────────────────────
 -- Window Focus (Super + Arrows)
