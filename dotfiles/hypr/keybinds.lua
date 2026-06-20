@@ -112,8 +112,10 @@ hl.bind(M .. " + SHIFT + K", hl.dsp.exec_cmd("~/.config/hypr/scripts/keybindings
     { description = "Show keybindings" })
 hl.bind(M .. " + CTRL + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-decorations.sh"),
     { description = "Switch decoration preset" })
-hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-windows.sh"),
+hl.bind(M .. " + CTRL + S", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-windows.sh"),
     { description = "Switch window preset" })
+hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg wallpaper-random"),
+    { description = "Random wallpaper" })
 
 -- ───────────────────────────────────────────
 -- Media Keys (via PipeWire — Noctalia)
