@@ -14,6 +14,16 @@ hl.window_rule({
     match = { class = "steam" },
     idle_inhibit = "always",
 })
+hl.window_rule({
+    name  = "zen-idleinhibit",
+    match = { class = "^zen$" },
+    idle_inhibit = "always",
+})
+hl.window_rule({
+    name  = "zoom-idleinhibit",
+    match = { class = "^zoom$" },
+    idle_inhibit = "always",
+})
 
 -- LocalSend — floating (multi appid)
 hl.window_rule({

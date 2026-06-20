@@ -202,6 +202,8 @@ hl.config({
 | App | Behavior |
 |-----|----------|
 | Steam | Floating (1200×800) + idle inhibit |
+| Zen Browser | Idle inhibit (nonton video aman) |
+| Zoom | Idle inhibit (video call aman) |
 | LocalSend | Floating (800×600) — two class patterns |
 | GNOME Calculator | Floating (400×500) |
 | Pavucontrol | Floating (800×600) |
