@@ -209,7 +209,7 @@ hl.config({
 | Pavucontrol | Floating (800×600) |
 | Btop (foot -T btop) | Floating (1200×700) |
 | imv | Floating (900×700) |
-| mpv | Floating (900×600) |
+| mpv | Floating (900×600) + idle inhibit fullscreen |
 | XWayland empty drag fix | `no_focus = true` |
 
 ### `gestures.lua`

@@ -81,6 +81,11 @@ hl.window_rule({
     float = true,
     size  = { 900, 600 },
 })
+hl.window_rule({
+    name  = "mpv-idleinhibit",
+    match = { class = "^mpv$" },
+    idle_inhibit = "fullscreen",
+})
 
 -- Fix XWayland drag issues
 hl.window_rule({
