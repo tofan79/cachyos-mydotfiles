@@ -20,6 +20,7 @@ hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "
 hl.bind(M .. " + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), { description = "App launcher" })
 hl.bind(M .. " + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"), { description = "Control center" })
 hl.bind(M .. " + CTRL + Space", hl.dsp.exec_cmd("noctalia msg settings-toggle"), { description = "Settings toggle" })
+hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg wallpaper-random"), { description = "Random wallpaper" })
 
 -- ───────────────────────────────────────────
 -- Window Focus (Super + Arrows)
@@ -114,9 +115,6 @@ hl.bind(M .. " + CTRL + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-decor
     { description = "Switch decoration preset" })
 hl.bind(M .. " + CTRL + S", hl.dsp.exec_cmd("~/.config/hypr/scripts/switch-windows.sh"),
     { description = "Switch window preset" })
-hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg wallpaper-random"),
-    { description = "Random wallpaper" })
-
 -- ───────────────────────────────────────────
 -- Media Keys (via PipeWire — Noctalia)
 -- ───────────────────────────────────────────
