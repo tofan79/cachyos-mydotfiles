@@ -127,7 +127,7 @@ hl.bind("XF86AudioNext", hl.dsp.exec_cmd("noctalia msg media next"), { locked = 
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("noctalia msg media previous"), { locked = true, description = "Previous track" })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("noctalia msg brightness-up"), { locked = true, repeating = true, description = "Brightness up" })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { locked = true, repeating = true, description = "Brightness down" })
-hl.bind("XF86Sleep", hl.dsp.exec_cmd("noctalia msg session suspend"), { description = "Suspend laptop" })
+hl.bind("XF86Sleep", hl.dsp.exec_cmd("~/.config/hypr/scripts/lock-and-suspend.sh"), { description = "Lock then suspend" })
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("gnome-calculator"), { locked = true, description = "Calculator" })
 hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh region"), { locked = true, description = "Screenshot region → annotate" })
 hl.bind("SHIFT + Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh fullscreen"), { locked = true, description = "Screenshot fullscreen → annotate" })
