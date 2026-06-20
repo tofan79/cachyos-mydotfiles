@@ -1,9 +1,9 @@
 [audio]
 enable_overdrive = true
 enable_sounds = true
-notification_sound = "/home/mindset/.config/noctalia/sounds/volume-change.wav"
+notification_sound = "/home/mindset/.local/state/noctalia/sounds/apple-pay-original.wav"
 sound_volume = 0.99999997764825821
-volume_change_sound = "/home/mindset/.config/noctalia/sounds/volume-change.wav"
+volume_change_sound = "/home/mindset/.local/state/noctalia/sounds/volume-change.wav"
 
 [bar]
 order = [ "Mindset" ]
@@ -34,7 +34,6 @@ order = [ "Mindset" ]
     widget_spacing = 8
 
 [brightness]
-enable_ddcutil = true
 minimum_brightness = 0.099999997764825821
 
 [calendar]
