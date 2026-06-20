@@ -31,7 +31,7 @@ chmod +x *.sh
 **Packages:**
 - **Dev:** `base-devel git curl wget rsync libva-utils cmake meson ninja python python-pip shellcheck openssh flatpak`
 - **Display/WM:** `foot foot-terminfo`
-- **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors satty gpu-screen-recorder tldr gum dua-cli lazydocker mpv-mpris`
+- **CLI:** `bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof pciutils usbutils hwinfo grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors dua-cli`
 - **Fonts:** `ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-meslo-nerd-font-powerlevel10k noto-fonts noto-fonts-emoji adobe-source-code-pro-fonts otf-comicshanns-nerd ttf-ms-fonts`
 - **Theming:** `qt6ct qt5ct gtk3 gtk4 libadwaita adwaita-icon-theme papirus-icon-theme nordic-theme bibata-cursor-theme tela-icon-theme`
 - **GStreamer:** `gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav x264 x265`
@@ -44,8 +44,8 @@ chmod +x *.sh
 - Bibata cursor (`bibata-cursor-theme` from Chaotic-AUR → `Bibata-Modern-Ice`)
 - JetBrainsMono + FiraCode Nerd Fonts (manual download)
 - Oh My Zsh + Powerlevel10k + zsh-autosuggestions + zsh-syntax-highlighting + zsh-completions
-- `.zshrc` merges with existing (fastfetch prepended, custom aliases appended); `.p10k.zsh` overwrites
-- `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu --devel && flatpak update -y`), `aur` alias for paru
+- `.zshrc` backup existing then overwrite; `.p10k.zsh` overwrites
+- `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu && paru -Syu --devel && flatpak update -y`), `aur` alias for paru
 - fastfetch config: Noctalia version line (`pacman -Q noctalia-git`), font size parsing fix
 - mise (runtime manager)
 - opencode
@@ -56,17 +56,22 @@ chmod +x *.sh
 
 **Copied:**
 - `dotfiles/foot/` → `~/.config/foot/`
+- `dotfiles/fontconfig/` → `~/.config/fontconfig/`
+- `dotfiles/git/` → `~/.config/git/`
 - `dotfiles/gtk-3.0/` → `~/.config/gtk-3.0/`
 - `dotfiles/gtk-4.0/` → `~/.config/gtk-4.0/`
+- `dotfiles/imv/` → `~/.config/imv/`
 - `dotfiles/qt5ct/` → `~/.config/qt5ct/`
 - `dotfiles/qt6ct/` → `~/.config/qt6ct/`
 - `dotfiles/btop/` → `~/.config/btop/`
 - `dotfiles/cava/` → `~/.config/cava/`
 - `dotfiles/yazi/` → `~/.config/yazi/`
 - `dotfiles/zed/` → `~/.config/zed/`
-- `dotfiles/zsh/.zshrc` → `~/` (merged with existing, not overwritten). `.p10k.zsh` → `~/`
+- `dotfiles/zsh/.zshrc` → `~/` (backup existing then overwrite). `.p10k.zsh` → `~/`
 - `Wallpapers/` → `~/Pictures/Wallpapers/`
 - `dotfiles/clean/clean.sh` → `~/.config/clean/`
+- `dotfiles/wireplumber/` → `~/.config/wireplumber/` (ASUS-only)
+- `docker-db/` → `~/Projects/docker-db/`
 
 ### `hyprland-noctalia.sh`
 
@@ -110,7 +115,7 @@ chmod +x *.sh
 - tmux config (from `dotfiles/tmux/`)
 - Icon/cursor theme applied via `gsettings`
 - Removes pre-installed CachyOS bloat: micro, alacritty, meld, cachyos-micro-settings
-- Hides unused desktop entries: avahi-discover, bssh, bvnc, qv4l2, qvidcap
+- Hides unused desktop entries: avahi-discover, bssh, bvnc, footclient, foot-server, java-java21-openjdk, jconsole-java21-openjdk, jshell-java21-openjdk, qv4l2, qvidcap, rofi, rofi-theme-selector
 
 ### `firewall.sh`
 
@@ -128,6 +133,7 @@ systemctl enable ufw
 ## 🪟 Hyprland Config (`~/.config/hypr/`)
 
 Entry point: `hyprland.lua`
+Also includes `hyprtoolkit.conf` with color definitions.
 
 ```lua
 require("monitor")
@@ -211,6 +217,7 @@ hl.config({
 | 3-finger horizontal | Scroll move (0.9 scale) |
 | 4-finger pinch out | Fullscreen on |
 | 4-finger pinch in | Fullscreen off |
+| 4-finger vertical | Workspace switch |
 
 ### `startup.lua`
 ```lua
@@ -234,6 +241,7 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | Key | Action |
 |-----|--------|
 | `SUPER + Q` | Close window |
+| `SUPER + SHIFT + L` | Lock screen |
 | `SUPER + CTRL + R` | Reload Hyprland |
 | `SUPER + CTRL + M` | Exit Hyprland |
 | `SUPER + Escape` | Session menu (Noctalia) |
@@ -320,6 +328,7 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | `XF86AudioNext` | Next track |
 | `XF86AudioPrev` | Previous track |
 | `XF86MonBrightnessUp/Down` | Brightness |
+| `XF86Calculator` | Calculator |
 | `Print` | Screenshot region (grim+slurp+satty) |
 | `Shift + Print` | Screenshot fullscreen (grim+satty) |
 | `Ctrl + Print` | Screenshot window (grim+satty) |
@@ -327,6 +336,7 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 ### Multi-Monitor
 | Key | Action |
 |-----|--------|
+| `SUPER + CTRL + ALT + Tab` | Cycle windows |
 | `SUPER + CTRL + ALT + ↑/←/↓/→` | Focus monitor |
 | `SUPER + CTRL + ALT + SHIFT + ↑/←/↓/→` | Move to monitor |
 
@@ -347,15 +357,14 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | Key | Action |
 |-----|--------|
 | `ALT + Tab` | Cycle windows |
-| `CTRL + ALT + Tab` | Cycle windows (alt) |
 
 ---
 
 ## 🎨 Presets
 
 ### Animations (`~/.config/hypr/animations/*.lua`)
-13 presets switchable via `SUPER + CTRL + A` (rofi):
-`animations-classic`, `animations-dynamic`, `animations-end4`, `animations-fast`, `animations-high`, `animations-moving`, `animations-smooth`, `default`, `disabled`, `metamorphosis`, `slide`, `standard`, `wipe`
+16 presets switchable via `SUPER + CTRL + A` (rofi):
+`animations-classic`, `animations-dynamic`, `animations-end4`, `animations-fast`, `animations-high`, `animations-moving`, `animations-moving-meta`, `animations-smooth`, `animations-smooth-meta`, `animations-wipe-meta`, `default`, `disabled`, `metamorphosis`, `slide`, `standard`, `wipe`
 
 Default: `animations-moving.lua` — bezier curves (overshot, smoothOut, smoothIn), speed 3-6
 
@@ -400,6 +409,9 @@ cpu_stats cpu_temp
 ram fps frame_timing
 font_size=15
 background_alpha=0
+legacy_layout=false
+hud_no_margin
+height=120
 ```
 
 ---
@@ -415,6 +427,7 @@ background_alpha=0
 | `toggle-animations.sh` | `SUPER + SHIFT + A` | Toggle animations on/off (cache-based) |
 | `text-extractor.sh` | `SUPER + ALT + A` | Select region → OCR (Tesseract) → clipboard |
 | `game-launch.sh` | — | NVIDIA Smooth Motion + Reflex + DLSS + switcherooctl + gamemode + MangoHud |
+| `scanning.sh` | — | AUR security scanner |
 
 ---
 
@@ -448,9 +461,9 @@ background_alpha=0
 | `git/` | `install.sh` | Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main |
 | `imv/` | `install.sh` | Omarchy keybinds: Ctrl+p/x/X/r/e (print, trash, rotate, edit) |
 | `wireplumber/` | `install.sh` | alsa-soft-mixer.conf drop-in — **ASUS-only** (auto-detected via DMI) |
-| `icons/` | `apps.sh` | Custom omarchy icons for lazydocker + dua |
-| `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Adwaita` |
-| `gtk-4.0/` | `install.sh` | `Tela-nord-dark` |
+| `hypr/icons/` | `apps.sh` | Custom omarchy icons for lazydocker + dua |
+| `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Nordic` |
+| `gtk-4.0/` | `install.sh` | Nordic theme, Tela-nord-dark icons, Bibata-Modern-Ice cursor 24 |
 | `qt5ct/` | `install.sh` | Fusion style + Noctalia custom palette |
 | `qt6ct/` | `install.sh` | Fusion style + Noctalia custom palette |
 | `btop/` | `install.sh` | `color_theme = "noctalia"` + noctalia.theme |
@@ -461,7 +474,7 @@ background_alpha=0
 | `clean/` | `install.sh` | `clean.sh` — system cleanup script |
 | `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Foot integration, minimal blue theme |
 | `Wallpapers/` | `install.sh` | Copied to `~/Pictures/Wallpapers/` |
-| `docker-db/` | `install.sh` | MariaDB + phpMyAdmin + PostgreSQL + pgAdmin dev DB → `~/Projects/docker-db/` |
+| `docker-db/` | `install.sh` | MariaDB + phpMyAdmin + PostgreSQL + pgAdmin dev DB → `~/Projects/docker-db/` _(project dir at repo root, not under `dotfiles/`)_ |
 
 ---
 
