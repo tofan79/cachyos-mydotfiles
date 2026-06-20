@@ -163,6 +163,16 @@ copy_dotfiles() {
             log_warn "${src_dir} dotfiles not found, skipping."
         fi
     done
+
+    # Noctalia state (settings + sounds)
+    if [[ -d "${SCRIPT_DIR}/dotfiles/noctalia" ]]; then
+        local src="${SCRIPT_DIR}/dotfiles/noctalia"
+        local dst="$HOME/.local/state/noctalia"
+        mkdir -p "$dst/sounds"
+        sed "s|/home/mindset|$HOME|g" "$src/settings.toml" > "$dst/settings.toml"
+        cp -r "$src/sounds"/* "$dst/sounds/" 2>/dev/null || true
+        log_ok "noctalia state copied."
+    fi
 }
 
 main() {

@@ -1,0 +1,313 @@
+[audio]
+enable_overdrive = true
+enable_sounds = true
+notification_sound = "/home/mindset/.config/noctalia/sounds/volume-change.wav"
+sound_volume = 0.99999997764825821
+volume_change_sound = "/home/mindset/.config/noctalia/sounds/volume-change.wav"
+
+[bar]
+order = [ "Mindset" ]
+
+    [bar.Mindset]
+    background_opacity = 0.4999999888241291
+    center = [ "workspaces", "audio_visualizer", "media" ]
+    contact_shadow = true
+    end = [
+        "tray",
+        "screenshot",
+        "recorder",
+        "notifications",
+        "clipboard",
+        "bluetooth",
+        "network",
+        "volume",
+        "battery",
+        "control-center",
+        "session"
+    ]
+    font_family = "Comic Sans MS"
+    font_weight = 400
+    margin_ends = 10
+    padding = 10
+    start = [ "launcher", "clock", "cpu", "temp", "ram", "privacy" ]
+    thickness = 30
+    widget_spacing = 8
+
+[brightness]
+enable_ddcutil = true
+minimum_brightness = 0.099999997764825821
+
+[calendar]
+refresh_minutes = 60
+
+[[control_center.shortcuts]]
+type = "wifi"
+
+[[control_center.shortcuts]]
+type = "bluetooth"
+
+[[control_center.shortcuts]]
+type = "nightlight"
+
+[[control_center.shortcuts]]
+type = "dark_mode"
+
+[[control_center.shortcuts]]
+type = "notification"
+
+[[control_center.shortcuts]]
+type = "power_profile"
+
+[desktop_widgets]
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 8
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+pre_action_fade_seconds = 5
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 900
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = false
+    timeout = 900
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 1200
+
+[location]
+auto_locate = true
+latitude = -6.9088900000000004
+longitude = 108.48972000000001
+sunrise = "06:00"
+sunset = "18:00"
+
+[lockscreen]
+blur_intensity = 0.0
+wallpaper = "/home/mindset/Pictures/Wallpapers/自由阶梯.JPG"
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [
+    "lockscreen-login-box@eDP-1",
+    "lockscreen-widget-0000000000000001",
+    "lockscreen-widget-0000000000000002",
+    "lockscreen-widget-0000000000000003",
+    "lockscreen-widget-0000000000000004"
+]
+
+    [lockscreen_widgets.grid]
+    cell_size = 8
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 927.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "on_primary"
+        background_opacity = 0.59999999999999998
+        background_radius = 20.0
+        input_opacity = 1.0
+        input_radius = 12.0
+        show_login_button = false
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 224.0
+    box_width = 448.0
+    cx = 960.0
+    cy = 188.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000001.settings]
+        background = false
+        background_opacity = 0.52000000000000002
+        center_text = true
+        clock_style = "digital"
+        font_family = ""
+        format = "{:%H:%M:%S}"
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 960.0
+    cy = 596.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "fancy_audio_visualizer"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000002.settings]
+        background = false
+        background_color = "surface"
+        background_opacity = 0.80000000000000004
+        background_padding = 10.0
+        background_radius = 12.0
+        bar_width = 0.59999999999999998
+        bloom_intensity = 0.5
+        fade_when_idle = true
+        inner_diameter = 0.69999999999999996
+        primary_color = "primary"
+        ring_opacity = 0.80000000000000004
+        rotation_speed = 2.0
+        secondary_color = "secondary"
+        sensitivity = 2.0
+        visualization_mode = "all"
+        wave_thickness = 1.0
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000003]
+    box_height = 80.0
+    box_width = 496.0
+    cx = 952.0
+    cy = 316.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "weather"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000003.settings]
+        background = false
+        background_color = "surface"
+        background_opacity = 0.80000000000000004
+        background_padding = 10.0
+        background_radius = 12.0
+        color = "on_surface"
+        font_family = ""
+        forecast_days = 3
+        shadow = true
+        show_forecast = false
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000004]
+    box_height = 80.0
+    box_width = 880.0
+    cx = 960.0
+    cy = 1020.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "audio_visualizer"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000004.settings]
+        aspect_ratio = 6.0
+        background = false
+        bands = 70.0
+        centered = false
+        color_2 = "secondary"
+        mirrored = true
+        show_when_idle = false
+
+[notification]
+background_opacity = 0.4999999888241291
+layer = "overlay"
+scale = 0.80000000447034836
+
+[osd]
+background_opacity = 0.4999999888241291
+position = "bottom_center"
+scale = 0.80000000447034836
+
+[plugin_settings."noctalia/screen_recorder"]
+audio_codec = "aac"
+color_range = "full"
+quality = "ultra"
+video_source = "focused"
+
+[plugins]
+enabled = [ "noctalia/screen_recorder", "noctalia/translator" ]
+
+[shell]
+avatar_path = "/var/lib/AccountsService/icons/mindset"
+clipboard_image_action_command = "grim -g \"$(slurp)\" - | satty -f-"
+font_family = "Comic Sans MS"
+password_style = "random"
+polkit_agent = true
+screen_time_enabled = true
+settings_show_advanced = true
+
+    [shell.panel]
+    clipboard_placement = "floating"
+    control_center_placement = "floating"
+    launcher_placement = "floating"
+    launcher_sort_by_usage = false
+    open_near_click_clipboard = true
+    open_near_click_control_center = true
+    open_near_click_launcher = true
+    session_placement = "centered"
+    transparency_mode = "glass"
+    wallpaper_placement = "centered"
+
+[system.monitor]
+gpu_poll_seconds = 2
+network_poll_seconds = 2
+
+[theme]
+community_palette = "GitHub Dark"
+mode = "dark"
+source = "community"
+wallpaper_scheme = "m3-rainbow"
+
+    [theme.templates]
+    builtin_ids = [ "btop", "cava", "foot", "gtk3", "gtk4", "hyprland", "qt" ]
+    community_ids = [ "zen-browser", "neovim", "zed", "rofi", "steam", "telegram", "yazi", "hyprtoolkit" ]
+
+[wallpaper]
+fill_mode = "stretch"
+transition_on_startup = true
+
+    [wallpaper.default]
+    path = "/home/mindset/Pictures/Wallpapers/111224 v2.png"
+
+    [wallpaper.last]
+    path = "/home/mindset/Pictures/Wallpapers/111224 v2.png"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/mindset/Pictures/Wallpapers/111224 v2.png"
+
+[weather]
+refresh_minutes = 5
+
+[widget.audio_visualizer]
+bands = 50
+color_2 = "secondary"
+show_when_idle = true
+width = 100.0
+
+[widget.clock]
+format = "{:%H:%M:%S}"
+
+[widget.cpu]
+stat = "cpu_temp"
+
+[widget.launcher]
+glyph = "brand-apple-filled"
+
+[widget.privacy]
+hide_inactive = true
+
+[widget.recorder]
+type = "noctalia/screen_recorder:recorder"
+
+[widget.spacer_2]
+type = "spacer"
+
+[widget.temp]
+stat = "gpu_temp"

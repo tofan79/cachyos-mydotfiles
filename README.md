@@ -473,6 +473,7 @@ height=120
 | `yazi/` | `install.sh` | Flavor set to noctalia |
 | `zed/` | `install.sh` | Noctalia Dark Transparent theme, ui_font_size 16, buffer_font_size 15 |
 | `zsh/` | `install.sh` | `.zshrc` (fastfetch, P10k, zoxide, fzf, mise, opencode), `.p10k.zsh` |
+| `noctalia/` | `hyprland-noctalia.sh` | `settings.toml` + sounds → `~/.local/state/noctalia/` |
 | `clean/` | `install.sh` | `clean.sh` — system cleanup script |
 | `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Foot integration, minimal blue theme |
 | `Wallpapers/` | `install.sh` | Copied to `~/Pictures/Wallpapers/` |
