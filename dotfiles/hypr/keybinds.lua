@@ -12,6 +12,7 @@ hl.bind(M .. " + Q", hl.dsp.window.close(), { description = "Close active window
 hl.bind(M .. " + CTRL + M", hl.dsp.exit(), { description = "Exit Hyprland" })
 hl.bind(M .. " + Escape", hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Session menu" })
 hl.bind(M .. " + SHIFT + L", hl.dsp.exec_cmd("noctalia msg session lock"), { description = "Lock screen" })
+hl.bind("XF86Sleep", hl.dsp.exec_cmd("noctalia msg session suspend"), { description = "Suspend laptop" })
 hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "System monitor (btop)" })
 
 -- ───────────────────────────────────────────
