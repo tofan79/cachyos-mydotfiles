@@ -2,29 +2,6 @@
 -- Window & Layer Rules
 -- ═══════════════════════════════════════════
 
--- Steam — floating + idle inhibit
-hl.window_rule({
-    name  = "steam-float",
-    match = { class = "steam" },
-    float = true,
-    size  = { 1200, 800 },
-})
-hl.window_rule({
-    name  = "steam-idleinhibit",
-    match = { class = "steam" },
-    idle_inhibit = "always",
-})
-hl.window_rule({
-    name  = "zen-idleinhibit",
-    match = { class = "^zen$" },
-    idle_inhibit = "always",
-})
-hl.window_rule({
-    name  = "zoom-idleinhibit",
-    match = { class = "^zoom$" },
-    idle_inhibit = "always",
-})
-
 -- LocalSend — floating (multi appid)
 hl.window_rule({
     name  = "localsend-float",
@@ -70,24 +47,24 @@ hl.window_rule({
 
 -- Image/Media viewers
 hl.window_rule({
-    name  = "imv-float",
-    match = { class = "^imv$" },
-    float = true,
-    size  = { 900, 700 },
+    name   = "imv-float",
+    match  = { class = "^imv$" },
+    float  = true,
+    size   = { 900, 700 },
     opaque = true,
 })
 hl.window_rule({
-    name  = "mpv-float",
-    match = { class = "^mpv$" },
-    float = true,
-    size  = { 900, 600 },
+    name   = "mpv-float",
+    match  = { class = "^mpv$" },
+    float  = true,
+    size   = { 900, 600 },
     opaque = true,
 })
 
 -- Fix XWayland drag issues
 hl.window_rule({
-    name  = "fix-xwayland-drags",
-    match = {
+    name     = "fix-xwayland-drags",
+    match    = {
         class      = "^$",
         title      = "^$",
         xwayland   = true,

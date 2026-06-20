@@ -71,7 +71,7 @@ widget_order = []
 
 [idle]
 behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
-pre_action_fade_seconds = 5
+pre_action_fade_seconds = 3
 
     [idle.behavior.lock]
     action = "lock"
@@ -107,7 +107,8 @@ widget_order = [
     "lockscreen-widget-0000000000000001",
     "lockscreen-widget-0000000000000002",
     "lockscreen-widget-0000000000000003",
-    "lockscreen-widget-0000000000000004"
+    "lockscreen-widget-0000000000000004",
+    "lockscreen-widget-0000000000000005"
 ]
 
     [lockscreen_widgets.grid]
@@ -136,7 +137,7 @@ widget_order = [
     box_height = 224.0
     box_width = 448.0
     cx = 960.0
-    cy = 188.0
+    cy = 148.0
     output = "eDP-1"
     rotation = 0.0
     type = "clock"
@@ -152,8 +153,8 @@ widget_order = [
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
     box_height = 0.0
     box_width = 0.0
-    cx = 960.0
-    cy = 596.0
+    cx = 170.0
+    cy = 910.0
     output = "eDP-1"
     rotation = 0.0
     type = "fancy_audio_visualizer"
@@ -177,10 +178,10 @@ widget_order = [
         wave_thickness = 1.0
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000003]
-    box_height = 80.0
-    box_width = 496.0
-    cx = 952.0
-    cy = 316.0
+    box_height = 208.0
+    box_width = 304.0
+    cx = 976.0
+    cy = 340.0
     output = "eDP-1"
     rotation = 0.0
     type = "weather"
@@ -195,11 +196,11 @@ widget_order = [
         font_family = ""
         forecast_days = 3
         shadow = true
-        show_forecast = false
+        show_forecast = true
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000004]
     box_height = 80.0
-    box_width = 880.0
+    box_width = 872.0
     cx = 960.0
     cy = 1020.0
     output = "eDP-1"
@@ -209,17 +210,43 @@ widget_order = [
         [lockscreen_widgets.widget.lockscreen-widget-0000000000000004.settings]
         aspect_ratio = 6.0
         background = false
-        bands = 70.0
-        centered = false
+        bands = 60.0
+        centered = true
         color_2 = "secondary"
         mirrored = true
         show_when_idle = false
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000005]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1744.0
+    cy = 910.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "fancy_audio_visualizer"
+
+        [lockscreen_widgets.widget.lockscreen-widget-0000000000000005.settings]
+        background = false
+        background_color = "surface"
+        background_opacity = 0.80000000000000004
+        background_padding = 10.0
+        background_radius = 12.0
+        bar_width = 0.59999999999999998
+        bloom_intensity = 0.5
+        fade_when_idle = true
+        inner_diameter = 0.69999999999999996
+        primary_color = "primary"
+        ring_opacity = 0.80000000000000004
+        rotation_speed = 2.0
+        secondary_color = "secondary"
+        sensitivity = 2.0
+        visualization_mode = "all"
+        wave_thickness = 1.0
 
 [notification]
 background_opacity = 0.4999999888241291
 layer = "overlay"
 scale = 0.80000000447034836
-
 
 [osd]
 background_opacity = 0.4999999888241291
@@ -275,13 +302,13 @@ fill_mode = "stretch"
 transition_on_startup = true
 
     [wallpaper.default]
-    path = "/home/mindset/Pictures/Wallpapers/sheng-l-q2dUSl9S4Xg-unsplash.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/42.png"
 
     [wallpaper.last]
-    path = "/home/mindset/Pictures/Wallpapers/sheng-l-q2dUSl9S4Xg-unsplash.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/42.png"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/mindset/Pictures/Wallpapers/sheng-l-q2dUSl9S4Xg-unsplash.jpg"
+    path = "/home/mindset/Pictures/Wallpapers/42.png"
 
 [weather]
 refresh_minutes = 5
