@@ -306,7 +306,7 @@ files = [
 	{ name = "gulpfile.coffee", text = "", fg = "#58a6ff" },
 	{ name = "gulpfile.js", text = "", fg = "#58a6ff" },
 	{ name = "gulpfile.ts", text = "", fg = "#58a6ff" },
-	{ name = "hypridle.conf", text = "", fg = "#58a6ff" },
+
 	{ name = "hyprland.conf", text = "", fg = "#58a6ff" },
 	{ name = "hyprlandd.conf", text = "", fg = "#58a6ff" },
 	{ name = "hyprlock.conf", text = "", fg = "#58a6ff" },

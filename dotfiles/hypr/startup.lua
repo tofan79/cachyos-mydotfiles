@@ -14,9 +14,6 @@ hl.on("hyprland.start", function()
     -- Clipboard history
     hl.exec_cmd("wl-paste --watch cliphist store")
 
-    -- Idle daemon (respects idle_inhibit window rules)
-    hl.exec_cmd("hypridle")
-
     -- Noctalia shell
     hl.exec_cmd("noctalia")
 end)
