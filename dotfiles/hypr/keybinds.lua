@@ -187,7 +187,7 @@ hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser (Z
 hl.bind(M .. " + N", hl.dsp.exec_cmd("zeditor"), { description = "Editor (Zed)" })
 hl.bind(M .. " + H", hl.dsp.exec_cmd("localsend"), { description = "LocalSend" })
 hl.bind(M .. " + T", hl.dsp.exec_cmd("Telegram"), { description = "Telegram" })
-hl.bind(M .. " + W", hl.dsp.exec_cmd("flatpak run io.github.tobagin.karere"), { description = "Karere" })
+hl.bind(M .. " + W", hl.dsp.exec_cmd("io.github.tobagin.karere"), { description = "Karere" })
 
 -- ───────────────────────────────────────────
 -- Mouse Bindings
