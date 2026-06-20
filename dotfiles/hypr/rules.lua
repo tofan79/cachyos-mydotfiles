@@ -74,17 +74,14 @@ hl.window_rule({
     match = { class = "^imv$" },
     float = true,
     size  = { 900, 700 },
+    force_opaque = true,
 })
 hl.window_rule({
     name  = "mpv-float",
     match = { class = "^mpv$" },
     float = true,
     size  = { 900, 600 },
-})
-hl.window_rule({
-    name  = "mpv-idleinhibit",
-    match = { class = "^mpv$" },
-    idle_inhibit = "fullscreen",
+    force_opaque = true,
 })
 
 -- Fix XWayland drag issues
