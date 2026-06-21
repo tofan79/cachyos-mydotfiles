@@ -70,12 +70,11 @@ install_core_app_support() {
         font-manager \
         ab-download-manager gamemode lib32-gamemode faugus-launcher protonplus \
         android-studio intellij-idea-community-edition \
-        zoom
+        zoom \
+        easyeffects
 
     if $IS_ASUS; then
         pacman_install asusctl rog-control-center
-        log_info "Installing ayuz-git from AUR..."
-        paru -S --noconfirm ayuz-git 2>/dev/null || log_warn "ayuz-git FAILED to install."
     fi
 
     if command -v asusctl &>/dev/null; then
