@@ -20,10 +20,11 @@ hl.bind(M .. " + slash", hl.dsp.exec_cmd("foot -T btop btop"), { description = "
 hl.bind(M .. " + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), { description = "App launcher" })
 hl.bind(M .. " + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"), { description = "Control center" })
 hl.bind(M .. " + CTRL + Space", hl.dsp.exec_cmd("noctalia msg settings-toggle"), { description = "Settings toggle" })
-hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg wallpaper-random"), { description = "Random wallpaper" })
+hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg panel-toggle wallpaper"), { description = "Wallpaper picker" })
 hl.bind(M .. " + CTRL + period", hl.dsp.exec_cmd("noctalia msg notification-clear-history"), { description = "Clear notifications" })
 hl.bind(M .. " + CTRL + comma", hl.dsp.exec_cmd("noctalia msg clipboard-clear"), { description = "Clear clipboard" })
 hl.bind(M .. " + CTRL + C", hl.dsp.exec_cmd("noctalia msg caffeine-toggle"), { description = "Toggle caffeine" })
+hl.bind(M .. " + CTRL + backslash", hl.dsp.exec_cmd("noctalia msg wallpaper-random"), { description = "Random wallpaper" })
 
 -- ───────────────────────────────────────────
 -- Window Focus (Super + Arrows)
