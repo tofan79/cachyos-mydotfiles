@@ -74,6 +74,8 @@ install_core_app_support() {
 
     if $IS_ASUS; then
         pacman_install asusctl rog-control-center
+        log_info "Installing ayuz-git from AUR..."
+        paru -S --noconfirm ayuz-git 2>/dev/null || log_warn "ayuz-git FAILED to install."
     fi
 
     if command -v asusctl &>/dev/null; then
@@ -171,6 +173,8 @@ apply_icon_cursor_settings() {
 main() {
     preflight_checks
     install_core_app_support
+    install_php_dev
+    deploy_php_config
     fix_terminal_desktop
     deploy_custom_desktop_entries
     deploy_nvim_config
@@ -178,6 +182,25 @@ main() {
     apply_icon_cursor_settings
     remove_cachyos_defaults
     log_ok "CachyOS app support complete. Log: ${LOG_FILE}"
+}
+
+install_php_dev() {
+    log_info "Installing PHP development stack..."
+    pacman_install php php-gd php-intl php-pgsql php-sqlite php-fpm php-tidy php-imagick php-redis php-memcached php-mongodb php-apcu composer php-igbinary php-xsl
+    composer global require laravel/installer 2>/dev/null || true
+    log_ok "PHP development stack installed."
+}
+
+deploy_php_config() {
+    local src="${SCRIPT_DIR}/dotfiles/php"
+    local dst="/etc/php"
+    if [[ -d "$src" ]]; then
+        log_info "Deploying PHP configuration..."
+        sudo mkdir -p "$dst"
+        sudo cp "$src/php.ini" "$dst/php.ini"
+        sudo cp -r "$src/conf.d/." "$dst/conf.d/"
+        log_ok "PHP configuration deployed."
+    fi
 }
 
 remove_cachyos_defaults() {

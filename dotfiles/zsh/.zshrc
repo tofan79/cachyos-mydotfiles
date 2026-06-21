@@ -71,4 +71,21 @@ eval "$(~/.local/bin/mise activate zsh)"
 # ---- opencode ----
 export PATH="$HOME/.opencode/bin:$PATH"
 
+# ---- Composer global ----
+export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+
+# ---- `i` = mise install + use global ----
+alias ims='mise use -g'
+
+# ---- msop: update mise + opencode ----
+msop() {
+  echo ":: Updating opencode..."
+  curl -fsSL https://opencode.ai/install | sh
+  echo ":: Updating mise..."
+  mise self-update
+  echo ":: Upgrading all mise tools..."
+  mise upgrade
+  echo ":: Done"
+}
+
 # fastfetch ada di atas (sebelum instant prompt)

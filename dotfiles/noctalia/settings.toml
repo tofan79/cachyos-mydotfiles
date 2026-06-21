@@ -268,6 +268,7 @@ clipboard_image_action_command = "grim -g \"$(slurp)\" - | satty -f-"
 font_family = "Comic Sans MS"
 password_style = "random"
 polkit_agent = true
+screen_time_enabled = true
 settings_show_advanced = true
 
     [shell.panel]
