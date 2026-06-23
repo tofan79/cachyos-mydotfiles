@@ -1,0 +1,13 @@
+[Unit]
+Description=Fix ASUS ALC256 mic/speaker levels
+After=pipewire-session-manager.service
+PartOf=pipewire-session-manager.service
+
+[Service]
+Type=oneshot
+ExecStartPre=sleep 2
+ExecStart=%h/.local/bin/fix-asus-audio.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=pipewire-session-manager.service

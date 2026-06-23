@@ -261,6 +261,14 @@ copy_dotfiles() {
         mkdir -p "$HOME/.config/clean" && cp "${SCRIPT_DIR}/dotfiles/clean/clean.sh" "$HOME/.config/clean/clean.sh" 2>/dev/null && chmod +x "$HOME/.config/clean/clean.sh" && log_ok "clean.sh copied."
     fi
 
+    if $IS_ASUS; then
+        mkdir -p "$HOME/.local/bin" "$HOME/.config/systemd/user"
+        cp "${SCRIPT_DIR}/dotfiles/local/bin/fix-asus-audio.sh" "$HOME/.local/bin/" 2>/dev/null && chmod +x "$HOME/.local/bin/fix-asus-audio.sh" && log_ok "fix-asus-audio.sh copied."
+        cp "${SCRIPT_DIR}/dotfiles/systemd/user/fix-asus-audio.service" "$HOME/.config/systemd/user/" 2>/dev/null && log_ok "fix-asus-audio.service copied."
+        systemctl --user daemon-reload 2>/dev/null || true
+        systemctl --user enable --now fix-asus-audio.service 2>/dev/null || true
+    fi
+
     log_ok "Dotfiles copied."
 }
 
