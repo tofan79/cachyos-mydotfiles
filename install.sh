@@ -316,6 +316,25 @@ fix_audio() {
         fi
     done
 
+    # Enable ALSA soft-mixer so PipeWire handles volume (prevents pavu from resetting ALSA)
+    mkdir -p "${HOME}/.config/wireplumber/wireplumber.conf.d/"
+    cat > "${HOME}/.config/wireplumber/wireplumber.conf.d/alsa-soft-mixer.conf" << 'WPCONFIG'
+monitor.alsa.rules = [
+  {
+    matches = [
+      { alsa.mixer_name = "Realtek ALC256" }
+    ]
+    actions = {
+      update-props = {
+        api.alsa.soft-mixer = true
+      }
+    }
+  }
+]
+WPCONFIG
+    systemctl --user restart wireplumber 2>/dev/null || true
+    log_ok "ALSA soft-mixer configured."
+
     # Save ALSA state for persistence
     pkexec alsactl store 2>/dev/null && log_ok "ALSA state saved." || log_warn "Could not save ALSA state."
 }
