@@ -1,0 +1,13 @@
+[Unit]
+Description=Watch for audio jack changes via pactl
+After=pipewire-session-manager.service
+PartOf=pipewire-session-manager.service
+
+[Service]
+Type=simple
+ExecStart=bash -c 'stdbuf -oL pactl subscribe | while read -r line; do case "$line" in *"card"*) ~/.local/bin/fix-asus-audio.sh;; esac; done'
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=pipewire-session-manager.service
