@@ -316,8 +316,8 @@ fix_audio() {
             log_ok "Internal Mic Boost set to 1, Capture 45 (card ${cardnum})"
             amixer -c "$cardnum" sset Speaker 87 unmute 2>/dev/null || true
             amixer -c "$cardnum" sset Master 87 unmute 2>/dev/null || true
-            amixer -c "$cardnum" sset 'Auto-Mute Mode' Enabled 2>/dev/null || true
-            log_ok "Speaker 100%, Master 100%, Auto-Mute Enabled (card ${cardnum})"
+            amixer -c "$cardnum" sset 'Auto-Mute Mode' Disabled 2>/dev/null || true
+            log_ok "Speaker 100%, Master 100%, Auto-Mute Disabled (card ${cardnum})"
             break
         fi
     done
