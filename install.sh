@@ -308,6 +308,10 @@ fix_audio() {
                 amixer -c "$cardnum" cset numid=9 0 2>/dev/null
                 log_ok "Internal Mic Boost set to 0 (card ${cardnum})"
             fi
+            # Unmute and set Speaker/Headphone volume (fix for ALC256)
+            amixer -c "$cardnum" sset Speaker 100% unmute 2>/dev/null || true
+            amixer -c "$cardnum" sset Headphone 100% unmute 2>/dev/null || true
+            log_ok "Speaker/Headphone unmuted (card ${cardnum})"
             break
         fi
     done
