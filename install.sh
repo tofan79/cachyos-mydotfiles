@@ -303,12 +303,13 @@ fix_audio() {
     for card in /proc/asound/card*/codec*; do
         if grep -q "ALC" "$card" 2>/dev/null; then
             cardnum=$(echo "$card" | grep -oP 'card\K\d+')
-            amixer -c "$cardnum" sset 'Internal Mic Boost' 0 2>/dev/null || true
-            amixer -c "$cardnum" sset 'Capture' 70% unmute 2>/dev/null || true
-            log_ok "Internal Mic Boost set to 0, Capture 70% (card ${cardnum})"
-            amixer -c "$cardnum" sset Speaker 100% unmute 2>/dev/null || true
-            amixer -c "$cardnum" sset Headphone 100% unmute 2>/dev/null || true
-            log_ok "Speaker/Headphone unmuted (card ${cardnum})"
+            amixer -c "$cardnum" sset 'Internal Mic Boost' 1 2>/dev/null || true
+            amixer -c "$cardnum" sset 'Capture' 45 unmute 2>/dev/null || true
+            log_ok "Internal Mic Boost set to 1, Capture 45 (card ${cardnum})"
+            amixer -c "$cardnum" sset Speaker 87 unmute 2>/dev/null || true
+            amixer -c "$cardnum" sset Master 87 unmute 2>/dev/null || true
+            amixer -c "$cardnum" sset 'Auto-Mute Mode' Enabled 2>/dev/null || true
+            log_ok "Speaker 100%, Master 100%, Auto-Mute Enabled (card ${cardnum})"
             break
         fi
     done
