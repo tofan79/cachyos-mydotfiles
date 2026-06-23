@@ -299,41 +299,19 @@ fix_audio() {
     # Restart WirePlumber to pick up alsa-soft-mixer drop-in
     systemctl --user restart wireplumber.service 2>/dev/null || true
 
-    # Set internal mic boost to 0 (prevents clipping on Realtek ALC codecs)
+    # Fix internal mic gain + speaker/headphone on ASUS ALC256/ALC285
     for card in /proc/asound/card*/codec*; do
         if grep -q "ALC" "$card" 2>/dev/null; then
             cardnum=$(echo "$card" | grep -oP 'card\K\d+')
-            # Check if Internal Mic Boost Volume control exists
-            if amixer -c "$cardnum" cget numid=9 2>/dev/null | grep -q "Internal Mic Boost"; then
-                amixer -c "$cardnum" cset numid=9 0 2>/dev/null
-                log_ok "Internal Mic Boost set to 0 (card ${cardnum})"
-            fi
-            # Unmute and set Speaker/Headphone volume (fix for ALC256)
+            amixer -c "$cardnum" sset 'Internal Mic Boost' 0 2>/dev/null || true
+            amixer -c "$cardnum" sset 'Capture' 70% unmute 2>/dev/null || true
+            log_ok "Internal Mic Boost set to 0, Capture 70% (card ${cardnum})"
             amixer -c "$cardnum" sset Speaker 100% unmute 2>/dev/null || true
             amixer -c "$cardnum" sset Headphone 100% unmute 2>/dev/null || true
             log_ok "Speaker/Headphone unmuted (card ${cardnum})"
             break
         fi
     done
-
-    # Enable ALSA soft-mixer so PipeWire handles volume (prevents pavu from resetting ALSA)
-    mkdir -p "${HOME}/.config/wireplumber/wireplumber.conf.d/"
-    cat > "${HOME}/.config/wireplumber/wireplumber.conf.d/alsa-soft-mixer.conf" << 'WPCONFIG'
-monitor.alsa.rules = [
-  {
-    matches = [
-      { alsa.mixer_name = "Realtek ALC256" }
-    ]
-    actions = {
-      update-props = {
-        api.alsa.soft-mixer = true
-      }
-    }
-  }
-]
-WPCONFIG
-    systemctl --user restart wireplumber 2>/dev/null || true
-    log_ok "ALSA soft-mixer configured."
 
     # Save ALSA state for persistence
     pkexec alsactl store 2>/dev/null && log_ok "ALSA state saved." || log_warn "Could not save ALSA state."
