@@ -6,4 +6,4 @@ amixer -c "$CARD" sset 'Internal Mic Boost' 1
 amixer -c "$CARD" sset 'Speaker' 87 unmute
 amixer -c "$CARD" sset 'Headphone' 87 unmute
 amixer -c "$CARD" sset 'Master' 87 unmute
-amixer -c "$CARD" sset 'Auto-Mute Mode' Enabled
+amixer -c "$CARD" sset 'Auto-Mute Mode' Disabled
