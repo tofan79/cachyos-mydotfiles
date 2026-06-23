@@ -267,6 +267,7 @@ copy_dotfiles() {
         cp "${SCRIPT_DIR}/dotfiles/systemd/user/fix-asus-audio.service" "$HOME/.config/systemd/user/" 2>/dev/null && log_ok "fix-asus-audio.service copied."
         systemctl --user daemon-reload 2>/dev/null || true
         systemctl --user enable --now fix-asus-audio.service 2>/dev/null || true
+        systemctl --user enable --now fix-audio-watcher.service 2>/dev/null || true
     fi
 
     log_ok "Dotfiles copied."
