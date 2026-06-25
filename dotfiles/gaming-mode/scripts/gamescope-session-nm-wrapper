@@ -7,7 +7,7 @@ save_pre_gaming_state() {
     {
         echo "PRE_GAMING_CPU_GOVERNOR=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null)"
         echo "PRE_GAMING_POWER_PROFILE=$(powerprofilesctl get 2>/dev/null)"
-        echo "PRE_GAMING_ASUSCTL_PROFILE=$(asusctl profile get 2>/dev/null | grep -oP 'Active profile: \K\w+')"
+        echo "PRE_GAMING_ASUSCTL_PROFILE=$(cat /tmp/.pre-gaming-asusctl 2>/dev/null || asusctl profile get 2>/dev/null | grep -oP 'Active profile: \K\w+')"
     } > "$SAVED_STATE_FILE"
     log "Saved pre-Gaming-Mode state to $SAVED_STATE_FILE"
 }
@@ -78,7 +78,7 @@ restore_balanced_mode() {
         sudo -n asusctl profile set "$saved_asusctl" 2>/dev/null || true
     fi
 
-    rm -f "$SAVED_STATE_FILE"
+    rm -f "$SAVED_STATE_FILE" /tmp/.pre-gaming-asusctl 2>/dev/null || true
     log "Pre-Gaming-Mode state restored (governor=$target_gov profile=${saved_pp:-balanced} asusctl=$saved_asusctl)"
 }
 
