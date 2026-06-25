@@ -69,7 +69,11 @@ setup_sddm() {
     fi
     if [[ -f "$GM_DIR/sddm/zz-gaming-session.conf" ]]; then
         sudo install -m 644 "$GM_DIR/sddm/zz-gaming-session.conf" /etc/sddm.conf.d/
-        sudo sed -i "s/^User=.*/User=${autologin_user}/" /etc/sddm.conf.d/zz-gaming-session.conf
+        if grep -q "^User=" /etc/sddm.conf.d/zz-gaming-session.conf 2>/dev/null; then
+            sudo sed -i "s/^User=.*/User=${autologin_user}/" /etc/sddm.conf.d/zz-gaming-session.conf
+        else
+            sudo sed -i "/^\[Autologin\]/a User=${autologin_user}" /etc/sddm.conf.d/zz-gaming-session.conf
+        fi
     fi
     log_ok "SDDM configured"
 }
