@@ -40,8 +40,8 @@ hl.animation({ leaf = "windowsMove", enabled = true, speed = 5, bezier = "wipe_c
 hl.animation({ leaf = "border", enabled = true, speed = 8, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = 15, bezier = "wipe_snap" })
 hl.animation({ leaf = "fadeDim", enabled = true, speed = 15, bezier = "wipe_out" })
-hl.animation({ leaf = "layersIn", enabled = true, speed = 6, bezier = "winIn", style = "slidefade 15%" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 12, bezier = "wipe_out", style = "slidefade 15%" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 6, bezier = "winIn" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 12, bezier = "wipe_out" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 10, bezier = "default" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 12, bezier = "wipe_out" })
 
