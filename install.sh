@@ -245,6 +245,16 @@ copy_dotfiles() {
         config_map["wireplumber"]=".config/wireplumber"
     fi
 
+    # Deploy noctalia config to XDG_STATE_HOME
+    mkdir -p "$HOME/.local/state/noctalia/sounds"
+    if [[ -f "${SCRIPT_DIR}/dotfiles/noctalia/settings.toml" ]]; then
+        cp "${SCRIPT_DIR}/dotfiles/noctalia/settings.toml" "$HOME/.local/state/noctalia/settings.toml" && log_ok "noctalia settings.toml copied."
+    fi
+    if [[ -d "${SCRIPT_DIR}/dotfiles/noctalia/sounds" ]]; then
+        cp "${SCRIPT_DIR}/dotfiles/noctalia/sounds"/* "$HOME/.local/state/noctalia/sounds/" 2>/dev/null || true
+        log_ok "noctalia sounds copied."
+    fi
+
     for src_dir in "${!config_map[@]}"; do
         local src="${SCRIPT_DIR}/dotfiles/${src_dir}"
         local dst="$HOME/${config_map[$src_dir]}"
