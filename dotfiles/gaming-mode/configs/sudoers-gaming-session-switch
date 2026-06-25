@@ -13,3 +13,4 @@
 %wheel ALL=(ALL) NOPASSWD: /usr/local/bin/gamescope-nm-stop
 %wheel ALL=(ALL) NOPASSWD: /usr/bin/powerprofilesctl
 %wheel ALL=(ALL) NOPASSWD: /usr/bin/nvidia-smi
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/asusctl

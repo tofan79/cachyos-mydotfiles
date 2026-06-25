@@ -13,6 +13,9 @@ if [[ -f "$SAVED_STATE_FILE" ]]; then
     sudo -n powerprofilesctl set "$PRE_GAMING_POWER_PROFILE" 2>/dev/null || \
       powerprofilesctl set "$PRE_GAMING_POWER_PROFILE" 2>/dev/null
   fi
+  if command -v asusctl &>/dev/null && [[ -n "${PRE_GAMING_ASUSCTL_PROFILE:-}" ]]; then
+    sudo -n asusctl profile set "$PRE_GAMING_ASUSCTL_PROFILE" 2>/dev/null || true
+  fi
   rm -f "$SAVED_STATE_FILE"
 fi
 sudo -n systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target 2>/dev/null
