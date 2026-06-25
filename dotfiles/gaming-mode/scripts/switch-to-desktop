@@ -1,0 +1,39 @@
+#!/bin/bash
+if [[ ! -f /tmp/.gaming-session-active ]]; then
+  exit 0
+fi
+rm -f /tmp/.gaming-session-active
+SAVED_STATE_FILE="$HOME/.cache/deckshift/saved-state"
+if [[ -f "$SAVED_STATE_FILE" ]]; then
+  source "$SAVED_STATE_FILE"
+  for gov in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+    echo "${PRE_GAMING_CPU_GOVERNOR:-powersave}" > "$gov" 2>/dev/null
+  done
+  if command -v powerprofilesctl &>/dev/null && [[ -n "${PRE_GAMING_POWER_PROFILE:-}" ]]; then
+    sudo -n powerprofilesctl set "$PRE_GAMING_POWER_PROFILE" 2>/dev/null || \
+      powerprofilesctl set "$PRE_GAMING_POWER_PROFILE" 2>/dev/null
+  fi
+  rm -f "$SAVED_STATE_FILE"
+fi
+sudo -n systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target 2>/dev/null
+sudo -n systemctl unmask --runtime sleep.target suspend.target hibernate.target hybrid-sleep.target 2>/dev/null
+sudo -n systemctl daemon-reload 2>/dev/null
+sudo -n /usr/local/bin/gaming-session-switch desktop 2>/dev/null || true
+timeout 5 steam -shutdown 2>/dev/null || true
+sleep 1
+pkill -TERM gamescope 2>/dev/null || true
+pkill -TERM -f gamescope-session 2>/dev/null || true
+for _ in {1..6}; do
+  pgrep -x gamescope >/dev/null 2>&1 || break
+  sleep 0.5
+done
+if pgrep -x gamescope >/dev/null 2>&1; then
+  pkill -9 gamescope 2>/dev/null || true
+  pkill -9 -f gamescope-session 2>/dev/null || true
+fi
+sleep 2
+touch /tmp/.deckshift-just-returned 2>/dev/null || true
+sudo -n chvt 2 2>/dev/null || true
+sleep 0.5
+sudo -n systemctl restart sddm
+exit 0

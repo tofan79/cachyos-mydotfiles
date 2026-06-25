@@ -1,0 +1,8 @@
+#!/bin/bash
+rm -f /tmp/.gaming-session-active
+sudo -n /usr/local/bin/gaming-session-switch desktop 2>/dev/null || true
+timeout 5 steam -shutdown 2>/dev/null || true
+sleep 1
+nohup sudo -n systemctl restart sddm &>/dev/null &
+disown
+exit 0

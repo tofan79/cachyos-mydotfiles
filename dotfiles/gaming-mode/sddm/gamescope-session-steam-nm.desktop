@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Gaming Mode (ChimeraOS)
+Comment=Steam Big Picture with gamescope-session
+Exec=/usr/local/bin/gamescope-session-nm-wrapper
+Type=Application
+DesktopNames=gamescope

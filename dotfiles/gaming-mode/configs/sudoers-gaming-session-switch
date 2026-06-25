@@ -1,0 +1,15 @@
+%video ALL=(ALL) NOPASSWD: /usr/local/bin/gaming-session-switch
+%video ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart sddm
+%video ALL=(ALL) NOPASSWD: /usr/bin/chvt
+%video ALL=(ALL) NOPASSWD: /usr/bin/systemctl mask --runtime sleep.target suspend.target hibernate.target hybrid-sleep.target
+%video ALL=(ALL) NOPASSWD: /usr/bin/systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+%video ALL=(ALL) NOPASSWD: /usr/bin/systemctl unmask --runtime sleep.target suspend.target hibernate.target hybrid-sleep.target
+%video ALL=(ALL) NOPASSWD: /usr/bin/systemctl daemon-reload
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/systemctl start NetworkManager.service
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop NetworkManager.service
+%video ALL=(ALL) NOPASSWD: /usr/bin/systemctl start bluetooth.service
+%video ALL=(ALL) NOPASSWD: /usr/bin/rfkill unblock bluetooth
+%wheel ALL=(ALL) NOPASSWD: /usr/local/bin/gamescope-nm-start
+%wheel ALL=(ALL) NOPASSWD: /usr/local/bin/gamescope-nm-stop
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/powerprofilesctl
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/nvidia-smi

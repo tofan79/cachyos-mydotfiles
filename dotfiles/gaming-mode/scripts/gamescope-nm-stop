@@ -1,0 +1,12 @@
+#!/bin/bash
+NM_MARKER="/tmp/.gamescope-started-nm"
+LOG_TAG="gamescope-nm"
+log() { logger -t "$LOG_TAG" "$*"; echo "$*"; }
+if [ -f "$NM_MARKER" ]; then
+    rm -f "$NM_MARKER"
+    if systemctl is-active --quiet NetworkManager.service; then
+        log "Stopping NetworkManager service..."
+        systemctl stop NetworkManager.service 2>/dev/null || true
+        sleep 1
+    fi
+fi

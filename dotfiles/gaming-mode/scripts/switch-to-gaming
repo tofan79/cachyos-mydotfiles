@@ -1,0 +1,25 @@
+#!/bin/bash
+sudo -n systemctl mask --runtime sleep.target suspend.target hibernate.target hybrid-sleep.target 2>/dev/null
+sudo -n /usr/local/bin/gaming-session-switch gaming 2>/dev/null || {
+  notify-send -u critical -t 3000 "Gaming Mode" "Failed to update session config" 2>/dev/null || true
+}
+notify-send -u normal -t 2000 "Gaming Mode" "Switching to Gaming Mode..." 2>/dev/null || true
+pkill -9 gamescope 2>/dev/null || true
+pkill -9 -f gamescope-session 2>/dev/null || true
+sleep 1
+ENV_CONF="$HOME/.config/environment.d/gamescope-session-plus.conf"
+if [[ -f "$ENV_CONF" ]]; then
+  TO_DISABLE=$(awk -F= '$1=="OUTPUT_CONNECTOR_TO_DISABLE" { sub(/^[^=]*=/,""); v=$0 } END { print v }' "$ENV_CONF")
+  if [[ -n "$TO_DISABLE" ]]; then
+    IFS=',' read -ra DISABLE_LIST <<< "$TO_DISABLE"
+    for conn in "${DISABLE_LIST[@]}"; do
+      conn="${conn// /}"
+      [[ -z "$conn" ]] && continue
+      hyprctl keyword monitor "${conn},disable" 2>/dev/null || true
+    done
+    sleep 0.5
+  fi
+fi
+sudo -n chvt 2 2>/dev/null || true
+sleep 0.3
+sudo -n systemctl restart sddm

@@ -1,0 +1,23 @@
+#!/bin/bash
+NM_MARKER="/tmp/.gamescope-started-nm"
+LOG_TAG="gamescope-nm"
+log() { logger -t "$LOG_TAG" "$*"; echo "$*"; }
+if ! systemctl is-active --quiet NetworkManager.service; then
+    log "Starting NetworkManager service..."
+    systemctl start NetworkManager.service
+    if [ $? -eq 0 ]; then
+        touch "$NM_MARKER"
+        log "NetworkManager started successfully"
+    else
+        log "ERROR: Failed to start NetworkManager"
+        exit 1
+    fi
+    log "Waiting for NetworkManager to initialize..."
+    for i in {1..20}; do
+        if nmcli general status &>/dev/null; then
+            log "NetworkManager ready after ${i} attempts"
+            break
+        fi
+        sleep 0.5
+    done
+fi

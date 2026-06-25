@@ -240,6 +240,7 @@ copy_dotfiles() {
         ["cava"]=".config/cava"
         ["yazi"]=".config/yazi"
         ["zed"]=".config/zed"
+        ["environment.d"]=".config/environment.d"
     )
     if $IS_ASUS; then
         config_map["wireplumber"]=".config/wireplumber"

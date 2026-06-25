@@ -1,0 +1,20 @@
+#!/bin/bash
+CONF="/etc/sddm.conf.d/zz-gaming-session.conf"
+if [[ ! -f "$CONF" ]]; then
+  echo "Error: Config file not found: $CONF" >&2
+  exit 1
+fi
+case "$1" in
+  gaming)
+    sed -i 's/^Session=.*/Session=gamescope-session-steam-nm/' "$CONF"
+    echo "Session set to: gaming mode"
+    ;;
+  desktop)
+    sed -i 's/^Session=.*/Session=hyprland/' "$CONF"
+    echo "Session set to: desktop mode"
+    ;;
+  *)
+    echo "Usage: $0 {gaming|desktop}" >&2
+    exit 1
+    ;;
+esac

@@ -195,6 +195,12 @@ hl.bind(M .. " + T", hl.dsp.exec_cmd("Telegram"), { description = "Telegram" })
 hl.bind(M .. " + W", hl.dsp.exec_cmd("io.github.tobagin.karere"), { description = "Karere" })
 
 -- ───────────────────────────────────────────
+-- Gaming Mode
+-- ───────────────────────────────────────────
+hl.bind(M .. " + SHIFT + G", hl.dsp.exec_cmd("/usr/local/bin/switch-to-gaming"), { description = "Gaming mode (SDDM switch)" })
+hl.bind(M .. " + SHIFT + R", hl.dsp.exec_cmd("/usr/local/bin/switch-to-desktop"), { description = "Exit gaming mode" })
+
+-- ───────────────────────────────────────────
 -- Mouse Bindings
 -- ───────────────────────────────────────────
 hl.bind(M .. " + mouse:272", hl.dsp.window.drag(), { mouse = true, description = "Move window with mouse" })

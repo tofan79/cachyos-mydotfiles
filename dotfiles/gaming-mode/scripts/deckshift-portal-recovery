@@ -1,0 +1,14 @@
+#!/bin/bash
+[[ -f /tmp/.deckshift-just-returned ]] || exit 0
+rm -f /tmp/.deckshift-just-returned
+sleep 2
+systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE 2>/dev/null || true
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE 2>/dev/null || true
+systemctl --user stop xdg-desktop-portal-hyprland.service xdg-desktop-portal.service 2>/dev/null || true
+pkill -TERM -x xdg-desktop-portal-hyprland xdg-desktop-portal 2>/dev/null
+sleep 0.5
+pkill -KILL -x xdg-desktop-portal-hyprland xdg-desktop-portal 2>/dev/null
+systemctl --user reset-failed xdg-desktop-portal-hyprland.service xdg-desktop-portal.service 2>/dev/null || true
+systemctl --user restart pipewire.service pipewire-pulse.service wireplumber.service 2>/dev/null || true
+sleep 2
+systemctl --user start xdg-desktop-portal-hyprland.service xdg-desktop-portal.service 2>/dev/null || true

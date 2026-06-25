@@ -14,6 +14,9 @@ hl.on("hyprland.start", function()
     -- Clipboard history
     hl.exec_cmd("wl-paste --watch cliphist store")
 
+    -- Portal recovery after Gaming Mode
+    hl.exec_cmd("/usr/local/bin/deckshift-portal-recovery")
+
     -- Noctalia shell
     hl.exec_cmd("noctalia")
 end)
