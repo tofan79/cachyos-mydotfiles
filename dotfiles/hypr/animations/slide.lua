@@ -31,7 +31,7 @@ hl.animation({ leaf = "windowsMove", enabled = true, speed = 5, bezier = "slide_
 hl.animation({ leaf = "border", enabled = true, speed = 8, bezier = "default" })
 hl.animation({ leaf = "fade", enabled = true, speed = 4, bezier = "slide_decel" })
 hl.animation({ leaf = "fadeDim", enabled = true, speed = 6, bezier = "slide_accel" })
-hl.animation({ leaf = "layersIn", enabled = true, speed = 4, bezier = "slide_soft", style = "slide" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 4, bezier = "slide_soft" })
 hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "slide_accel" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 3, bezier = "slide_soft" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 5, bezier = "slide_accel" })

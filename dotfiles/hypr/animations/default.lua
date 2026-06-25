@@ -42,7 +42,7 @@ hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "md3_decel" })
 -- Commmented out alternatives from your legacy configuration:
 -- hl.animation({ leaf = "layers", enabled = true, speed = 2, bezier = "md3_decel", style = "slide" })
 
-hl.animation({ leaf = "layersIn", enabled = true, speed = 3, bezier = "menu_decel", style = "slide" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 3, bezier = "menu_decel" })
 hl.animation({ leaf = "layersOut", enabled = true, speed = 1.6, bezier = "menu_accel" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 2, bezier = "menu_decel" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 4.5, bezier = "menu_accel" })
