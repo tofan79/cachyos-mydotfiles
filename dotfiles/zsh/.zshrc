@@ -74,6 +74,10 @@ export PATH="$HOME/.opencode/bin:$PATH"
 # ---- Composer global ----
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
+# ---- EasyEffects ----
+alias ee='easyeffects --gapplication-service &'
+alias effect='python -m projectpulsewire start'
+
 # ---- `i` = mise install + use global ----
 alias ims='mise use -g'
 
@@ -86,6 +90,18 @@ msop() {
   echo ":: Upgrading all mise tools..."
   mise upgrade
   echo ":: Done"
+}
+
+# ---- Resolve convert ----
+alias convert-resolve='resolve_convert.sh -q hq'
+alias backup-resolve='resolve_backup.sh --output-dir ~/Backups'
+restore-resolve() {
+  local backup="${1:-$(ls -t ~/Backups/resolve_backup_*.tar.gz 2>/dev/null | head -1)}"
+  if [[ -z "$backup" ]]; then
+    echo "Gak ada backup di ~/Backups/"
+    return 1
+  fi
+  resolve_backup.sh --restore "$backup"
 }
 
 # fastfetch ada di atas (sebelum instant prompt)
