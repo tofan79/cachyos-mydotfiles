@@ -1,2 +1,5 @@
 #!/bin/bash
-sed -i "/^Relogin=/d" /etc/sddm.conf.d/zz-gaming-session.conf
+CONF="/etc/sddm.conf.d/zz-gaming-session.conf"
+if grep -q "\[Autologin\]" "$CONF" 2>/dev/null; then
+  > "$CONF"
+fi
