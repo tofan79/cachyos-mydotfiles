@@ -17,6 +17,9 @@ hl.on("hyprland.start", function()
     -- Restore asusctl profile setelah gaming mode (asusd kadang nyangkut "Balanced")
     hl.exec_cmd("sleep 2 && asusctl profile set Performance")
 
+    -- Hapus Relogin=true dari SDDM config biar gak auto-login di boot normal
+    hl.exec_cmd("sleep 3 && sudo -n /usr/local/bin/disable-sddm-autologin 2>/dev/null || true")
+
     -- Clipboard history
     hl.exec_cmd("wl-paste --watch cliphist store")
 

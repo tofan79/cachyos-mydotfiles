@@ -1,0 +1,2 @@
+#!/bin/bash
+sed -i "/^Relogin=/d" /etc/sddm.conf.d/zz-gaming-session.conf

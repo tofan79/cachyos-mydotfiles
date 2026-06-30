@@ -14,3 +14,4 @@
 %wheel ALL=(ALL) NOPASSWD: /usr/bin/powerprofilesctl
 %wheel ALL=(ALL) NOPASSWD: /usr/bin/nvidia-smi
 %wheel ALL=(ALL) NOPASSWD: /usr/bin/asusctl
+mindset ALL=(ALL) NOPASSWD: /usr/local/bin/disable-sddm-autologin

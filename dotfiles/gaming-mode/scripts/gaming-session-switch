@@ -7,10 +7,14 @@ fi
 case "$1" in
   gaming)
     sed -i 's/^Session=.*/Session=gamescope-session-steam-nm/' "$CONF"
+    sed -i '/^Relogin=/d' "$CONF"
+    echo "Relogin=true" >> "$CONF"
     echo "Session set to: gaming mode"
     ;;
   desktop)
     sed -i 's/^Session=.*/Session=hyprland/' "$CONF"
+    sed -i '/^Relogin=/d' "$CONF"
+    echo "Relogin=true" >> "$CONF"
     echo "Session set to: desktop mode"
     ;;
   *)
