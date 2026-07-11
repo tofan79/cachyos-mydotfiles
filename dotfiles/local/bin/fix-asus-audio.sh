@@ -16,13 +16,13 @@ if [[ $JACK == "values=on" ]]; then
   amixer -c "$CARD" sset 'Speaker' 0 mute
   amixer -c "$CARD" sset 'Headphone' 87 unmute
   amixer -c "$CARD" cset numid=6 1 2>/dev/null
-  amixer -c "$CARD" sset 'Internal Mic' 0 2>/dev/null
-  amixer -c "$CARD" sset 'Headset Mic' 1 2>/dev/null
+  amixer -c "$CARD" sset 'Internal Mic' nocap 2>/dev/null
+  amixer -c "$CARD" sset 'Headset Mic' cap 2>/dev/null
 else
   # No headphone — enable speaker, mute headphone, switch to internal mic
   amixer -c "$CARD" sset 'Speaker' 87 unmute
   amixer -c "$CARD" sset 'Headphone' 0 mute
   amixer -c "$CARD" cset numid=6 0 2>/dev/null
-  amixer -c "$CARD" sset 'Internal Mic' 1 2>/dev/null
-  amixer -c "$CARD" sset 'Headset Mic' 0 2>/dev/null
+  amixer -c "$CARD" sset 'Internal Mic' cap 2>/dev/null
+  amixer -c "$CARD" sset 'Headset Mic' nocap 2>/dev/null
 fi
