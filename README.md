@@ -520,4 +520,4 @@ All workspaces 1-9 persistent (visible in Noctalia bar when empty). Default layo
 - `hyprctl eval "hl.config({...})"` — cara bener untuk runtime config di Hyprland Lua API
 - Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies colors via text parsing, no global variable needed
 - Session name: **"Hyprland (Noctalia)"** in SDDM
-- **Sumber package:** CachyOS official repos (cachyos + extra/core) — semua package utama termasuk `noctalia` dan `gamescope-session-cachyos` dari repo, tanpa AUR/Chaotic-AUR
+- **Sumber package:** CachyOS official repos (cachyos + extra/core). Chaotic-AUR **binary repo mirror** (via pacman, bukan AUR helper/paru/yay) tetap di-setup sebagai fallback repo — bukan untuk install AUR manual. Semua package utama (`hyprland`, `noctalia`, `gamescope-session-cachyos`, `rofi-wayland`, dll) dari repo resmi, tanpa `aur_install`/`paru`.

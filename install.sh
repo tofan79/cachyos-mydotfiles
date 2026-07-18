@@ -338,8 +338,27 @@ fix_audio() {
     pkexec alsactl store 2>/dev/null && log_ok "ALSA state saved." || log_warn "Could not save ALSA state."
 }
 
+setup_chaotic_aur() {
+    log_info "Setting up Chaotic-AUR (binary repo mirror, via pacman)..."
+    if pacman -Qi chaotic-keyring &>/dev/null; then
+        log_ok "Chaotic-AUR already configured."
+        return 0
+    fi
+    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com 2>/dev/null || true
+    sudo pacman-key --lsign-key 3056513887B78AEB 2>/dev/null || true
+    sudo pacman -U --noconfirm \
+        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
+        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' 2>/dev/null
+    if ! grep -q '\[chaotic-aur\]' /etc/pacman.conf 2>/dev/null; then
+        echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf >/dev/null
+    fi
+    sudo pacman -Sy --noconfirm 2>/dev/null
+    log_ok "Chaotic-AUR configured."
+}
+
 main() {
     preflight_checks
+    setup_chaotic_aur
     install_packages
     setup_flatpak
     setup_nerd_fonts
