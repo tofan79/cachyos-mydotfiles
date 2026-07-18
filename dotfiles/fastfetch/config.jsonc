@@ -78,6 +78,12 @@
       "keyColor": "blue",
     },
     {
+      "type": "command",
+      "key": "│ ├󰉼",
+      "keyColor": "blue",
+      "text": "pacman -Q noctalia 2>/dev/null | awk '{print \"Noctalia\", $2}' || echo 'not installed'",
+    },
+    {
       "type": "terminal",
       "key": "│ ├",
       "keyColor": "blue",
@@ -86,12 +92,6 @@
       "type": "packages",
       "key": "│ ├󰏖",
       "keyColor": "blue",
-    },
-    {
-      "type": "command",
-      "key": "│ ├󰉼",
-      "keyColor": "blue",
-      "text": "pacman -Q noctalia-git 2>/dev/null | awk '{print \"Noctalia\", $2}' || echo 'not installed'",
     },
     {
       "type": "command",

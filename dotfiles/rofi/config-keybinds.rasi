@@ -1,45 +1,45 @@
 @theme "noctalia"
 
 configuration {
-    font: "JetBrainsMono Nerd Font 11";
+    font: "JetBrainsMono Nerd Font 9";
     show-icons: false;
 }
 
 window {
     location: center;
-    width: 480;
-    border-radius: 24px;
+    width: 650;
+    border-radius: 16px;
 }
 
 mainbox {
-    padding: 12px;
+    padding: 8px;
 }
 
 inputbar {
     border-color: @accent;
     border: 2px;
-    border-radius: 16px;
-    padding: 8px 16px;
-    spacing: 8px;
+    border-radius: 12px;
+    padding: 6px 12px;
+    spacing: 6px;
     children: [ prompt, entry ];
 }
 
 message {
-    margin: 12px 0 0;
-    border-radius: 16px;
+    margin: 8px 0 0;
+    border-radius: 12px;
 }
 
 listview {
-    margin: 12px 0 0;
-    lines: 6;
+    margin: 8px 0 0;
+    lines: 20;
     columns: 1;
     fixed-height: false;
 }
 
 element {
-    padding: 8px 16px;
-    spacing: 8px;
-    border-radius: 16px;
+    padding: 4px 12px;
+    spacing: 4px;
+    border-radius: 10px;
 }
 
 element selected.normal, element selected.active {

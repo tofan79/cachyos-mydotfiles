@@ -57,7 +57,13 @@ hl.window_rule({
     name   = "mpv-float",
     match  = { class = "^mpv$" },
     float  = true,
-    size   = { 900, 600 },
+    size   = { 900, 700 },
+    opaque = true,
+})
+hl.window_rule({
+    name   = "zoom",
+    match  = { class = "^zoom$" },
+    float  = true,
     opaque = true,
 })
 

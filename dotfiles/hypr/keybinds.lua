@@ -24,8 +24,9 @@ hl.bind(M .. " + CTRL + W", hl.dsp.exec_cmd("noctalia msg panel-toggle wallpaper
 hl.bind(M .. " + CTRL + period", hl.dsp.exec_cmd("noctalia msg notification-clear-history"), { description = "Clear notifications" })
 hl.bind(M .. " + CTRL + comma", hl.dsp.exec_cmd("noctalia msg clipboard-clear"), { description = "Clear clipboard" })
 hl.bind(M .. " + CTRL + C", hl.dsp.exec_cmd("noctalia msg caffeine-toggle"), { description = "Toggle caffeine" })
-hl.bind(M .. " + CTRL + backslash", hl.dsp.exec_cmd("noctalia msg wallpaper-random"), { description = "Random wallpaper" })
-
+hl.bind(M .. " + CTRL + slash", hl.dsp.exec_cmd("noctalia msg panel-toggle noctalia/wallhaven:browser"), { description = "Wallhaven wallpaper" })
+hl.bind(M .. " + CTRL + backslash", hl.dsp.exec_cmd("noctalia msg panel-toggle noctalia/mpvpaper:picker"), { description = "Video wallpaper" })
+hl.bind(M .. " + CTRL + P", hl.dsp.exec_cmd("noctalia msg panel-toggle oldirtty/color_picker:panel"), { description = "Color picker" })
 -- ───────────────────────────────────────────
 -- Window Focus (Super + Arrows)
 -- ───────────────────────────────────────────
@@ -190,9 +191,14 @@ hl.bind(M .. " + Return", hl.dsp.exec_cmd("foot"), { description = "Terminal" })
 hl.bind(M .. " + E", hl.dsp.exec_cmd("nautilus"), { description = "File manager" })
 hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser (Zen)" })
 hl.bind(M .. " + N", hl.dsp.exec_cmd("zeditor"), { description = "Editor (Zed)" })
-hl.bind(M .. " + H", hl.dsp.exec_cmd("localsend"), { description = "LocalSend" })
+hl.bind(M .. " + L", hl.dsp.exec_cmd("localsend"), { description = "LocalSend" })
 hl.bind(M .. " + T", hl.dsp.exec_cmd("Telegram"), { description = "Telegram" })
 hl.bind(M .. " + W", hl.dsp.exec_cmd("io.github.tobagin.karere"), { description = "Karere" })
+hl.bind(M .. " + D", hl.dsp.exec_cmd("vesktop"), { description = "Vesktop (Discord)" })
+hl.bind(M .. " + G", hl.dsp.exec_cmd("steam"), { description = "Steam" })
+hl.bind(M .. " + A", hl.dsp.exec_cmd("/opt/AionUi/AionUi"), { description = "AionUI" })
+hl.bind(M .. " + U", hl.dsp.exec_cmd("/opt/abdownloadmanager/bin/ABDownloadManager"), { description = "AB Download Manager" })
+hl.bind(M .. " + P", hl.dsp.exec_cmd("protonplus"), { description = "ProtonPlus" })
 
 -- ───────────────────────────────────────────
 -- Gaming Mode

@@ -43,7 +43,7 @@ alias dex='docker exec -it'
 alias dlog='docker logs -f'
 
 # ---- CachyOS / Arch ----
-alias update='sudo pacman -Syu && paru -Syu --devel && flatpak update -y'
+alias update='shelly upgrade-all && curl -fsSL https://opencode.ai/install | sh && mise self-update && mise upgrade && mimo upgrade'
 alias install='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 alias search='pacman -Ss'
@@ -81,17 +81,6 @@ alias effect='python -m projectpulsewire start'
 # ---- `i` = mise install + use global ----
 alias ims='mise use -g'
 
-# ---- msop: update mise + opencode ----
-msop() {
-  echo ":: Updating opencode..."
-  curl -fsSL https://opencode.ai/install | sh
-  echo ":: Updating mise..."
-  mise self-update
-  echo ":: Upgrading all mise tools..."
-  mise upgrade
-  echo ":: Done"
-}
-
 # ---- Resolve convert ----
 alias convert-resolve='resolve_convert.sh -q hq'
 alias backup-resolve='resolve_backup.sh --output-dir ~/Backups'
@@ -105,3 +94,6 @@ restore-resolve() {
 }
 
 # fastfetch ada di atas (sebelum instant prompt)
+
+# mimocode
+export PATH=/home/mindset/.mimocode/bin:$PATH
