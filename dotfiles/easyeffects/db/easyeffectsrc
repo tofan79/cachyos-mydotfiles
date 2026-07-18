@@ -1,0 +1,26 @@
+[EffectsPipelines]
+bypass=true
+
+[Presets]
+lastLoadedOutputPreset=Perfect EQ
+
+[StreamInputs]
+inputDevice=alsa_input.pci-0000_06_00.6.analog-stereo
+visiblePage=pluginsPage
+
+[StreamOutputs]
+linkToVirtualSource=true
+mostUsedPresets=Dolby Atmos,Boosted,Laptop,Perfect EQ,Bass Boosted
+outputDevice=alsa_output.pci-0000_06_00.6.analog-stereo
+plugins=equalizer#0
+usedPresets=Advanced Auto Gain:3,Bass Boosted:6,Bass Enhancing + Perfect EQ:5,Bass Enhancing + Perfect EQ - Low Latency:5,Boosted:11,Dolby Atmos:13,Laptop:8,Loudness+Autogain:3,Perfect EQ:6,Speaker Sync:3,Bass - Bass + Clarity:1,Bass - Bass + Loudness:1,Bass - Clean Bass Lift:1,Bass - Club V-Shape:1,Bass - Deep Sub Lift:1,Bass - Late Night Bass:1,Bass - Punchy Everyday:1,Bass - Speaker Rescue:1,Bass - Tight Kick:1,Bass - Warm Consumer:1,Bose:2,Brand - Bose Smooth Bass:2,Brand - Bose Warm:1,Brand - Harman Kardon Lounge:1,Brand - Harman Reference:2,Brand - JBL Party V:1,Brand - JBL Pure Bass:2,Brand - Sony Bright:1,Brand - Sony Excited:1,classical-max:2,classical-min:2,Dynamics - Auto Gain Punch:1,edm-max:2,edm-min:1,Genre - Classical Warm:2,Genre - EDM Smooth:1,Genre - Indie Warm:1,Genre - Rock Arena:2,indie-max:2,kpop-min:2,Sony:1,Genre - Hi-Fi Reference:1,Genre - K-Pop Impact:1,hifi-max:1,hifi-min:1,indie-min:1,Music:1
+visiblePage=pluginsPage
+visiblePlugin=equalizer#0
+
+[Style]
+forceBreezeTheme=false
+
+[Window]
+height=839
+visiblePipeWirePage=testSignalsPage
+width=1347

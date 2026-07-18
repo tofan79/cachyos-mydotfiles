@@ -240,6 +240,7 @@ copy_dotfiles() {
         ["cava"]=".config/cava"
         ["yazi"]=".config/yazi"
         ["zed"]=".config/zed"
+        ["easyeffects"]=".config/easyeffects"
         ["environment.d"]=".config/environment.d"
     )
     # Deploy noctalia config to XDG_STATE_HOME
