@@ -2,9 +2,8 @@
 
 Personal dotfiles for **ASUS TUF Gaming A15 FA506ICB** — AMD Renoir + NVIDIA RTX 3050.
 
-Dual setup:
+Setup:
 - **Current:** Hyprland (stable, Lua API) + Noctalia Shell v5
-- **Legacy:** MangoWM + Noctalia (`mango-noctalia.sh`)
 
 ---
 
