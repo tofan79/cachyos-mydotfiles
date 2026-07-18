@@ -19,7 +19,8 @@ chmod +x *.sh
 | 1 | `./install.sh` | Core OS (packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for foot/gtk/qt/btop/cava/zsh, wallpapers) |
 | 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + SDDM + rofi + switcheroo-control (enabled) + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
 | 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
-| 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
+| 4 | `./gaming.sh` | Gaming session: `gamescope-session-cachyos` (cachyos repo, Provides `gamescope-session-git` + `gamescope-session-steam-git`) + Steam gamescope session |
+| 5 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
 
 ---
 
@@ -68,6 +69,8 @@ chmod +x *.sh
 - `dotfiles/zsh/.zshrc` → `~/` (backup existing then overwrite). `.p10k.zsh` → `~/`
 - `Wallpapers/` → `~/Pictures/Wallpapers/`
 - `dotfiles/clean/clean.sh` → `~/.config/clean/`
+- `dotfiles/easyeffects/` → `~/.config/easyeffects/` (audio EQ presets)
+- `dotfiles/environment.d/` → `~/.config/environment.d/` (Steam/gamescope env vars)
 - ASUS audio/mic fix → `fix-audio.sh` (portable, self-contained — WirePlumber conf + systemd services embedded)
 - `docker-db/` → `~/Projects/docker-db/`
 
@@ -82,7 +85,7 @@ chmod +x *.sh
 - Polkit fix: `/etc/polkit-1/rules.d/49-networkmanager.rules` — bypasses polkit prompt for NetworkManager actions (fixes Noctalia WiFi D-Bus crash, GitHub issue #3013)
 
 **Copied:**
-- `dotfiles/hypr/` → `~/.config/hypr/`
+- `dotfiles/hypr/` → `~/.config/hypr/` (includes `applications/` desktop + `icons/` for lazydocker/dua)
 - `dotfiles/rofi/` → `~/.config/rofi/`
 - `dotfiles/xdg-desktop-portal/` → `~/.config/xdg-desktop-portal/`
 - `dotfiles/fastfetch/` → `~/.config/fastfetch/`
@@ -240,10 +243,10 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | Key | Action |
 |-----|--------|
 | `SUPER + Q` | Close window |
-| `SUPER + SHIFT + L` | Lock screen |
 | `SUPER + CTRL + R` | Reload Hyprland |
 | `SUPER + CTRL + M` | Exit Hyprland |
 | `SUPER + Escape` | Session menu (Noctalia) |
+| `SUPER + SHIFT + L` | Lock screen |
 | `SUPER + /` | System monitor (btop) |
 
 ### Noctalia Shell
@@ -252,6 +255,13 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | `SUPER + Space` | App launcher |
 | `SUPER + ALT + Space` | Control center |
 | `SUPER + CTRL + Space` | Settings toggle |
+| `SUPER + CTRL + W` | Wallpaper picker |
+| `SUPER + CTRL + period` | Clear notifications |
+| `SUPER + CTRL + comma` | Clear clipboard |
+| `SUPER + CTRL + C` | Toggle caffeine (keep awake) |
+| `SUPER + CTRL + slash` | Wallhaven wallpaper browser |
+| `SUPER + CTRL + backslash` | Video wallpaper (mpvpaper) picker |
+| `SUPER + CTRL + P` | Color picker |
 
 ### Focus & Swap (Vim-style arrows)
 | Key | Action |
@@ -271,9 +281,9 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 ### Scratchpad
 | Key | Action |
 |-----|--------|
-| `SUPER + S` | Toggle special workspace |
-| `SUPER + SHIFT + S` | Send to special |
-| `SUPER + SHIFT + CTRL + S` | Move out of special |
+| `SUPER + S` | Toggle special workspace `magic` |
+| `SUPER + SHIFT + S` | Send to special workspace |
+| `SUPER + SHIFT + CTRL + S` | Move out of special workspace |
 
 ### Layout
 | Key | Action |
@@ -291,12 +301,12 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | `SUPER + Tab` / `SUPER + SHIFT + Tab` | Group next/prev |
 | `SUPER + ALT + 1-5` | Group index |
 
-### Preset Switching (Rofi)
+### Presets (Rofi)
 | Key | Action |
 |-----|--------|
 | `SUPER + CTRL + A` | Switch animation preset |
 | `SUPER + CTRL + D` | Switch decoration preset |
-| `SUPER + CTRL + W` | Switch window preset |
+| `SUPER + CTRL + S` | Switch window preset |
 | `SUPER + SHIFT + A` | Toggle animations on/off |
 
 ### App Launchers
@@ -306,8 +316,20 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | `SUPER + E` | Nautilus file manager |
 | `SUPER + B` | Zen browser |
 | `SUPER + N` | Zed editor |
-| `SUPER + H` | LocalSend |
+| `SUPER + L` | LocalSend |
 | `SUPER + T` | Telegram |
+| `SUPER + W` | Karere |
+| `SUPER + D` | Vesktop (Discord) |
+| `SUPER + G` | Steam |
+| `SUPER + A` | AionUI |
+| `SUPER + U` | AB Download Manager |
+| `SUPER + P` | ProtonPlus |
+
+### Gaming Mode
+| Key | Action |
+|-----|--------|
+| `SUPER + SHIFT + G` | Switch to gaming session (SDDM) |
+| `SUPER + SHIFT + R` | Exit gaming mode → desktop |
 
 ### Workspaces
 | Key | Action |
@@ -327,10 +349,11 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 | `XF86AudioNext` | Next track |
 | `XF86AudioPrev` | Previous track |
 | `XF86MonBrightnessUp/Down` | Brightness |
+| `XF86Sleep` | Lock then suspend |
 | `XF86Calculator` | Calculator |
-| `Print` | Screenshot region (grim+slurp+satty) |
-| `Shift + Print` | Screenshot fullscreen (grim+satty) |
-| `Ctrl + Print` | Screenshot window (grim+satty) |
+| `Print` | Screenshot region → annotate (satty) |
+| `Shift + Print` | Screenshot fullscreen → annotate |
+| `Ctrl + Print` | Screenshot window → annotate |
 
 ### Multi-Monitor
 | Key | Action |
@@ -365,7 +388,7 @@ All binds use `SUPER` (Windows key). View at runtime: `SUPER + SHIFT + K`
 16 presets switchable via `SUPER + CTRL + A` (rofi):
 `animations-classic`, `animations-dynamic`, `animations-end4`, `animations-fast`, `animations-high`, `animations-moving`, `animations-moving-meta`, `animations-smooth`, `animations-smooth-meta`, `animations-wipe-meta`, `default`, `disabled`, `metamorphosis`, `slide`, `standard`, `wipe`
 
-Default: `animations-moving.lua` — bezier curves (overshot, smoothOut, smoothIn), speed 3-6
+Default: `wipe-meta.lua` — borderangle wipe, speed 20 (borderangle animation)
 
 ### Decorations (`~/.config/hypr/decorations/*.lua`)
 10 presets via `SUPER + CTRL + D`:
@@ -459,7 +482,9 @@ height=120
 | `git/` | `install.sh` | Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main |
 | `imv/` | `install.sh` | Omarchy keybinds: Ctrl+p/x/X/r/e (print, trash, rotate, edit) |
 | `fix-audio.sh` | `install.sh` (auto) / standalone | ASUS ALC256 mic/audio fix — portable, self-contained (WirePlumber conf + systemd services embedded); run `./fix-audio.sh --force` on non-ASUS |
-| `hypr/icons/` | `apps.sh` | Custom omarchy icons for lazydocker + dua |
+| `hypr/applications/` + `hypr/icons/` | `hyprland-noctalia.sh` | Custom `.desktop` + icons for lazydocker + dua (deployed into `~/.config/hypr/`) |
+| `easyeffects/` | `install.sh` | Audio EQ preset chain (`db/*.rc`) → `~/.config/easyeffects/` |
+| `environment.d/` | `install.sh` | Steam/gamescope env vars → `~/.config/environment.d/` |
 | `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Nordic` |
 | `gtk-4.0/` | `install.sh` | Nordic theme, Tela-nord-dark icons, Bibata-Modern-Ice cursor 24 |
 | `qt5ct/` | `install.sh` | Fusion style + Noctalia custom palette |
@@ -470,6 +495,7 @@ height=120
 | `zed/` | `install.sh` | Noctalia Dark Transparent theme, ui_font_size 16, buffer_font_size 15 |
 | `zsh/` | `install.sh` | `.zshrc` (fastfetch, P10k, zoxide, fzf, mise, opencode), `.p10k.zsh` |
 | `noctalia/` | `hyprland-noctalia.sh` | `settings.toml` + sounds → `~/.local/state/noctalia/` |
+| `gaming-mode/` | `gaming.sh` | Gamescope session configs, scripts (`switch-to-gaming`, `gamescope-nm-*`, `deckshift-portal-recovery`), SDDM gaming session, udev/sudoers/polkit rules |
 | `clean/` | `install.sh` | `clean.sh` — system cleanup script |
 | `tmux/` | `apps.sh` | Prefix `C-Space`, Vi mode, Foot integration, minimal blue theme |
 | `Wallpapers/` | `install.sh` | Copied to `~/Pictures/Wallpapers/` |
@@ -520,3 +546,4 @@ All workspaces 1-9 persistent (visible in Noctalia bar when empty). Default layo
 - Session name: **"Hyprland (Noctalia)"** in SDDM
 - **Sumber package:** CachyOS official repos (cachyos + extra/core). Chaotic-AUR **binary repo mirror** (via pacman, bukan AUR helper/paru/yay) tetap di-setup sebagai fallback repo — bukan untuk install AUR manual. Semua package utama (`hyprland`, `noctalia`, `gamescope-session-cachyos`, `rofi-wayland`, dll) dari repo resmi, tanpa `aur_install`/`paru`.
 - **Audio fix portabel:** `fix-audio.sh` self-contained (config ter-embed) — jalan di CachyOS/Arch DAN distro lain (Debian/Ubuntu/Fedora). Deteksi audio stack (PipeWire/PulseAudio/ALSA) + init (systemd/autostart). `install.sh` otomatis jalanin untuk hardware ASUS. Standalone: `./fix-audio.sh` (atau `--force` / `--apply` / `--uninstall`).
+- **Default Hyprland presets:** animation = `wipe-meta.lua` (borderangle speed 20), decoration = `rounding-all-blur.lua`, window = `glass.lua`. README disinkronkan dengan sistem stabil (keybinds, packages, dotfiles dir) — lihat section di atas.
