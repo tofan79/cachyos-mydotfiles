@@ -70,9 +70,9 @@ pacman_install() {
 
 install_packages() {
     log_info "Installing Hyprland-specific packages..."
-    pacman_install hyprland-git rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control
+    pacman_install hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control
     ensure_paru
-    aur_install noctalia-git
+    aur_install noctalia
     log_ok "Packages installed."
 }
 

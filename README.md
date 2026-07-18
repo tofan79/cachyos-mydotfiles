@@ -3,7 +3,7 @@
 Personal dotfiles for **ASUS TUF Gaming A15 FA506ICB** — AMD Renoir + NVIDIA RTX 3050.
 
 Dual setup:
-- **Current:** Hyprland (git, Lua API) + Noctalia Shell v5
+- **Current:** Hyprland (stable, Lua API) + Noctalia Shell v5
 - **Legacy:** MangoWM + Noctalia (`mango-noctalia.sh`)
 
 ---
@@ -46,7 +46,7 @@ chmod +x *.sh
 - Oh My Zsh + Powerlevel10k + zsh-autosuggestions + zsh-syntax-highlighting + zsh-completions
 - `.zshrc` backup existing then overwrite; `.p10k.zsh` overwrites
 - `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu && paru -Syu --devel && flatpak update -y`), `aur` alias for paru
-- fastfetch config: Noctalia version line (`pacman -Q noctalia-git`), font size parsing fix
+- fastfetch config: Noctalia version line (`pacman -Q noctalia`), font size parsing fix
 - mise (runtime manager)
 - opencode
 - Foot as default terminal (`xdg-mime`, foot.ini)
@@ -75,8 +75,8 @@ chmod +x *.sh
 
 ### `hyprland-noctalia.sh`
 
-**Packages:** `hyprland-git rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control`  
-**AUR:** `noctalia-git` (via paru)
+**Packages:** `hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control`  
+**AUR:** `noctalia` (via paru)
 
 **Setup:**
 - SDDM enabled as display manager
@@ -522,4 +522,4 @@ All workspaces 1-9 persistent (visible in Noctalia bar when empty). Default layo
 - `hyprctl eval "hl.config({...})"` — cara bener untuk runtime config di Hyprland Lua API
 - Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies colors via text parsing, no global variable needed
 - Session name: **"Hyprland (Noctalia)"** in SDDM
-- **Sumber package:** CachyOS official + Chaotic-AUR (binary) + AUR hanya `noctalia-git` (via `paru`, karena `noctalia-shell` di Chaotic terlalu tua)
+- **Sumber package:** CachyOS official + Chaotic-AUR (binary) + AUR hanya `noctalia` (via `paru`, karena `noctalia-shell` di Chaotic terlalu tua)

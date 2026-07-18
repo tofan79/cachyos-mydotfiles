@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Noctalia Shell installer for CachyOS/Arch (v5 alpha — noctalia-git)
+# Noctalia Shell installer for CachyOS/Arch (v5 stable — noctalia)
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -72,7 +72,7 @@ install_packages() {
     log_info "Installing packages..."
     pacman_install mangowm cliphist gpu-screen-recorder gpu-screen-recorder-ui ttf-fira-code
     ensure_paru
-    aur_install noctalia-git
+    aur_install noctalia
     log_ok "Packages installed."
 }
 
