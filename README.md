@@ -426,7 +426,6 @@ height=120
 | `toggle-animations.sh` | `SUPER + SHIFT + A` | Toggle animations on/off (cache-based) |
 | `text-extractor.sh` | `SUPER + ALT + A` | Select region → OCR (Tesseract) → clipboard |
 | `game-launch.sh` | — | NVIDIA Smooth Motion + Reflex + DLSS + switcherooctl + gamemode + MangoHud |
-| `scanning.sh` | — | Package security scanner (detects unofficial/compromised packages) |
 
 ---
 
