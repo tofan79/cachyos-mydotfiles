@@ -19,7 +19,7 @@ chmod +x *.sh
 | 1 | `./install.sh` | Core OS (packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for foot/gtk/qt/btop/cava/zsh, wallpapers) |
 | 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + SDDM + rofi + switcheroo-control (enabled) + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
 | 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
-| 4 | `./gaming.sh` | Gaming session: `gamescope-session-cachyos` (cachyos repo, Provides `gamescope-session-git` + `gamescope-session-steam-git`) + Steam gamescope session |
+| 4 | `./gaming.sh` | Gaming session: `gamescope-session-git` + `gamescope-session-steam-git` (cachyos/chaotic-aur repo, via pacman) + Steam gamescope session |
 | 5 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
 
 ---
@@ -544,6 +544,6 @@ All workspaces 1-9 persistent (visible in Noctalia bar when empty). Default layo
 - `hyprctl eval "hl.config({...})"` — cara bener untuk runtime config di Hyprland Lua API
 - Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies colors via text parsing, no global variable needed
 - Session name: **"Hyprland (Noctalia)"** in SDDM
-- **Sumber package:** CachyOS official repos (cachyos + extra/core). Chaotic-AUR **binary repo mirror** (via pacman, bukan AUR helper/paru/yay) tetap di-setup sebagai fallback repo — bukan untuk install AUR manual. Semua package utama (`hyprland`, `noctalia`, `gamescope-session-cachyos`, `rofi-wayland`, dll) dari repo resmi, tanpa `aur_install`/`paru`.
+- **Sumber package:** CachyOS official repos (cachyos + extra/core) + Chaotic-AUR **binary repo mirror** (via pacman, bukan AUR helper/paru/yay). Semua package utama (`hyprland`, `noctalia`, `gamescope-session-git`, `gamescope-session-steam-git`, `rofi-wayland`, dll) dari repo resmi/chaotic-aur lewat pacman, tanpa `aur_install`/`paru`.
 - **Audio fix portabel:** `fix-audio.sh` self-contained (config ter-embed) — jalan di CachyOS/Arch DAN distro lain (Debian/Ubuntu/Fedora). Deteksi audio stack (PipeWire/PulseAudio/ALSA) + init (systemd/autostart). `install.sh` otomatis jalanin untuk hardware ASUS. Standalone: `./fix-audio.sh` (atau `--force` / `--apply` / `--uninstall`).
 - **Default Hyprland presets:** animation = `wipe-meta.lua` (borderangle speed 20), decoration = `rounding-all-blur.lua`, window = `glass.lua`. README disinkronkan dengan sistem stabil (keybinds, packages, dotfiles dir) — lihat section di atas.
