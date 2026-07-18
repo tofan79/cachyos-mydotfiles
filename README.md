@@ -17,7 +17,7 @@ chmod +x *.sh
 
 | Step | Script | What it does |
 |------|--------|-------------|
-| 1 | `./install.sh` | Core OS (Chaotic-AUR + packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for foot/gtk/qt/btop/cava/zsh, wallpapers) |
+| 1 | `./install.sh` | Core OS (packages + fonts + themes, Nerd Fonts, Oh My Zsh + Powerlevel10k, mise, opencode, Flatpak + Flathub, dotfiles for foot/gtk/qt/btop/cava/zsh, wallpapers) |
 | 2 | `./hyprland-noctalia.sh` | Hyprland + Noctalia + SDDM + rofi + switcheroo-control (enabled) + polkit fix + HM dotfiles (hypr/, rofi/, xdg-desktop-portal/, fastfetch/, MangoHud/, nvim/) |
 | 3 | `./apps.sh` | Apps: Nautilus, Zen browser, Neovim + AstroNvim, tmux, Yazi, MPV, imv, Telegram, LocalSend, ASUS tools, desktop file fixes, remove CachyOS bloat |
 | 4 | `sudo ./firewall.sh` | UFW: deny incoming, allow LocalSend (53317/udp+tcp), enable + systemctl enable |
@@ -38,14 +38,13 @@ chmod +x *.sh
 - **FS tools:** `exfatprogs ntfs-3g btrfs-progs cifs-utils dosfstools smartmontools logrotate tcpdump`
 
 **Setup:**
-- Chaotic-AUR key, keyring, mirrorlist, added to `/etc/pacman.conf`
 - Flatpak + Flathub remote + OBS Studio (+ PipeWire plugin) + Karere
-- Tela icon theme (`tela-icon-theme` from Chaotic-AUR → `Tela-nord-dark`)
-- Bibata cursor (`bibata-cursor-theme` from Chaotic-AUR → `Bibata-Modern-Ice`)
+- Tela icon theme (`tela-icon-theme` → `Tela-nord-dark`)
+- Bibata cursor (`bibata-cursor-theme` → `Bibata-Modern-Ice`)
 - JetBrainsMono + FiraCode Nerd Fonts (manual download)
 - Oh My Zsh + Powerlevel10k + zsh-autosuggestions + zsh-syntax-highlighting + zsh-completions
 - `.zshrc` backup existing then overwrite; `.p10k.zsh` overwrites
-- `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu && paru -Syu --devel && flatpak update -y`), `aur` alias for paru
+- `chsh` to zsh, pacman aliases (including `update = sudo pacman -Syu && flatpak update -y`)
 - fastfetch config: Noctalia version line (`pacman -Q noctalia`), font size parsing fix
 - mise (runtime manager)
 - opencode
@@ -75,8 +74,7 @@ chmod +x *.sh
 
 ### `hyprland-noctalia.sh`
 
-**Packages:** `hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control`  
-**AUR:** `noctalia` (via paru)
+**Packages:** `hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils lib32-nvidia-utils sddm switcheroo-control noctalia`
 
 **Setup:**
 - SDDM enabled as display manager
@@ -429,7 +427,7 @@ height=120
 | `toggle-animations.sh` | `SUPER + SHIFT + A` | Toggle animations on/off (cache-based) |
 | `text-extractor.sh` | `SUPER + ALT + A` | Select region → OCR (Tesseract) → clipboard |
 | `game-launch.sh` | — | NVIDIA Smooth Motion + Reflex + DLSS + switcherooctl + gamemode + MangoHud |
-| `scanning.sh` | — | AUR security scanner |
+| `scanning.sh` | — | Package security scanner (detects unofficial/compromised packages) |
 
 ---
 
@@ -487,7 +485,7 @@ height=120
 # System cleanup
 ~/.config/clean/clean.sh
 ```
-Cleans: pacman cache, orphans, AUR caches (yay/paru), Flatpak unused runtimes, Go build/module cache, pip cache, npm cache, Cargo registry, mise tarballs + cache clear, temp files, journal logs (>3d), trash, browser caches (Zen/Chromium), mesa/RADV/NVIDIA shader caches, Qt/GTK caches, opencode/zed cache, zsh history, thumbnails.
+Cleans: pacman cache, orphans, Flatpak unused runtimes, Go build/module cache, pip cache, npm cache, Cargo registry, mise tarballs + cache clear, temp files, journal logs (>3d), trash, browser caches (Zen/Chromium), mesa/RADV/NVIDIA shader caches, Qt/GTK caches, opencode/zed cache, zsh history, thumbnails.
 
 ---
 
@@ -522,4 +520,4 @@ All workspaces 1-9 persistent (visible in Noctalia bar when empty). Default layo
 - `hyprctl eval "hl.config({...})"` — cara bener untuk runtime config di Hyprland Lua API
 - Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies colors via text parsing, no global variable needed
 - Session name: **"Hyprland (Noctalia)"** in SDDM
-- **Sumber package:** CachyOS official + Chaotic-AUR (binary) + AUR hanya `noctalia` (via `paru`, karena `noctalia-shell` di Chaotic terlalu tua)
+- **Sumber package:** CachyOS official repos (cachyos + extra/core) — semua package utama termasuk `noctalia` dan `gamescope-session-cachyos` dari repo, tanpa AUR/Chaotic-AUR

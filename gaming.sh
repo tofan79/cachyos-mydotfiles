@@ -27,12 +27,9 @@ preflight() {
 install_packages() {
     log_info "Installing ChimeraOS session packages..."
     local pkgs=()
-    pacman -Qi gamescope-session-git &>/dev/null || pkgs+=("gamescope-session-git")
-    pacman -Qi gamescope-session-steam-git &>/dev/null || pkgs+=("gamescope-session-steam-git")
+    pacman -Qi gamescope-session-cachyos &>/dev/null || pkgs+=("gamescope-session-cachyos")
     if ((${#pkgs[@]})); then
-        sudo pacman -S --noconfirm "${pkgs[@]}" 2>/dev/null || {
-            paru -S --noconfirm "${pkgs[@]}" 2>/dev/null || log_warn "Install manually: paru -S ${pkgs[*]}"
-        }
+        sudo pacman -S --noconfirm "${pkgs[@]}" || log_warn "Failed to install: ${pkgs[*]}"
     fi
     log_ok "Packages OK"
 }

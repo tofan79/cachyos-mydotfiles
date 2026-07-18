@@ -29,33 +29,6 @@ preflight_checks() {
     sudo -n true 2>/dev/null || sudo -v
 }
 
-ensure_paru() {
-    if command -v paru &>/dev/null; then
-        log_ok "paru already installed."
-        return 0
-    fi
-    log_info "Installing paru (AUR helper)..."
-    local tmp
-    tmp="$(mktemp -d)"
-    sudo pacman -S --noconfirm --needed base-devel git || true
-    git clone --depth 1 https://aur.archlinux.org/paru.git "$tmp/paru" || { log_err "Failed to clone paru from AUR."; rm -rf "$tmp"; return 1; }
-    (cd "$tmp/paru" && makepkg -si --noconfirm) || { log_err "makepkg failed for paru."; rm -rf "$tmp"; return 1; }
-    rm -rf "$tmp"
-    log_ok "paru installed."
-}
-
-aur_install() {
-    local pkgs=("$@") pkg
-    for pkg in "${pkgs[@]}"; do
-        if pacman -Q "$pkg" &>/dev/null || command -v "$pkg" &>/dev/null; then
-            log_ok "${pkg} already installed."
-            continue
-        fi
-        log_info "Installing ${pkg}..."
-        paru -S --noconfirm "$pkg" || log_warn "Failed to install ${pkg}."
-    done
-}
-
 pacman_install() {
     local pkgs=("$@") pkg
     for pkg in "${pkgs[@]}"; do
@@ -71,8 +44,7 @@ pacman_install() {
 install_packages() {
     log_info "Installing packages..."
     pacman_install mangowm cliphist gpu-screen-recorder gpu-screen-recorder-ui ttf-fira-code
-    ensure_paru
-    aur_install noctalia
+    pacman_install noctalia
     log_ok "Packages installed."
 }
 
