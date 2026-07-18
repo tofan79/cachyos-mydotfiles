@@ -242,10 +242,6 @@ copy_dotfiles() {
         ["zed"]=".config/zed"
         ["environment.d"]=".config/environment.d"
     )
-    if $IS_ASUS; then
-        config_map["wireplumber"]=".config/wireplumber"
-    fi
-
     # Deploy noctalia config to XDG_STATE_HOME
     mkdir -p "$HOME/.local/state/noctalia/sounds"
     if [[ -f "${SCRIPT_DIR}/dotfiles/noctalia/settings.toml" ]]; then
@@ -270,15 +266,6 @@ copy_dotfiles() {
 
     if [[ -f "${SCRIPT_DIR}/dotfiles/clean/clean.sh" ]]; then
         mkdir -p "$HOME/.config/clean" && cp "${SCRIPT_DIR}/dotfiles/clean/clean.sh" "$HOME/.config/clean/clean.sh" 2>/dev/null && chmod +x "$HOME/.config/clean/clean.sh" && log_ok "clean.sh copied."
-    fi
-
-    if $IS_ASUS; then
-        mkdir -p "$HOME/.local/bin" "$HOME/.config/systemd/user"
-        cp "${SCRIPT_DIR}/dotfiles/local/bin/fix-asus-audio.sh" "$HOME/.local/bin/" 2>/dev/null && chmod +x "$HOME/.local/bin/fix-asus-audio.sh" && log_ok "fix-asus-audio.sh copied."
-        cp "${SCRIPT_DIR}/dotfiles/systemd/user/fix-asus-audio.service" "$HOME/.config/systemd/user/" 2>/dev/null && log_ok "fix-asus-audio.service copied."
-        systemctl --user daemon-reload 2>/dev/null || true
-        systemctl --user enable --now fix-asus-audio.service 2>/dev/null || true
-        systemctl --user enable --now fix-audio-watcher.service 2>/dev/null || true
     fi
 
     log_ok "Dotfiles copied."
@@ -313,29 +300,16 @@ copy_project_dirs() {
 }
 
 fix_audio() {
-    $IS_ASUS || { log_info "Skipping audio fix (non-ASUS)."; return 0; }
-    log_info "Applying audio fixes (ASUS ALC256/ALC285)..."
-
-    # Restart WirePlumber to pick up alsa-soft-mixer drop-in
-    systemctl --user restart wireplumber.service 2>/dev/null || true
-
-    # Fix internal mic gain + speaker/headphone on ASUS ALC256/ALC285
-    for card in /proc/asound/card*/codec*; do
-        if grep -q "ALC" "$card" 2>/dev/null; then
-            cardnum=$(echo "$card" | grep -oP 'card\K\d+')
-            amixer -c "$cardnum" sset 'Internal Mic Boost' 1 2>/dev/null || true
-            amixer -c "$cardnum" sset 'Capture' 45 unmute 2>/dev/null || true
-            log_ok "Internal Mic Boost set to 1, Capture 45 (card ${cardnum})"
-            amixer -c "$cardnum" sset Speaker 87 unmute 2>/dev/null || true
-            amixer -c "$cardnum" sset Master 87 unmute 2>/dev/null || true
-            amixer -c "$cardnum" sset 'Auto-Mute Mode' Disabled 2>/dev/null || true
-            log_ok "Speaker 100%, Master 100%, Auto-Mute Disabled (card ${cardnum})"
-            break
+    if $IS_ASUS; then
+        log_info "Running ASUS audio fix (fix-audio.sh)..."
+        if [[ -x "${SCRIPT_DIR}/fix-audio.sh" ]]; then
+            "${SCRIPT_DIR}/fix-audio.sh" || log_warn "fix-audio.sh reported an issue."
+        else
+            log_warn "fix-audio.sh not found, skipping audio fix."
         fi
-    done
-
-    # Save ALSA state for persistence
-    pkexec alsactl store 2>/dev/null && log_ok "ALSA state saved." || log_warn "Could not save ALSA state."
+    else
+        log_info "Skipping audio fix (non-ASUS)."
+    fi
 }
 
 setup_chaotic_aur() {

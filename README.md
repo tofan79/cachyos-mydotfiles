@@ -68,7 +68,7 @@ chmod +x *.sh
 - `dotfiles/zsh/.zshrc` → `~/` (backup existing then overwrite). `.p10k.zsh` → `~/`
 - `Wallpapers/` → `~/Pictures/Wallpapers/`
 - `dotfiles/clean/clean.sh` → `~/.config/clean/`
-- `dotfiles/wireplumber/` → `~/.config/wireplumber/` (ASUS-only)
+- ASUS audio/mic fix → `fix-audio.sh` (portable, self-contained — WirePlumber conf + systemd services embedded)
 - `docker-db/` → `~/Projects/docker-db/`
 
 ### `hyprland-noctalia.sh`
@@ -459,7 +459,7 @@ height=120
 | `fontconfig/` | `install.sh` | ComicShannsMono Nerd Font monospace, Liberation Sans serif/sans |
 | `git/` | `install.sh` | Git config: aliases, pull.rebase, push.autoSetupRemote, defaultBranch=main |
 | `imv/` | `install.sh` | Omarchy keybinds: Ctrl+p/x/X/r/e (print, trash, rotate, edit) |
-| `wireplumber/` | `install.sh` | alsa-soft-mixer.conf drop-in — **ASUS-only** (auto-detected via DMI) |
+| `fix-audio.sh` | `install.sh` (auto) / standalone | ASUS ALC256 mic/audio fix — portable, self-contained (WirePlumber conf + systemd services embedded); run `./fix-audio.sh --force` on non-ASUS |
 | `hypr/icons/` | `apps.sh` | Custom omarchy icons for lazydocker + dua |
 | `gtk-3.0/` | `install.sh` | `Tela-nord-dark`, `Bibata-Modern-Ice`, `Nordic` |
 | `gtk-4.0/` | `install.sh` | Nordic theme, Tela-nord-dark icons, Bibata-Modern-Ice cursor 24 |
@@ -520,3 +520,4 @@ All workspaces 1-9 persistent (visible in Noctalia bar when empty). Default layo
 - Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies colors via text parsing, no global variable needed
 - Session name: **"Hyprland (Noctalia)"** in SDDM
 - **Sumber package:** CachyOS official repos (cachyos + extra/core). Chaotic-AUR **binary repo mirror** (via pacman, bukan AUR helper/paru/yay) tetap di-setup sebagai fallback repo — bukan untuk install AUR manual. Semua package utama (`hyprland`, `noctalia`, `gamescope-session-cachyos`, `rofi-wayland`, dll) dari repo resmi, tanpa `aur_install`/`paru`.
+- **Audio fix portabel:** `fix-audio.sh` self-contained (config ter-embed) — jalan di CachyOS/Arch DAN distro lain (Debian/Ubuntu/Fedora). Deteksi audio stack (PipeWire/PulseAudio/ALSA) + init (systemd/autostart). `install.sh` otomatis jalanin untuk hardware ASUS. Standalone: `./fix-audio.sh` (atau `--force` / `--apply` / `--uninstall`).
