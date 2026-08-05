@@ -45,7 +45,7 @@ pacman_install() {
             continue
         fi
         log_info "Installing ${pkg}..."
-        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
+        sudo pacman -S --needed --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
 }
 
@@ -179,7 +179,6 @@ main() {
     deploy_nvim_config
     deploy_tmux_config
     apply_icon_cursor_settings
-    fix_asus_audio
     remove_cachyos_defaults
     log_ok "CachyOS app support complete. Log: ${LOG_FILE}"
 }
@@ -201,19 +200,6 @@ deploy_php_config() {
         sudo cp -r "$src/conf.d/." "$dst/conf.d/"
         log_ok "PHP configuration deployed."
     fi
-}
-
-fix_asus_audio() {
-    $IS_ASUS || return 0
-    log_info "Fixing ASUS audio (ALC256)..."
-    local card=2
-    amixer -c "$card" sset 'Capture' 45 unmute >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Internal Mic Boost' 1 >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Speaker' 87 unmute >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Master' 87 unmute >/dev/null 2>&1 || true
-    amixer -c "$card" sset 'Auto-Mute Mode' Enabled >/dev/null 2>&1 || true
-    sudo alsactl store "$card" 2>/dev/null || true
-    log_ok "ASUS audio fixed (ALC256)."
 }
 
 remove_cachyos_defaults() {

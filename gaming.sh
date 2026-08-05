@@ -30,7 +30,7 @@ install_packages() {
     pacman -Qi gamescope-session-git &>/dev/null || pkgs+=("gamescope-session-git")
     # pacman -Qi gamescope-session-steam-git &>/dev/null || pkgs+=("gamescope-session-steam-git")  # removed: duplicates gaming entry in SDDM
     if ((${#pkgs[@]})); then
-        sudo pacman -S --noconfirm "${pkgs[@]}" || log_warn "Failed to install: ${pkgs[*]}"
+        sudo pacman -S --needed --noconfirm "${pkgs[@]}" || log_warn "Failed to install: ${pkgs[*]}"
     fi
     log_ok "Packages OK"
 }

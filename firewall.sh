@@ -20,7 +20,7 @@ trap 'log_err "Failed at line ${LINENO}: ${BASH_COMMAND}"' ERR
 [[ "$(id -u)" -eq 0 ]] || { log_err "Run as root: sudo $0"; exit 1; }
 
 log_info "Installing UFW..."
-pacman -S --noconfirm ufw || { log_err "UFW install failed."; exit 1; }
+pacman -S --needed --noconfirm ufw || { log_err "UFW install failed."; exit 1; }
 
 log_info "Configuring UFW rules..."
 ufw default deny incoming

@@ -37,7 +37,7 @@ pacman_install() {
             continue
         fi
         log_info "Installing ${pkg}..."
-        sudo pacman -S --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
+        sudo pacman -S --needed --noconfirm "$pkg" || log_warn "${pkg} FAILED to install."
     done
 }
 
