@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Screenshot region -> OCR text -> clipboard
+# Dependencies: grim, slurp, tesseract, wl-copy, notify-send
+set -euo pipefail
+
+app="OCR"
+need() { command -v "$1" >/dev/null 2>&1 || { notify-send -u normal "$app" "$1 is not installed"; exit 1; }; }
+
+input_file=""
+if [[ ${1:-} == "--file" ]]; then
+  [[ -n ${2:-} ]] || { notify-send -u critical "$app" "Missing image path"; exit 2; }
+  input_file="$2"; shift 2
+fi
+
+for c in tesseract wl-copy notify-send; do need "$c"; done
+
+tmp="$input_file"
+if [[ -z $tmp ]]; then
+  for c in grim slurp; do need "$c"; done
+  tmp="$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/ocr.XXXXXX.png")"
+  trap 'rm -f "$tmp"' EXIT
+fi
+
+if [[ -n $input_file ]]; then
+  [[ -r $tmp ]] || { notify-send -u critical "$app" "Cannot read image at $tmp"; exit 1; }
+else
+  geometry="$(slurp 2>/dev/null)" || exit 130
+  [[ -n $geometry ]] || exit 0
+  grim -g "$geometry" "$tmp"
+fi
+
+text="$(tesseract "$tmp" - 2>/dev/null || true)"
+if [[ -z ${text//[[:space:]]/} ]]; then
+  notify-send -u normal "$app" "No text found"
+  exit 0
+fi
+
+printf '%s' "$text" | wl-copy
+notify-send -u low "$app" "Text copied to clipboard"

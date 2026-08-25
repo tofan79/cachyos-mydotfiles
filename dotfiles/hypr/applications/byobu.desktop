@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Byobu Gnome Terminal
-Comment=Advanced Command Line and Text Window Manager
-Icon=/usr/share/byobu/pixmaps/byobu.svg
-Exec=gnome-terminal --name=us.kirkland.terminals.byobu --class=us.kirkland.terminals.byobu -- byobu
-Type=Application
-Categories=GNOME;GTK;System;Utility;TerminalEmulator;
-StartupWMClass=us.kirkland.terminals.byobu
-NoDisplay=true

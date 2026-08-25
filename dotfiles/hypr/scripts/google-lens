@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Screenshot region -> Google Lens visual search
+# Dependencies: grim, slurp, curl, jq, xdg-open, notify-send
+set -euo pipefail
+
+app="Google Lens"
+need() { command -v "$1" >/dev/null 2>&1 || { notify-send -u normal "$app" "$1 is not installed"; exit 1; }; }
+
+input_file=""
+if [[ ${1:-} == "--file" ]]; then
+  [[ -n ${2:-} ]] || { notify-send -u critical "$app" "Missing image path"; exit 2; }
+  input_file="$2"; shift 2
+fi
+
+for c in curl jq notify-send xdg-open; do need "$c"; done
+
+tmp="$input_file"
+if [[ -z $tmp ]]; then
+  for c in grim slurp; do need "$c"; done
+  tmp="$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/google-lens.XXXXXX.png")"
+  trap 'rm -f "$tmp"' EXIT
+fi
+
+if [[ -n $input_file ]]; then
+  [[ -r $tmp ]] || { notify-send -u critical "$app" "Cannot read image at $tmp"; exit 1; }
+else
+  geometry="$(slurp 2>/dev/null)" || exit 130
+  [[ -n $geometry ]] || exit 0
+  grim -g "$geometry" "$tmp"
+fi
+
+notify-send -u low "$app" "Uploading to Google Lens..."
+
+if ! response="$(curl -fsS --connect-timeout 10 --max-time 45 -F "files[]=@$tmp" https://uguu.se/upload)"; then
+  notify-send -u critical "$app" "Upload failed"
+  exit 1
+fi
+
+remote_url="$(printf '%s' "$response" | jq -r '.files[0].url // .files[0].src // empty')"
+[[ -n $remote_url ]] || { notify-send -u critical "$app" "No URL in response"; exit 1; }
+
+encoded_url="$(jq -nr --arg url "$remote_url" '$url|@uri')"
+xdg-open "https://www.google.com/searchbyimage?image_url=$encoded_url" >/dev/null 2>&1

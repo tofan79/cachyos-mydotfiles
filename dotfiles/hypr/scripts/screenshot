@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Screenshot tool with 3 modes: region, fullscreen, window
+# Opens in Satty for annotation before saving
+# Dependencies: grim, slurp, hyprctl, satty, jq, notify-send
+set -euo pipefail
+
+app="Screenshot"
+tmp="/tmp/screenshot.png"
+
+mode="${1:-region}"
+
+case "$mode" in
+  region|r)
+    geometry="$(slurp 2>/dev/null)" || exit 130
+    [[ -n "$geometry" ]] || exit 0
+    grim -g "$geometry" "$tmp"
+    ;;
+  fullscreen|fs|all)
+    grim "$tmp"
+    ;;
+  window|w)
+    geometry=$(hyprctl clients -j | jq -r '.[] | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | slurp -r 2>/dev/null) || exit 130
+    [[ -n "$geometry" ]] || exit 0
+    grim -g "$geometry" "$tmp"
+    ;;
+  *)
+    notify-send -u critical "$app" "Usage: screenshot [region|fullscreen|window]"
+    exit 1
+    ;;
+esac
+
+if [[ -f "$tmp" ]]; then
+  wl-copy --type image/png < "$tmp"
+  nohup satty --filename "$tmp" --save-after-copy >/dev/null 2>&1 &
+  disown
+else
+  notify-send -u critical "$app" "Screenshot failed"
+  exit 1
+fi

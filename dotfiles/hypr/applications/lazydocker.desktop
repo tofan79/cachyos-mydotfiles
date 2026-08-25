@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=LazyDocker
-Exec=foot lazydocker
-Icon=lazydocker
-Terminal=false
-Categories=Utility;Development;
-Comment=Docker TUI manager

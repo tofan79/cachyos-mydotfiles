@@ -2,18 +2,25 @@
 -- Hyprland Config — Converted from MangoWM
 -- ═══════════════════════════════════════════
 
--- Set module search path so require() finds files in ~/.config/hypr/
-package.path = os.getenv("HOME") .. "/.config/hypr/?.lua;" .. package.path
+-- Set module search path so require() finds files in ~/.config/hypr/ and extras/
+package.path = os.getenv("HOME")
+	.. "/.config/hypr/extras/?.lua;"
+	.. os.getenv("HOME")
+	.. "/.config/hypr/?.lua;"
+	.. package.path
 
 require("monitor")
 require("env")
 require("noctalia").apply_theme()
 dofile(os.getenv("HOME") .. "/.config/hypr/colors.lua")
-dofile(os.getenv("HOME") .. "/.config/hypr/windows/glass.lua")
-dofile(os.getenv("HOME") .. "/.config/hypr/decorations/rounding-all-blur.lua")
-dofile(os.getenv("HOME") .. "/.config/hypr/animations/wipe-meta.lua")
+require("decoration")
+dofile(os.getenv("HOME") .. "/.config/hypr/extras/animations/bounce.lua")
 require("keybinds")
+require("resize")
+require("lid")
 require("rules")
+require("execs")
+require("group")
 require("layouts")
 require("gestures")
 require("startup")
