@@ -23,22 +23,22 @@
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/ss-desktop.png" alt="Desktop" width="600"/>
+  <img src="assets/screenshots/ss-desktop.png" alt="Desktop" width="800"/>
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/ss-launcher.png" alt="Launcher" width="300"/>
-  <img src="assets/screenshots/ss-animation.png" alt="Animations" width="300"/>
+  <img src="assets/screenshots/ss-launcher.png" alt="Launcher" width="380"/>
+  <img src="assets/screenshots/ss-animation.png" alt="Animations" width="380"/>
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/ss-layout.png" alt="Layout" width="300"/>
-  <img src="assets/screenshots/ss-monitor.png" alt="Monitor" width="300"/>
+  <img src="assets/screenshots/ss-layout.png" alt="Layout" width="380"/>
+  <img src="assets/screenshots/ss-monitor.png" alt="Monitor" width="380"/>
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/ss-btop.png" alt="btop" width="300"/>
-  <img src="assets/screenshots/ss-fastfetch.png" alt="Fastfetch" width="300"/>
+  <img src="assets/screenshots/ss-btop.png" alt="btop" width="380"/>
+  <img src="assets/screenshots/ss-fastfetch.png" alt="Fastfetch" width="380"/>
 </p>
 
 ---
@@ -248,16 +248,6 @@ exec gamemoderun mangohud "$@"
 > Use it in Steam as `~/.config/hypr/scripts/game-launch.sh %command%`.
 
 MangoHud config: top-centre, GPU/CPU stats, frametime, zero background.
-
----
-
-## 🧼 Maintenance
-
-```bash
-~/.config/clean/clean.sh
-```
-
-Safe system cleanup: pacman cache (keep 2), orphans, Shelly/flatpak, clipboard, browser/GPU/Qt caches, journal (>3 days), trash, zsh history, thumbnails. (No dangerous `/tmp` wiping.)
 
 ---
 
