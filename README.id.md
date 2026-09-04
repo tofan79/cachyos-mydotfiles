@@ -43,6 +43,18 @@
 
 ---
 
+## 🔌 Plugin Noctalia
+
+Dotfiles ini berpasangan dengan **[mindset-noctalia-plugins](https://github.com/tofan79/mindset-noctalia-plugins)** — enam plugin Noctalia untuk display, layout, animasi, gaming, pengingat, dan container.
+
+```sh
+noctalia msg plugins source add mindset git https://github.com/tofan79/mindset-noctalia-plugins.git
+```
+
+Lihat [repo plugin](https://github.com/tofan79/mindset-noctalia-plugins) untuk daftar lengkap dan panduan install.
+
+---
+
 ## ✨ Tentang
 
 Dotfiles minimal untuk desktop **CachyOS + Hyprland Noctalia**, dibangun di atas opsi instalasi **CachyOS Hyprland Noctalia** resmi — tanpa membangun DE manual, tanpa setup "No Desktop".
