@@ -9,14 +9,13 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT"></a>
   <img src="https://img.shields.io/badge/ASUS-TUF%20A15%20FA506ICB-orange" alt="ASUS TUF">
-  <img src="https://img.shields.io/badge/WM-Hyprland-ff69b4" alt="Hyprland">
-  <img src="https://img.shields.io/badge/Shell-Noctalia%20v5-purple" alt="Noctalia">
+  <img src="https://img.shields.io/badge/WM-Hyprland%20Noctalia-ff69b4" alt="Hyprland">
   <img src="https://img.shields.io/badge/OS-CachyOS-cyan" alt="CachyOS">
-  <img src="https://img.shields.io/badge/GPU-NVIDIA%20RTX%203050-brightgreen" alt="NVIDIA">
+  <img src="https://img.shields.io/badge/GPU-NVIDIA%20RTX%203050-grey" alt="NVIDIA">
 </p>
 
 <p align="center">
-  <b>Hyprland + Noctalia Shell v5</b> — AMD Renoir · NVIDIA RTX 3050 · Wayland
+  <b>Simple CachyOS + Hyprland Noctalia dotfiles</b> for the ASUS TUF Gaming A15 (AMD Renoir + NVIDIA RTX 3050, Wayland).
 </p>
 
 ---
@@ -24,346 +23,231 @@
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/ss-desktop.png" width="800" alt="Desktop">
+  <img src="assets/screenshots/ss-desktop.png" alt="Desktop" width="600"/>
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/ss-rofi.png" width="400" alt="Rofi Launcher">
-  <img src="assets/screenshots/ss-presets.png" width="400" alt="Rofi Presets">
-  <br>
-  <img src="assets/screenshots/ss-btop.png" width="400" alt="Btop System Monitor">
-  <img src="assets/screenshots/ss-launcher.png" width="400" alt="App Launcher">
+  <img src="assets/screenshots/ss-launcher.png" alt="Launcher" width="300"/>
+  <img src="assets/screenshots/ss-animation.png" alt="Animations" width="300"/>
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/kN-uwjMguwQ"><img src="https://img.shields.io/badge/▶️_Watch_on_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"></a>
+  <img src="assets/screenshots/ss-layout.png" alt="Layout" width="300"/>
+  <img src="assets/screenshots/ss-monitor.png" alt="Monitor" width="300"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/ss-btop.png" alt="btop" width="300"/>
+  <img src="assets/screenshots/ss-fastfetch.png" alt="Fastfetch" width="300"/>
 </p>
 
 ---
 
-## ✨ Highlights
+## ✨ About
 
-| | |
-|---|---|
-| 🎨 **16 animation presets** | Switch with `SUPER + CTRL + A` |
-| 🪟 **Layout picker** | Rofi selector — `SUPER + ALT + W` |
-| 🪟 **14 window + 10 decoration presets** | Rofi switcher — no reload |
-| 🎮 **Gaming mode** | DeckShift — Steam Deck toggle |
-| 🔄 **DM-agnostic** | SDDM · GDM · LightDM · greetd · Ly |
-| 🧹 **One-command cleanup** | `clean.sh` — cache, orphans, temp |
+Minimal, opinionated dotfiles for a **CachyOS + Hyprland Noctalia** desktop. Built on the official **CachyOS Hyprland Noctalia** install option — no manual DE building, no "No Desktop" setup.
+
+- **Shell / panel / launcher:** Noctalia (Noctalia Shell v6 style)
+- **WM config:** Hyprland Lua API (`hyprland.lua`, loaded via uwsm)
+- **Keybinds:** Noctalia/Omarchy-style (`SUPER` modifier)
+- **GPU:** default AMD Renoir iGPU (battery), NVIDIA RTX 3050 on-demand for editing/gaming
 
 ---
 
-## 📋 Table of Contents
+## 🚀 Install CachyOS + Hyprland
 
-- [Dotfiles — Config Only (Safe)](#dotfiles--config-only-safe)
-- [Installer — Fresh OS](#installer--fresh-os)
-- [Hyprland Config](#hyprland-config)
-- [Keybindings](#keybindings)
-- [Presets](#presets)
-- [Gaming](#gaming)
-- [Scripts](#scripts)
-- [Theme Stack](#theme-stack)
-- [Dotfiles Reference](#dotfiles-reference)
-- [Maintenance](#maintenance)
-- [Notes](#notes)
-- [License](#license)
+Hyprland Noctalia is now a **first-class desktop option** in the CachyOS installer (since the **June 2026 ISO**).
+
+1. Download the desktop ISO: <https://cachyos.org/download/>, and flash it to a USB (e.g. `dd` or Ventoy).
+2. Boot the USB, run **CachyOS Hello**, and click **Install**.
+3. In the **desktop picker**, select **Hyprland Noctalia** (the pre-configured option).
+4. Complete the Calamares installer (partitioning, user, bootloader). Btrfs + Snapper is recommended for rollbacks.
+5. After reboot, log in to the **Hyprland (Noctalia)** session.
+
+> The installer now ships Noctalia as a first-class desktop option (joining KDE, GNOME, Niri, i3, bspwm, Sway, Wayfire, Qtile). `paru` was replaced by **Shelly** — use `shelly` for AUR installs.
 
 ---
 
-## 📁 Dotfiles — Config Only (Safe)
+## 📦 Install these dotfiles
 
-> **Copies hypr files to `~/.config/hypr/`** — no sudo, no system changes.
-> For users who already have Hyprland + Noctalia.
-
-### Prerequisites
-
-| Requirement | Package |
-|---|---|
-| Hyprland + Noctalia | `hyprland noctalia` |
-| Rofi (preset switcher) | `rofi` |
-| Terminal | `foot` |
-| Nerd Font | `ttf-jetbrains-mono-nerd` |
-| Cursor | `bibata-cursor-theme` (Bibata-Modern-Ice) |
-| Icons | `tela-icon-theme` (Tela-nord-dark) |
-| GTK | `nordic-theme` |
-
-### Usage
+Clone and run **one script**:
 
 ```bash
-git clone https://github.com/tofan79/cachyos-mydotfiles.git
+git clone https://github.com/tofan79/cachyos-mydotfiles
 cd cachyos-mydotfiles
 chmod +x mydotfiles.sh
 ./mydotfiles.sh
 ```
 
-**Install gaming mode? (y/N)**
-- `y` → auto-installs **Chaotic-AUR** (if missing) → runs `gaming.sh` (sudo)
-- `n` / Enter → skip, safe
+`mydotfiles.sh` is now **simple and safe** — it only:
 
-### What Gets Copied
+1. **Backs up** the existing `~/.config/{fastfetch,hypr,uwsm}` to `~/.config-backup-<timestamp>/`
+2. **Copies** those three config dirs from `dotfiles/` into place
+3. **Copies** `Wallpapers/` → `~/Pictures/` (backing up any existing files with the same name)
+4. Reloads Hyprland
 
-| From | To |
-|---|---|
-| `dotfiles/hypr/` | `~/.config/hypr/` |
-| `dotfiles/rofi/` | `~/.config/rofi/` |
-| Default preset → `hyprctl reload` | Applied immediately |
+**No sudo. No system changes. No other config touched.** All other config directories (GTK, kitty, cava, MangoHud, …) are left untouched.
 
 ---
 
-## 💿 Installer — Fresh OS
+## 📁 What's in `dotfiles/`
 
-> For fresh Arch/CachyOS installs. Run step by step.
+| Folder | Contains |
+|--------|----------|
+| `dotfiles/hypr/` | Hyprland Lua config + Omarchy keybinds + scripts |
+| `dotfiles/uwsm/` | `env` — GPU/env vars, default browser, shell session env |
+| `dotfiles/fastfetch/` | Fastfetch config + Noctalia theme |
 
-```bash
-git clone https://github.com/tofan79/cachyos-mydotfiles.git
-cd cachyos-mydotfiles
-chmod +x *.sh
-```
+### Wallpapers
 
-| Step | Script | What It Does |
-|------|--------|-------------|
-| 1 | `./install.sh` | **Core OS** — packages, fonts, Zsh + P10k, mise, opencode, Flatpak, non-Hyprland dotfiles |
-| 2 | `./hyprland-noctalia.sh` | **Desktop WM** — Hyprland, Noctalia, SDDM, rofi, polkit fix, Hyprland dotfiles |
-| 3 | `./apps.sh` | **Applications** — Nautilus, Zen, Neovim, tmux, Docker, PHP, ASUS tools, bloat removal |
-| 4 | `./gaming.sh` | **Gaming** — DeckShift session switch, performance tuning |
-| 5 | `sudo ./firewall.sh` | **Firewall** — UFW deny incoming, allow LocalSend |
-| 6 | `./fix-audio.sh` (optional) | **ASUS audio fix** — ALC256 mic/audio. ASUS TUF/ROG only. |
-
-<details>
-<summary><b>Step details</b></summary>
-
-### Step 1: `install.sh`
-
-**Packages:** `base-devel git curl wget rsync cmake meson python python-pip flatpack foot bat fzf zoxide fastfetch jq tmux ripgrep fd tree unzip zip bc lsof grim slurp wl-clipboard brightnessctl playerctl eza pamixer wlsunset lm_sensors ...`
-
-**Setup:** Flatpak + Flathub · Tela-nord-dark icons · Bibata-Modern-Ice cursor · JetBrainsMono + FiraCode Nerd Font · Oh My Zsh + P10k · mise · opencode · Foot default term · Fontconfig · Git aliases · Sensors · `gnome-keyring-daemon`
-
-**Copied to `~/.config/`:** `foot/` · `fontconfig/` · `git/` · `gtk-3.0/` · `gtk-4.0/` · `qt5ct/` · `qt6ct/` · `btop/` · `cava/` · `yazi/` · `zed/` · `zsh/` · `easyeffects/` · `environment.d/` · `noctalia/` · `Wallpapers/` · `docker-db/`
-
-### Step 2: `hyprland-noctalia.sh`
-
-**Packages:** `hyprland rofi cliphist xdg-desktop-portal-hyprland hyprpicker nvidia-utils sddm switcheroo-control noctalia gnome-keyring`
-
-**Does:** SDDM enable · `switcheroo-control` · Session → "Hyprland (Noctalia)" · Polkit fix · Noctalia state fix
-
-**Copied:** `hypr/` · `rofi/` · `xdg-desktop-portal/` · `fastfetch/` · `MangoHud/` · `nvim/`
-
-### Step 3: `apps.sh`
-
-**Packages:** `nautilus yazi neovim btop mpv imv evince easyeffects tesseract imagemagick cava satty gum lazydocker telegram-desktop localsend zen-browser-bin zed protonplus ab-download-manager android-studio docker php ...`
-
-**Does:** ASUS auto-detect → `asusctl` + `rog-control-center` · Docker enable · tmux config · PHP deploy · Remove CachyOS bloat · Hide unused desktop entries
-
-### Step 4: `gaming.sh`
-
-**Does:** `gamescope-session-git` + session scripts + autologin (auto-detect DM) + performance tuning
-
-**Compatible with:** SDDM · GDM · LightDM · greetd · Ly
-
-### Step 5: `firewall.sh`
-
-```bash
-ufw default deny incoming && ufw default allow outgoing
-ufw allow 53317/udp && ufw allow 53317/tcp   # LocalSend
-ufw --force enable && systemctl enable ufw
-```
-</details>
-
----
-
-## ⚙️ Hyprland Config
-
-**Entry:** `~/.config/hypr/hyprland.lua`
-
-```lua
-require("monitor")                  -- eDP-1 1920x1080@144
-require("env")                      -- XDG, QT, cursor, NVIDIA
-require("noctalia").apply_theme()
-dofile("colors.lua")
-dofile("windows/glass.lua")
-dofile("decorations/rounding-all-blur.lua")
-dofile("animations/wipe-meta.lua")
-require("keybinds")
-require("rules")
-require("layouts")
-require("gestures")
-require("startup")
-```
-
-### Key Modules
-
-| Module | What |
-|--------|------|
-| `monitor.lua` | `1920x1080@144`, VRR, scale 1 |
-| `env.lua` | Qt6ct, Bibata cursor, NVIDIA offload |
-| `layouts.lua` | Dwindle (default), preserve_split, persistent 1-9 |
-| `rules.lua` | Steam floating, Zen/Zoom idle inhibit, XWayland fix |
-| `gestures.lua` | 3-finger workspace, 4-finger fullscreen |
-| `startup.lua` | xdg-desktop-portal, cliphist, Noctalia |
+`Wallpapers/` (`BG02.png`, `BG03.png`) are copied to `~/Pictures/`.
 
 ---
 
 ## ⌨️ Keybindings
 
-All use `SUPER` (Windows key). View on screen: `SUPER + SHIFT + K`
+All use `SUPER` (Windows key). Defined in `~/.config/hypr/config/binds.lua`.
 
-| Category | Key | Action |
-|----------|-----|--------|
-| **Core** | `SUPER + Q` | Close window |
-| | `SUPER + CTRL + R` | Reload Hyprland |
-| | `SUPER + Escape` | Session menu (Noctalia) |
-| | `SUPER + CTRL + L` | Lock screen |
-| | `SUPER + /` | Btop system monitor |
-| **Shell** | `SUPER + Space` | App launcher |
-| | `SUPER + ALT + Space` | Control center |
-| | `SUPER + CTRL + Space` | Settings |
-| | `SUPER + CTRL + W` | Wallpaper picker |
-| | `SUPER + CTRL + C` | Caffeine toggle |
-| | `SUPER + CTRL + /` | Wallhaven browser |
-| | `SUPER + CTRL + P` | Color picker |
-| **Focus** | `SUPER + arrows` | Move focus |
-| | `SUPER + SHIFT + arrows` | Swap windows |
-| | `SUPER + CTRL + up/down` | Prev/next workspace |
-| **Window** | `SUPER + F` | Fullscreen |
-| | `SUPER + SHIFT + F` | Maximize |
-| | `SUPER + SHIFT + T` | Float toggle |
-| | `SUPER + ALT + T` | Float + pin |
-| **Scratchpad** | `SUPER + S` | Toggle special |
-| | `SUPER + SHIFT + S` | Send to special |
-| **Layout** | `SUPER + ALT + W` | Switch layout (rofi picker) |
-| | `SUPER + CTRL + K` | Swap split |
-| | `SUPER + CTRL + J` | Toggle split |
-| **Groups** | `SUPER + SHIFT + G` | Toggle group |
-| | `SUPER + Tab` / `SHIFT + Tab` | Next/prev group |
-| **Presets** | `SUPER + CTRL + A` | Switch animations |
-| | `SUPER + CTRL + D` | Switch decorations |
-| | `SUPER + CTRL + S` | Switch windows |
-| | `SUPER + SHIFT + A` | Animations on/off |
-| **Apps** | `SUPER + Enter` | Foot terminal |
-| | `SUPER + E` | Nautilus |
-| | `SUPER + B` | Zen browser |
-| | `SUPER + N` | Zed editor |
-| | `SUPER + G` | Steam |
-| | `SUPER + L` | LocalSend |
-| | `SUPER + T` | Telegram |
-| | `SUPER + D` | Vesktop (Discord) |
-| | `SUPER + ALT + G` | Gaming mode switch |
-| **Workspace** | `SUPER + 1-9` | Switch workspace |
-| | `SUPER + SHIFT + 1-9` | Move to workspace |
-| **Mouse** | `SUPER + left click` | Drag window |
-| | `SUPER + right click` | Resize window |
-| **Media** | `XF86Sleep` | Lock + suspend |
+### Core & Shell
 
-> Some keybinds require specific apps (Foot, Nautilus, Zen, etc.) — install via installer scripts.
+| Key | Action |
+|-----|--------|
+| `SUPER + Q` | Close window |
+| `SUPER + SHIFT + R` | Reload Hyprland |
+| `SUPER + Escape` | Session menu (Noctalia) |
+| `SUPER + CTRL + L` | Lock screen |
+| `SUPER + Space` | App launcher (Noctalia panel) |
+| `SUPER + CTRL + Space` | Settings toggle |
+| `SUPER + CTRL + comma` | Clear clipboard |
+| `SUPER + CTRL + C` | Caffeine toggle |
+| `CTRL + SHIFT + Escape` | btop system monitor |
+| `SUPER + /` | System monitor (procmon) |
+
+### Windows & Layout
+
+| Key | Action |
+|-----|--------|
+| `SUPER + arrows` | Smart focus |
+| `SUPER + SHIFT + arrows` | Smart swap |
+| `SUPER + CTRL + up/down` | Prev / next workspace |
+| `SUPER + F` | Toggle fullscreen |
+| `SUPER + SHIFT + F` | Maximize |
+| `SUPER + SHIFT + T` | Toggle floating |
+| `SUPER + ALT + T` | Toggle floating + pinned |
+| `SUPER + CTRL + R` | Enter resize mode |
+| `ALT + Tab` | Cycle windows |
+| `SUPER + CTRL + K` | (Dwindle) swap split |
+| `SUPER + CTRL + J` | (Dwindle) toggle split |
+| `SUPER + CTRL + M` | (Master) cycle orientation |
+
+### Groups
+
+| Key | Action |
+|-----|--------|
+| `SUPER + SHIFT + G` | Toggle window group |
+| `SUPER + CTRL + G` | Out of group |
+| `SUPER + CTRL + [` / `]` | Into group left / right |
+| `SUPER + ALT + ]` / `[` | Into group up / down |
+| `SUPER + Tab` / `SHIFT + Tab` | Group next / prev |
+| `SUPER + CTRL + 1-9` | Group index |
+
+### Apps (use `variables.lua` — single source of truth)
+
+| Key | App |
+|-----|-----|
+| `SUPER + Return` | **kitty** (terminal) |
+| `SUPER + E` | **dolphin** (file manager) |
+| `SUPER + B` | **zen-browser** (browser) |
+| `SUPER + N` | **zeditor** (editor) |
+| `SUPER + Y` | Music player (mpv) |
+| `SUPER + O` | Video player (mpv) |
+| `SUPER + I` | Image viewer (loupe) |
+| `XF86Calculator` | Calculator (gnome-calculator) |
+| `SUPER + T` | Telegram |
+| `SUPER + W` | Karere |
+| `SUPER + D` | Vesktop (Discord) |
+| `SUPER + G` | Steam |
+
+> All app binds resolve from `~/.config/hypr/config/variables.lua`. Change `TERMINAL`, `FILE_MANAGER`, `BROWSER`, `EDITOR`, etc. there once.
+
+### Workspaces & Mouse
+
+| Key | Action |
+|-----|--------|
+| `SUPER + 1-9` | Switch workspace |
+| `SUPER + SHIFT + 1-9` | Move to workspace |
+| `SUPER + S` | Toggle special workspace |
+| `SUPER + left/right click` | Move / resize window |
+| `SUPER + mouse_up/down` | Prev / next workspace |
+
+### Media / Misc
+
+| Key | Action |
+|-----|--------|
+| `XF86Audio*` | Volume / mute / mic / media (media panel) |
+| `XF86MonBrightnessUp/Down` | Brightness |
+| `Print` / `SHIFT+Print` / `CTRL+Print` | Screenshot region / fullscreen / window |
+| `SUPER + P` | Color picker (hyprpicker) |
+| `SUPER + .` | Emoji panel |
+| `SUPER + SHIFT + L` | Google Lens (region) |
+| `SUPER + SHIFT + O` | OCR (region) |
+| `SUPER + SHIFT + Q` | QR scan (region) |
+| `SUPER + Minus` / `Plus` | Zoom cursor out / in |
 
 ---
 
-## 🎨 Presets
+## 🎛️ Config stack
 
-Switch window styles without reloading — via Rofi.
+| Layer | Choice |
+|-------|--------|
+| Desktop | CachyOS Hyprland Noctalia |
+| Shell | Zsh + Powerlevel10k |
+| Terminal | kitty (ComicShannsMono Nerd Font, transparency, padding) |
+| File manager | dolphin |
+| Browser | zen-browser |
+| Editor | zeditor |
+| Panel / launcher | Noctalia |
+| Image viewer | loupe |
+| Music / video | mpv |
 
-### Animations
-`SUPER + CTRL + A` — 16 presets
+### Editing defaults
 
-| Default | Others |
-|---------|--------|
-| **wipe-meta** | classic · dynamic · end4 · fast · high · moving · smooth · default · disabled · metamorphosis · slide · standard · wipe · moving-meta · smooth-meta |
+All default apps live in `~/.config/hypr/config/variables.lua`:
 
-### Decorations
-`SUPER + CTRL + D` — 10 presets
+```lua
+TERMINAL     = "kitty"
+FILE_MANAGER = "dolphin"
+BROWSER      = "zen-browser"
+EDITOR       = "zeditor"
+```
 
-| Default | Others |
-|---------|--------|
-| **rounding-all-blur** (10px, opacity 0.9/0.7, blur 2/2) | blur · default · gamemode · no-blur · no-rounding · no-rounding-more-blur · rounding · rounding-all-blur-no-shadows · rounding-more-blur |
-
-### Windows
-`SUPER + CTRL + S` — 14 presets
-
-| Default | Others |
-|---------|--------|
-| **glass** (gaps 5/10, border 2px, gradient) | border-1..4 · border-1..4-reverse · default · gamemode · no-border · no-border-more-gaps · transparent |
+Bindings read these variables, so you only change them in **one place**.
 
 ---
 
 ## 🎮 Gaming
 
-### game-launch.sh
-Steam launch option `~/.config/hypr/scripts/game-launch.sh %command%`
+Streams through **Steam / Lutris, etc.** Launched via the keybind `SUPER + G` or Steam. Since the system defaults to the **AMD iGPU**, `game-launch.sh` forces the **NVIDIA** GPU for gaming, wrapped in GameMode + MangoHud.
+
+Set `game-launch.sh` as the Steam launch option:
 
 ```bash
-export NVPRESENT_ENABLE_SMOOTH_MOTION=1    # NVIDIA frame gen
-export DXVK_NVAPI_VKREFLEX=1               # NVIDIA Reflex
-export PROTON_ENABLE_NGX_UPDATER=1         # DLSS auto-update
-exec switcherooctl launch -- gamemoderun mangohud "$@"
+#!/usr/bin/env bash
+# ~/.config/hypr/scripts/game-launch.sh
+set -euo pipefail
+
+# Force NVIDIA rendering (system default = AMD iGPU)
+export __NV_PRIME_RENDER_OFFLOAD=1
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export GBM_BACKEND=nvidia-drm
+export __VK_LAYER_NV_optimus=NVIDIA_only
+
+exec gamemoderun mangohud "$@"
 ```
 
-### MangoHud
-```
-legacy_layout=false  position=top-center  font_size=15
-background_alpha=0   hud_no_margin        height=120
-gpu_stats gpu_temp gpu_name  cpu_stats cpu_temp  ram fps frame_timing
-```
+> Use it in Steam as `~/.config/hypr/scripts/game-launch.sh %command%`.
 
----
-
-## 📜 Scripts
-
-| Script | Binding | Function |
-|--------|---------|----------|
-| `keybindings.sh` | `SUPER + SHIFT + K` | View all keybinds |
-| `switch-animations.sh` | `SUPER + CTRL + A` | Animation presets |
-| `switch-decorations.sh` | `SUPER + CTRL + D` | Decoration presets |
-| `switch-windows.sh` | `SUPER + CTRL + S` | Window presets |
-| `toggle-animations.sh` | `SUPER + SHIFT + A` | Animations on/off |
-| `switch-layouts.sh` | `SUPER + ALT + W` | Layout picker (rofi) |
-| `text-extractor.sh` | `SUPER + ALT + A` | OCR → clipboard |
-| `game-launch.sh` | Steam option | NVIDIA + gamemode + MangoHud |
-| `lock-and-suspend.sh` | `XF86Sleep` | Lock + suspend |
-
----
-
-## 🎯 Theme Stack
-
-| Layer | Theme |
-|-------|-------|
-| Icons | Tela-nord-dark |
-| Cursor | Bibata-Modern-Ice 24px |
-| GTK | Nordic |
-| Qt5/Qt6 | Fusion + Noctalia palette |
-| Terminal | Foot + ComicShannsMono Nerd Font 10pt |
-| Shell | Zsh + Powerlevel10k (rainbow) |
-| Rofi | Noctalia · centered · rounded 24px |
-
----
-
-## 📦 Dotfiles Reference
-
-| Folder | Script | Contents |
-|--------|--------|----------|
-| `hypr/` | `mydotfiles.sh` / `hyprland-noctalia.sh` | Full Lua config + presets + scripts |
-| `rofi/` | `hyprland-noctalia.sh` | Noctalia theme |
-| `xdg-desktop-portal/` | `hyprland-noctalia.sh` | default=hyprland |
-| `fastfetch/` | `hyprland-noctalia.sh` | Custom Omarchy layout |
-| `MangoHud/` | `hyprland-noctalia.sh` | Gaming overlay |
-| `nvim/` | `hyprland-noctalia.sh` + `apps.sh` | AstroNvim v6 |
-| `foot/` | `install.sh` | Font, alpha, grapheme-shaping |
-| `fontconfig/` | `install.sh` | Font fallbacks |
-| `git/` | `install.sh` | Git config |
-| `gtk-3.0/` + `gtk-4.0/` | `install.sh` | Nordic · Tela · Bibata |
-| `qt5ct/` + `qt6ct/` | `install.sh` | Fusion + Noctalia palette |
-| `btop/` | `install.sh` | Noctalia theme |
-| `cava/` | `install.sh` | Audio visualizer theme |
-| `yazi/` | `install.sh` | Noctalia flavor |
-| `zed/` | `install.sh` | Noctalia Dark Transparent |
-| `noctalia/` | `install.sh` + `hyprland-noctalia.sh` | settings.toml + sounds |
-| `easyeffects/` | `install.sh` | Audio EQ presets |
-| `environment.d/` | `install.sh` | Steam/gamescope env vars |
-| `gaming-mode/` | `gaming.sh` | DeckShift session configs |
-| `php/` | `apps.sh` | php.ini + conf.d |
-| `tmux/` | `apps.sh` | C-Space prefix, vi mode |
-| `clean/` | `install.sh` | System cleanup script |
-| `Wallpapers/` | `install.sh` | Background images |
+MangoHud config: top-centre, GPU/CPU stats, frametime, zero background.
 
 ---
 
@@ -373,28 +257,24 @@ gpu_stats gpu_temp gpu_name  cpu_stats cpu_temp  ram fps frame_timing
 ~/.config/clean/clean.sh
 ```
 
-Cleans: pacman cache · orphans · Flatpak · Go/pip/npm/Cargo cache · mise · Shelly · cliphist · temp · journal (>3d) · trash · browser cache · shader cache · Qt/GTK cache · Zed cache · zsh history · thumbnails
+Safe system cleanup: pacman cache (keep 2), orphans, Shelly/flatpak, clipboard, browser/GPU/Qt caches, journal (>3 days), trash, zsh history, thumbnails. (No dangerous `/tmp` wiping.)
 
 ---
 
 ## 📝 Notes
 
-- **Runtime config:** `hyprctl eval "hl.config({...})"` — correct way in Hyprland Lua API
-- **Noctalia colors:** Noctalia regenerates `noctalia.lua` — `colors.lua` re-applies via text parsing
-- **Session name:** "Hyprland (Noctalia)" in any display manager
-- **Audio fix:** `fix-audio.sh` — standalone, portable. Auto for ASUS.
-- **Package sources:** CachyOS official repos + Chaotic-AUR binary mirror
+- **GPU:** Default is the AMD Renoir iGPU (battery-friendly). NVIDIA is used on-demand for editing/gaming. Env is in `~/.config/uwsm/env`.
+- **Runtime config:** `uwsm` loads Hyprland Lua config (`hyprland.lua`).
+- **AUR helper:** Shelly (CachyOS default), not paru/yay.
+- **Package sources:** CachyOS repos + Chaotic-AUR binary mirror.
 
 ---
 
 ## 🙏 Credits
 
-| Project | Source |
-|---------|--------|
-| Animation presets (16 presets) | [ML4W](https://github.com/mylinuxforwork/dotfiles) |
-| DeckShift gaming session | [github.com/28allday/deckshift](https://github.com/28allday/deckshift) |
-| Noctalia Shell | [github.com/noctalia-dev/noctalia](https://github.com/noctalia-dev/noctalia) |
-| Hyprland | [hyprland.org](https://hyprland.org) |
+- [Noctalia Shell](https://github.com/noctalia-dev/noctalia)
+- [Hyprland](https://hyprland.org)
+- [CachyOS](https://cachyos.org) — Hyprland Noctalia desktop option
 
 ---
 

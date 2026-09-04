@@ -1,29 +1,34 @@
--- ═══════════════════════════════════════════
--- Hyprland Config — Converted from MangoWM
--- ═══════════════════════════════════════════
+-- CachyOS Hyprland Configuration
 
--- Set module search path so require() finds files in ~/.config/hypr/ and extras/
-package.path = os.getenv("HOME")
-	.. "/.config/hypr/extras/?.lua;"
-	.. os.getenv("HOME")
-	.. "/.config/hypr/?.lua;"
-	.. package.path
-
-require("monitor")
-require("env")
-require("noctalia").apply_theme()
-dofile(os.getenv("HOME") .. "/.config/hypr/colors.lua")
-require("decoration")
-dofile(os.getenv("HOME") .. "/.config/hypr/extras/animations/bounce.lua")
-require("keybinds")
-require("resize")
-require("lid")
-require("rules")
-require("execs")
-require("group")
-require("layouts")
-require("gestures")
-require("startup")
-
+require("config.animations")
+require("config.autostart")
+require("config.colors")
+require("config.decorations")
+require("config.variables")
+require("config.environment")
+require("config.inputs")
+require("config.binds")
+require("config.misc")
+require("config.monitors")
+require("config.windowrules")
+require("config.workspaces")
+require("config.lid")
+require("config.resize")
 dofile(os.getenv("HOME") .. "/.config/hypr/layouts/fair.lua")
 dofile(os.getenv("HOME") .. "/.config/hypr/layouts/deck.lua")
+
+-- For Noctalia Color templates
+require("noctalia").apply_theme()
+
+-- Override border ke gradient 2 warna (primary->secondary) setelah apply_theme,
+local noct = require("noctalia")
+hl.config({
+    general = {
+        col = {
+            active_border = {
+                colors = { noct.colors.primary, noct.colors.secondary },
+                angle = 45,
+            },
+        },
+    },
+})

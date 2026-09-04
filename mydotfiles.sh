@@ -16,81 +16,70 @@ fi
 exec > >(tee -a "$LOG_FILE") 2>&1
 trap 'log_err "Failed at line ${LINENO}: ${BASH_COMMAND}"' ERR
 
-HYPR_SRC="${SCRIPT_DIR}/dotfiles/hypr"
-HYPR_DST="${HOME}/.config/hypr"
-ROFI_SRC="${SCRIPT_DIR}/dotfiles/rofi"
-ROFI_DST="${HOME}/.config/rofi"
+DOTFILES_SRC="${SCRIPT_DIR}/dotfiles"
+CONFIG_DST="${HOME}/.config"
+WALLPAPER_SRC="${SCRIPT_DIR}/Wallpapers"
+PICTURES_DST="${HOME}/Pictures"
+
+STAMP="$(date +%Y%m%d-%H%M%S)"
+BACKUP_DIR="$HOME/.config-backup-$STAMP"
 
 preflight() {
     [[ "$(id -u)" -ne 0 ]] || { log_err "Do not run as root."; exit 1; }
 }
 
 copy_dotfiles() {
-    log_info "Copying hypr dotfiles..."
-    mkdir -p "$HYPR_DST"
-    rsync -a --exclude='/applications' --exclude='/icons' "$HYPR_SRC"/. "$HYPR_DST/"
-    log_ok "Hypr dotfiles copied to ${HYPR_DST}"
+    log_info "Copying all dotfiles to ~/.config..."
+    [[ -d "$DOTFILES_SRC" ]] || { log_err "dotfiles not found at $DOTFILES_SRC"; return 1; }
+    mkdir -p "$CONFIG_DST"
 
-    if [[ -d "$ROFI_SRC" ]]; then
-        log_info "Copying rofi config..."
-        mkdir -p "$ROFI_DST"
-        cp -r "$ROFI_SRC"/. "$ROFI_DST/"
-        log_ok "Rofi config copied to ${ROFI_DST}"
-    else
-        log_warn "Rofi dotfiles not found, skipping."
-    fi
+    log_info "Backing up existing configs to ${BACKUP_DIR} ..."
+
+    for dir in "$DOTFILES_SRC"/*; do
+        [[ -e "$dir" ]] || continue
+        base="$(basename "$dir")"
+        if [[ -d "$CONFIG_DST/$base" ]]; then
+            mkdir -p "$BACKUP_DIR"
+            cp -a "$CONFIG_DST/$base" "$BACKUP_DIR/" 2>/dev/null
+            log_ok "Backed up ${base} -> ${BACKUP_DIR}/${base}"
+        fi
+        mkdir -p "$CONFIG_DST/$base"
+        rsync -a "$dir"/. "$CONFIG_DST/$base/"
+        log_ok "Copied ${base} -> ${CONFIG_DST}/${base}"
+    done
 
     hyprctl reload 2>/dev/null && log_ok "Hyprland reloaded." || log_warn "Hyprland not running, reload skipped."
 }
 
-setup_chaotic_aur() {
-    if pacman -Qi chaotic-keyring &>/dev/null; then
-        log_ok "Chaotic-AUR already configured."
+copy_wallpapers() {
+    log_info "Copying wallpapers to ~/Pictures..."
+    if [[ ! -d "$WALLPAPER_SRC" ]]; then
+        log_warn "Wallpapers directory not found at $WALLPAPER_SRC, skipping."
         return 0
     fi
-    log_info "Setting up Chaotic-AUR (binary repo mirror)..."
-    sudo -n true 2>/dev/null || sudo -v
-    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com 2>/dev/null || true
-    sudo pacman-key --lsign-key 3056513887B78AEB 2>/dev/null || true
-    sudo pacman -U --noconfirm \
-        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
-        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' 2>/dev/null
-    if ! grep -q '\[chaotic-aur\]' /etc/pacman.conf 2>/dev/null; then
-        echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf >/dev/null
-    fi
-    sudo pacman -Sy --noconfirm 2>/dev/null
-    log_ok "Chaotic-AUR configured."
-}
-
-install_gaming() {
-    echo ""
-    echo -e "${YELLOW}Install gaming mode (DeckShift session switch)?${NC}"
-    echo -e "  Gaming mode butuh Chaotic-AUR repo + gamescope-session-git."
-    echo -e "  Semua akan diinstall otomatis."
-    read -r -p "$(echo -e "${CYAN}[INPUT]${NC}  Lanjut? (y/N): ")" ans
-    case "$ans" in
-        [yY]|[yY][eE][sS])
-            log_info "Installing gaming mode..."
-            setup_chaotic_aur
-            if [[ -x "${SCRIPT_DIR}/gaming.sh" ]]; then
-                "${SCRIPT_DIR}/gaming.sh"
-                log_ok "Gaming mode installed."
-            else
-                log_err "gaming.sh not found!"
-                return 1
-            fi
-            ;;
-        *)
-            log_info "Skipping gaming mode."
-            ;;
-    esac
+    mkdir -p "$PICTURES_DST"
+    local count=0
+    for wp in "$WALLPAPER_SRC"/*; do
+        [[ -f "$wp" ]] || continue
+        local name
+        name="$(basename "$wp")"
+        if [[ -f "$PICTURES_DST/$name" ]]; then
+            mkdir -p "$BACKUP_DIR"
+            cp -a "$PICTURES_DST/$name" "$BACKUP_DIR/$name" 2>/dev/null
+            log_ok "Backed up existing $name -> ${BACKUP_DIR}/${name}"
+        fi
+        cp -a "$wp" "$PICTURES_DST/$name"
+        log_ok "Copied wallpaper ${name} -> ${PICTURES_DST}/${name}"
+        ((count++))
+    done
+    [[ "$count" -gt 0 ]] && log_ok "Wallpapers copied (${count} files)." || log_warn "No wallpapers found."
 }
 
 main() {
     preflight
-    [[ -d "$HYPR_SRC" ]] || { log_err "hypr dotfiles not found at $HYPR_SRC"; exit 1; }
+    [[ -d "$DOTFILES_SRC" ]] || { log_err "dotfiles not found at $DOTFILES_SRC"; exit 1; }
     copy_dotfiles
-    install_gaming
+    copy_wallpapers
     echo ""
     log_ok "All done! Log: ${LOG_FILE}"
 }
