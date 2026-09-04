@@ -68,7 +68,7 @@ Dotfiles minimal untuk desktop **CachyOS + Hyprland Noctalia**, dibangun di atas
 
 ## 🚀 Install CachyOS + Hyprland
 
-Hyprland Noctalia kini adalah **opsi desktop utama** di installer CachyOS (sejak **ISO Juni 2026**).
+Hyprland Noctalia kini adalah **opsi desktop utama** di installer CachyOS (sejak **ISO Agustus 2026**).
 
 1. Unduh ISO desktop: <https://cachyos.org/download/>, lalu flash ke USB (mis. `dd` atau Ventoy).
 2. Boot dari USB, jalankan **CachyOS Hello**, lalu klik **Install**.
